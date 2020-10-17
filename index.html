@@ -144,6 +144,86 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-三分钟弄懂多进程与多线程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/10/15/%E4%B8%89%E5%88%86%E9%92%9F%E5%BC%84%E6%87%82%E5%A4%9A%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/">三分钟弄懂多进程与多线程</a>
+    </h1>
+  
+
+        
+        <a href="/2020/10/15/%E4%B8%89%E5%88%86%E9%92%9F%E5%BC%84%E6%87%82%E5%A4%9A%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2020-10-15T14:48:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-15</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="首先理解一下什么是进程与线程（这个很重要）"><a href="#首先理解一下什么是进程与线程（这个很重要）" class="headerlink" title="首先理解一下什么是进程与线程（这个很重要）"></a>首先理解一下什么是进程与线程（这个很重要）</h1><blockquote>
+<p>1.进程是操作系统分配资源的最小单元, 线程是操作系统调度的最小单元。(一个是供分配， 一个是供调度)<br>2.一个应用程序至少包括1个进程，而1个进程包括1个或多个线程，线程的尺度更小。<br>3.每个进程在执行过程中拥有独立的内存单元，而一个线程的多个线程在执行过程中共享内存。  </p>
+</blockquote>
+<p>举个例子：<br>①一座<strong>工厂（类似CPU）</strong>，假设电力有限，只能供一个车间，即只能运行一个任务，里面有许多的<strong>车间（类似进程）</strong>，执行单个的任务，这时，就是每次只能单个车间运行，若是另一个车间想工作，则当前车间得休息。<br>②而多核CPU，就像多个工厂，它可以同时让多个车间（类似多个进程）一起工作，当然，是工作在不同工厂里，也就是运行在不同CPU核上。<br>③而每个车间里有很多的<strong>工人</strong>，这就类似是<strong>线程</strong>，一个车间可以有多个工人，也就是一个进程可有多个线程。  </p>
+<h2 id="这样就基本说明白了CPU、多核、进程、线程之间的关系。这里好像一切都很和谐，跟锁没什么关系。为社么会出现锁呢？"><a href="#这样就基本说明白了CPU、多核、进程、线程之间的关系。这里好像一切都很和谐，跟锁没什么关系。为社么会出现锁呢？" class="headerlink" title="这样就基本说明白了CPU、多核、进程、线程之间的关系。这里好像一切都很和谐，跟锁没什么关系。为社么会出现锁呢？"></a>这样就基本说明白了CPU、多核、进程、线程之间的关系。这里好像一切都很和谐，跟锁没什么关系。为社么会出现锁呢？</h2><p>接下来就得谈谈内存占用的问题。  </p>
+<ul>
+<li>在一个进程下，它拥有的资源是有限的（有多少呢，举个例子），而在这个进程下，多个线程是共享这些资源的，就像是一个车间地方大小是一定的，每个工人工作占用的地方不一致，那怎么办呢，那就得加把锁了，当某个工作地方被占满了就得挂上锁，告诉其他工人，这里已经容不下人了。得等人出来，也就是某个线程结束释放内存时，才能又进去人，开始新的线程。  </li>
+<li>这里大佬们发明了一个简单防止冲突的方法，叫做<strong>互斥锁（Mutual exclusion，缩写 Mutex）</strong>。也就是说，一个线程在使用共享内存时，会把门锁住，防止其他人进来占用。后来的人得等着，等这把锁被解开，也就是空间被释放，才能再进去用这个空间。</li>
+<li>还有些房间，可以同时容纳n个人，比如厨房。也就是说，如果人数大于n，多出来的人只能在外面等着。这好比某些内存区域，只能供给固定数目的线程使用。这时的解决方法，就是在门口挂n把钥匙。进去的人就取一把钥匙，出来时再把钥匙挂回原处。后到的人发现钥匙架空了，就知道必须在门口排队等着了。这种做法叫做**”信号量”（Semaphore）**，用来保证多个线程不会互相冲突。  </li>
+<li>不难看出，mutex是semaphore的一种特殊情况（n=1时）。也就是说，完全可以用后者替代前者。但是，因为mutex较为简单，且效率高，所以在必须保证资源独占的情况下，还是采用这种设计。</li>
+</ul>
+<h1 id="多进程与多线程之间的关系"><a href="#多进程与多线程之间的关系" class="headerlink" title="多进程与多线程之间的关系"></a>多进程与多线程之间的关系</h1><p>讲完了定义上的进程与线程的区别，讲讲在实际应用中体现出来的区别。<br>假设一个电脑6核CPU，开6个进程同时运行进行计算，可以让每个核占用跑到100%，总CPU的100%。<br>而开一个进程，6个线程或更多个CPU占用率也只能跑到单核的100%，也就是总CPU的1/6。<br>Window10+python 实验一下：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用Process库 开6个进程： </span></span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process  </span><br><span class="line"><span class="keyword">import</span> os  </span><br><span class="line"><span class="keyword">import</span> time  </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">long_time_task</span>(<span class="params">i</span>):</span>  </span><br><span class="line"></span><br><span class="line">    print(<span class="string">&#x27;子进程: &#123;&#125; - 任务&#123;&#125;&#x27;</span>.format(os.getpid(), i))</span><br><span class="line">    <span class="comment"># 写个死循环，让它一直工作</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        recircle = <span class="number">2</span>**<span class="number">100</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&#x27;__main__&#x27;</span>:  </span><br><span class="line"></span><br><span class="line">    print(<span class="string">&#x27;当前母进程: &#123;&#125;&#x27;</span>.format(os.getpid()))</span><br><span class="line">    start = time.time()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">6</span>):</span><br><span class="line">        p = Process(target=long_time_task, args=(i,))</span><br><span class="line">        p.start()</span><br><span class="line">        p.join()</span><br><span class="line">    print(<span class="string">&#x27;等待所有子进程完成。&#x27;</span>)</span><br><span class="line">    <span class="comment"># p1.start()</span></span><br><span class="line">    <span class="comment"># p2.start()</span></span><br><span class="line">    <span class="comment"># p1.join()</span></span><br><span class="line">    <span class="comment"># p2.join()</span></span><br><span class="line">    end = time.time()</span><br><span class="line">    print(<span class="string">&quot;总共用时&#123;&#125;秒&quot;</span>.format((end - start)))</span><br></pre></td></tr></table></figure>
+
+<p>打开任务管理器，切换到性能，检测：</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/10/15/%E4%B8%89%E5%88%86%E9%92%9F%E5%BC%84%E6%87%82%E5%A4%9A%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Hexo搭建博客奶奶级教程，趟过无数坑，一秒上手" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
