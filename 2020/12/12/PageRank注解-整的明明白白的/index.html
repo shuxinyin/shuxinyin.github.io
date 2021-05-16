@@ -16,10 +16,9 @@
 <meta property="og:description" content="PageRank本质是一个长时间随机游走算法，反复迭代，达到一个稳态">
 <meta property="og:locale" content="zh_CH">
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20201211235708.jpg">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20201211235707.jpg">
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20201211235706.jpg">
 <meta property="article:published_time" content="2020-12-11T16:15:37.000Z">
-<meta property="article:modified_time" content="2020-12-11T16:23:06.123Z">
+<meta property="article:modified_time" content="2021-05-16T05:24:13.122Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta property="article:tag" content="机器学习算法">
 <meta name="twitter:card" content="summary">
@@ -192,6 +191,30 @@
     
     <!-- 目录内容 -->
     
+        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+        <span class="btn-bg"></span>
+        <span class="btn-text">文章导航</span>
+        </p>
+        <div id="toc-article" class="toc-article">
+            <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+            <strong class="toc-title">文章目录</strong>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PagePank%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">PagePank基本模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PR%E7%9A%84%E8%AE%A1%E7%AE%97pr%E5%80%BC%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">PR的计算pr值原理：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B6%E5%AE%9E%E9%80%9A%E4%BF%97%E7%9A%84%E6%9D%A5%E8%AF%B4%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%85%AC%E5%BC%8F%E4%BB%A3%E8%A1%A8%E7%9A%84%E5%B0%B1%E6%98%AF%E4%B8%89%E7%A7%8D%E5%88%86%E9%85%8D%E6%9C%BA%E5%88%B6%E3%80%82"><span class="toc-number"></span> <span class="toc-text">其实通俗的来说，这个公式代表的就是三种分配机制。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pagerank%E4%B8%BB%E8%A6%81%E6%9C%89%E4%B8%89%E7%A7%8D%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">pagerank主要有三种实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E9%9D%A2%E5%B0%B1networkx%E4%B8%ADpagerank%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">下面就networkx中pagerank函数分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+       </div>
+       <script type="text/javascript">
+        function showToc(){
+            var toc_article = document.getElementById("toc-article");
+            var show_toc_btn = document.getElementById("show-toc-btn");
+            toc_article.setAttribute("style","display:block");
+            show_toc_btn.setAttribute("style","display:none");
+            };
+        function showBtn(){
+            var toc_article = document.getElementById("toc-article");
+            var show_toc_btn = document.getElementById("show-toc-btn");
+            toc_article.setAttribute("style","display:none");
+            show_toc_btn.setAttribute("style","display:block");
+            };
+       </script>
+    
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
@@ -203,26 +226,34 @@
    1/3 & 0 & 0 & 1/2\\
    1/3 & 0 & 0 & 1/2 \\
    1/3 & 1/2 & 0 & 0
-  \end{bmatrix}</script><p>假设上网的人浏览每一个网页的概率相等，即1/n，这里有四个网址，故n=4,也表示着节点的初始PR值，下面进行第一此迭代后，即浏览传播后，各节点的PR值变化。<br>$P1 = M<em>P0=<br>  \begin{bmatrix}<br>   0 &amp; 1/2 &amp; 1 &amp; 0\\<br>   1/3 &amp; 0 &amp; 0 &amp; 1/2\\<br>   1/3 &amp; 0 &amp; 0 &amp; 1/2 \\<br>   1/3 &amp; 1/2 &amp; 0 &amp; 0<br>  \end{bmatrix}<br>$</em>$<br>  \begin{bmatrix}<br>   1/4\\<br>   1/4\\<br>   1/4\\<br>   1/4<br>  \end{bmatrix}<br>$=$<br>  \begin{bmatrix}<br>   9/24\\<br>   5/24\\<br>   5/24\\<br>   5/24<br>  \end{bmatrix}<br>$<br>接下来的第二次，第三次、第n次传播迭代与上类似，转移矩阵M不变，$Pn=M<em>V1</em>V2<em>..Vn-1$,直到一个稳态，也就是前后两次的插差值$Pn-Pn-1&lt;Δ$,Δ自己定义精度即可。<br><em>*以上是一个基本的传播方式，但是在这里会遇到两个问题</em></em></p>
-<h2 id="Pagerank主要有两个问题要解决："><a href="#Pagerank主要有两个问题要解决：" class="headerlink" title="Pagerank主要有两个问题要解决："></a>Pagerank主要有两个问题要解决：</h2><ol>
-<li><strong>DeadEnds</strong>：零outlink节点,如C点，只入不出；会导致经过反复迭代之后，所有节点的pr值为0，<br><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20201211235707.jpg" alt="ZeroOutLinkGraph"><br>此时的转移矩阵M:<script type="math/tex; mode=display">M=
-\begin{bmatrix}
-0 & 1/2 & 0 & 0\\
-1/3 & 0 & 0 & 1/2\\
-1/3 & 0 & 0 & 1/2 \\
-1/3 & 1/2 & 0 & 0
-\end{bmatrix}</script>学过矩阵的应该知道，$Pn=M<em>V1</em>V2*..Vn-1$，这样一直迭代下去，节点的PR总和Sum（PR）！=1， 一直衰减，最后会导致所有的节点PR=0.自己可以动手算算试试。</li>
-</ol>
+  \end{bmatrix}
+
+假设上网的人浏览每一个网页的概率相等，即1/n，这里有四个网址，故n=4,也表示着节点的初始PR值，下面进行第一此迭代后，即浏览传播后，各节点的PR值变化。</script><p> P1 = M<em>P0=<br>  \begin{bmatrix}<br>   0 &amp; 1/2 &amp; 1 &amp; 0\\<br>   1/3 &amp; 0 &amp; 0 &amp; 1/2\\<br>   1/3 &amp; 0 &amp; 0 &amp; 1/2 \\<br>   1/3 &amp; 1/2 &amp; 0 &amp; 0<br>  \end{bmatrix} 
+</em><br>  \begin{bmatrix}<br>   1/4\\<br>   1/4\\<br>   1/4\\<br>   1/4<br>  \end{bmatrix}<br>=<br>  \begin{bmatrix}<br>   9/24\\<br>   5/24\\<br>   5/24\\<br>   5/24<br>  \end{bmatrix}</p>
+<script type="math/tex; mode=display">
+$  
+接下来的第二次，第三次、第n次传播迭代与上类似，转移矩阵M不变，$Pn=M*V1*V2*..Vn-1$,直到一个稳态，也就是前后两次的插差值$Pn-Pn-1<Δ, Δ自己定义精度即可。
+**以上是一个基本的传播方式，但是在这里会遇到两个问题**
+
+## Pagerank主要有两个问题要解决：
+
+1. DeadEnds：零outlink节点,如C点，只入不出；会导致经过反复迭代之后，所有节点的pr值为0，  
+
+    此时的转移矩阵M:</script><p>M=<br>     \begin{bmatrix}<br>   0 &amp; 1/2 &amp; 0 &amp; 0\\<br>   1/3 &amp; 0 &amp; 0 &amp; 1/2\\<br>   1/3 &amp; 0 &amp; 0 &amp; 1/2 \\<br>  1/3 &amp; 1/2 &amp; 0 &amp; 0<br>    \end{bmatrix}</p>
+<p>$$</p>
+<p>学过矩阵的应该知道，Pn=M<em>V1</em>V2*..Vn-1，这样一直迭代下去，节点的PR总和Sum（PR）！=1， 一直衰减，最后会导致所有的节点PR=0.自己可以动手算算试试。</p>
 <p><strong>解决方法</strong>：加上随机的出链，设置固定概率α的随机跳到下一个链接（具体怎么实现的可看最后的源码分析部分）</p>
 <ol>
 <li><strong>SpiderTrap</strong>：零outlink，只入不出但有关系指向自己,如下图C节点<br><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20201211235706.jpg" alt="ZeroOutLinkGraph"><br>这会导致最后PR的值都集中到C节点身上，因为C就是个漩涡，进来了出不去，PR在C点积累，最后随着迭代，C点PR=1，其他为0；这是算法的一个bug，最初还被一些网站拥有人利用过，让自己的网站排名靠前。<br><strong>看看发明者针对这种情况的解决方法</strong>：给每个节点设置随机概率（1-α）的出链。（模拟用户自己输入网址随机进入下一个网页的概率）<br>阻尼系数α（按谷歌实践下来给的默认是0.85，当然你也可以给一个），1-α是输入网址概率</li>
 </ol>
-<h2 id="PR的计算pr值原理："><a href="#PR的计算pr值原理：" class="headerlink" title="PR的计算pr值原理："></a>PR的计算pr值原理：</h2><p><strong>PR得分的来自于三种方式：</strong><br><strong>PR=alpha<em>w</em>PR+aplha<em>dangling分配+(1-alpha)</em>平均分配</strong>  </p>
+<h2 id="PR的计算pr值原理："><a href="#PR的计算pr值原理：" class="headerlink" title="PR的计算pr值原理："></a>PR的计算pr值原理：</h2><p><strong>PR得分的来自于三种方式：</strong><br><strong>PR=alpha <em> w </em> PR+aplha<em> dangling分配+(1-alpha) </em> 平均分配 </strong>  </p>
 <blockquote>
-<h1 id="其实通俗的来说，这个公式代表的就是三种分配机制。"><a href="#其实通俗的来说，这个公式代表的就是三种分配机制。" class="headerlink" title="其实通俗的来说，这个公式代表的就是三种分配机制。"></a>其实通俗的来说，这个公式代表的就是三种分配机制。</h1><pre><code>1. w*PR这种是根据入链权重（即关系方向）老老实实按路径分配  
+<h1 id="其实通俗的来说，这个公式代表的就是三种分配机制。"><a href="#其实通俗的来说，这个公式代表的就是三种分配机制。" class="headerlink" title="其实通俗的来说，这个公式代表的就是三种分配机制。"></a>其实通俗的来说，这个公式代表的就是三种分配机制。</h1></blockquote>
+<pre><code>1. w*PR这种是根据入链权重（即关系方向）老老实实按路径分配  
 2. dangling是强制分配，指的是零OutLink节点（DeadEnds）因为无出链，在矩阵迭代计算过程（30次），会导致所有PR值为0，故给零OutLink节点强制alpha概率的分配给图中每一个节点  
 3. 平均分配，不让spider trap（自我指向的）这种产生rank sink的节点捞太多油水，表示用户在任何一个界面上通过随机（1-alpha）输入网址到达此节点n的贡献的PR值，其实客观上也是在帮dangling分配。  
-</code></pre><p>从图和矩阵的角度来说，可以这样理解，我们这个矩阵可以看出是个有向图  </p>
+</code></pre><blockquote>
+<p>从图和矩阵的角度来说，可以这样理解，我们这个矩阵可以看出是个有向图  </p>
 <pre><code>#矩阵要收敛--&gt;矩阵有唯一解--&gt;n阶方阵对应有向图是强连通的--&gt;两个节点相互可达，1能到2,2能到1  
 #如果是个强连通图，就是我们上面说的第1种情况，自由竞争，那么我们可以确定是收敛的  
 #不然就会有spider trap造成rank sink问题  
@@ -385,7 +416,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PagePank%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">PagePank基本模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pagerank%E4%B8%BB%E8%A6%81%E6%9C%89%E4%B8%A4%E4%B8%AA%E9%97%AE%E9%A2%98%E8%A6%81%E8%A7%A3%E5%86%B3%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">Pagerank主要有两个问题要解决：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PR%E7%9A%84%E8%AE%A1%E7%AE%97pr%E5%80%BC%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">PR的计算pr值原理：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B6%E5%AE%9E%E9%80%9A%E4%BF%97%E7%9A%84%E6%9D%A5%E8%AF%B4%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%85%AC%E5%BC%8F%E4%BB%A3%E8%A1%A8%E7%9A%84%E5%B0%B1%E6%98%AF%E4%B8%89%E7%A7%8D%E5%88%86%E9%85%8D%E6%9C%BA%E5%88%B6%E3%80%82"><span class="toc-number"></span> <span class="toc-text">其实通俗的来说，这个公式代表的就是三种分配机制。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pagerank%E4%B8%BB%E8%A6%81%E6%9C%89%E4%B8%89%E7%A7%8D%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">pagerank主要有三种实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E9%9D%A2%E5%B0%B1networkx%E4%B8%ADpagerank%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">下面就networkx中pagerank函数分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#PagePank%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">PagePank基本模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PR%E7%9A%84%E8%AE%A1%E7%AE%97pr%E5%80%BC%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">PR的计算pr值原理：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B6%E5%AE%9E%E9%80%9A%E4%BF%97%E7%9A%84%E6%9D%A5%E8%AF%B4%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%85%AC%E5%BC%8F%E4%BB%A3%E8%A1%A8%E7%9A%84%E5%B0%B1%E6%98%AF%E4%B8%89%E7%A7%8D%E5%88%86%E9%85%8D%E6%9C%BA%E5%88%B6%E3%80%82"><span class="toc-number"></span> <span class="toc-text">其实通俗的来说，这个公式代表的就是三种分配机制。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pagerank%E4%B8%BB%E8%A6%81%E6%9C%89%E4%B8%89%E7%A7%8D%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.</span> <span class="toc-text">pagerank主要有三种实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E9%9D%A2%E5%B0%B1networkx%E4%B8%ADpagerank%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">下面就networkx中pagerank函数分析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
                     </div>
                 </span>
             </div>
