@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210321211301.jpg">
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210321211306.png">
 <meta property="article:published_time" content="2021-03-21T13:09:19.000Z">
-<meta property="article:modified_time" content="2021-03-21T13:17:07.226Z">
+<meta property="article:modified_time" content="2021-05-16T03:08:37.101Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta property="article:tag" content="loss function">
 <meta name="twitter:card" content="summary">
@@ -201,9 +201,11 @@
 <li>Hinge Loss<h2 id="1-corss-entropy"><a href="#1-corss-entropy" class="headerlink" title="1.corss_entropy"></a>1.corss_entropy</h2></li>
 </ul>
 <ol>
-<li>function:衡量两个分布的相似性<a id="more"></a>
-<img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210321211301.jpg" alt="cross_entropy"></li>
-<li>math<br>以0-1分布,二分类为例：<br> ce_loss =$-\sum_{y=0}^1[y]log(p_{o,c})<pre><code>     =-(ylog(p) + (1-y)log(1-p))$</code></pre>
+<li><p>function:衡量两个分布的相似性</p>
+ <a id="more"></a>
+<p> <img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210321211301.jpg" alt="cross_entropy"></p>
+</li>
+<li><p>math<br>以0-1分布,二分类为例：<br>$$<br>ce_loss =-\sum_{y=0}^1[y]log(p_{o,c})=-(ylog(p) + (1-y)log(1-p))<br>$$</p>
 </li>
 </ol>
 <ul>
@@ -212,15 +214,15 @@
 </ul>
 <ol start="3">
 <li><p>code</p>
-<figure class="highlight python"><figcaption><span>code</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cross_entropy</span>(<span class="params">p, y</span>):</span></span><br><span class="line">    <span class="keyword">if</span> y==<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> -log(p)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> -log(<span class="number">1</span>-p)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cross_entropy</span>(<span class="params">p, y</span>):</span></span><br><span class="line">    <span class="keyword">if</span> y==<span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> -log(p)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> -log(<span class="number">1</span>-p)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>multi_class-多分类</p>
 </li>
 </ol>
 <ul>
-<li><p>math:<br>ce_loss = $-\sum_{c=1}^My_{o,c}log(p_{o,c})$</p>
+<li><p>math:<br>$$<br>ce_loss =  -\sum_{c=1}^My_{o,c}log(p_{o,c})<br>$$</p>
 </li>
-<li><p>$y_{o,c}=1$: label for class c</p>
+<li><p>$y_{o,c}=1: label for class c$</p>
 </li>
 <li><p>$p_{o,c}$:predicted probability for class c</p>
 </li>
@@ -236,7 +238,7 @@
 <li>KL散度 又称相对熵<br>KL散度经常用来衡量两个单独的概率分布如P(x)和Q(x)的分布差异，也就是loss损失值（P表示样本的真实分布，Q表示模型预测的分布）<br>$D_{kl}(p||q)=\sum{i=1}^np(x_i)log(p(x_i)/q(x_i))$<blockquote>
 <ol>
 <li>因为对数函数是凸函数，所以KL散度的值为非负数。</li>
-<li>有时会将KL散度称为KL距离，但它并不满足距离的性质:<br>KL散度不是对称的；<br>KL散度不满足三角不等式。  </li>
+<li>有时会将KL散度称为KL距离，但它并不满足距离的性质:<br> KL散度不是对称的；<br> KL散度不满足三角不等式。  </li>
 </ol>
 </blockquote>
 </li>
@@ -259,8 +261,7 @@
 <ul>
 <li>$x_i$ 样本i的feature</li>
 <li>$y_{it}$: 第i个样本的truth label</li>
-<li>$y_i$ predicted probability for i<br><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210321211306.png" alt="hingeloss"><br>Code<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Hinge</span>(<span class="params">p, y</span>):</span></span><br><span class="line">    <span class="keyword">return</span> np.max(<span class="number">0</span>, y-(<span class="number">1</span><span class="number">-2</span>*y)*p)</span><br></pre></td></tr></table></figure>
-</li>
+<li>$y_i$ predicted probability for i<br><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210321211306.png" alt="hingeloss"><br>Code<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Hinge</span>(<span class="params">p, y</span>):</span></span><br><span class="line">    <span class="keyword">return</span> np.max(<span class="number">0</span>, y-(<span class="number">1</span><span class="number">-2</span>*y)*p)</span><br></pre></td></tr></table></figure></li>
 </ul>
 
       
