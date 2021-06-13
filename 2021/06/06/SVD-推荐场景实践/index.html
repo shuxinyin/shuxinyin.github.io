@@ -15,15 +15,15 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="SVD与LFM在推荐中都是属于协同过滤算法。SVD 叫做奇异值矩阵分解。看现在的文章上经常把它跟LFM认为是一个东西，它其实跟LFM是两回事。 LFM（latent factor model）隐因子模型 也叫做ALS（alternating least squares，交替最小二乘法） 下面就看看这两个区别在哪，优劣又在哪。">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:image" content="c:/Users/shuxinyin/AppData/Roaming/Typora/typora-user-images/image-20210606223515220.png">
-<meta property="og:image" content="c:/Users/shuxinyin/AppData/Roaming/Typora/typora-user-images/image-20210606230931032.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210613180553.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210613180552.png">
 <meta property="article:published_time" content="2021-06-06T10:23:21.000Z">
-<meta property="article:modified_time" content="2021-06-13T09:32:56.335Z">
+<meta property="article:modified_time" content="2021-06-13T10:08:53.371Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta property="article:tag" content="Recommendation">
 <meta property="article:tag" content="SVD">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:/Users/shuxinyin/AppData/Roaming/Typora/typora-user-images/image-20210606223515220.png">
+<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210613180553.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -224,9 +224,9 @@
 <p>下面就看看这两个区别在哪，优劣又在哪。</p>
 <a id="more"></a>
 <h4 id="SVD"><a href="#SVD" class="headerlink" title="SVD"></a>SVD</h4><p>假设一个user-item矩阵$A_{m,n}$,$m表示user个数，n表示item个数$，那$A*A^T$可以得到样本的协方差矩阵$C$,将$C$进行矩阵分解，得到一组正交特征向量$q_1,q_2,…,q_m$及对应的特征值$α_1, α_2,…, α_m$。就是下面这个图的样子。</p>
-<p><img src="C:/Users/shuxinyin/AppData/Roaming/Typora/typora-user-images/image-20210606223515220.png" alt="image-20210606223515220"></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210613180553.png" alt="svd"></p>
 <p>到这里，怎么用SVD做推荐的原理就看的很明白了。  就是先根据user-item的共现矩阵，进行分解后得到user的特征向量矩阵、奇异值特征矩阵及item的特征向量矩阵。  </p>
-<p>然后就可以用这些向量矩阵来表示每一个user或item，这就跟embedding原理类似。$user向量<em>对应的特征指</em>item向量，即V_{user_i}<em>α_i</em>V_{item_i}$，会得到一个值$r$，表示偏爱程度。然后根据这个$r$做推荐。</p>
+<p>然后就可以用这些向量矩阵来表示每一个user或item，这就跟embedding原理类似。user向量<em>对应的特征指</em>item向量，即$V_{user_i}<em>α_i</em>V_{item_i}$，会得到一个值$r​，表示偏爱程度。然后根据这个​r​做推荐。</p>
 <p><strong>上述只是原理上捋了一遍，但实际工程中，用SVD这么干推荐的很少，为什么这么说呢？</strong></p>
 <p>主要是有下面这几个问题：</p>
 <ol>
@@ -235,11 +235,11 @@
 </ol>
 <p>因此，工程中很难出现单纯用SVD做推荐的做法。</p>
 <h4 id="LFM"><a href="#LFM" class="headerlink" title="LFM"></a>LFM</h4><p>还是假设一个user-item矩阵$A_{m,n}$,$m表示user个数，n表示item个数$，初始化两个$user矩阵P与item矩阵Q$,即每一个user、item都初始化一个向量表示$V_{user_i}、V_{item_i}$，$A$矩阵格子中已有的值就是一条训练数据，用V_{user_i}*V_{item_i}去拟合，格子中没有的值不用管。这样就成功解决了共现矩阵的问题以及初始化的问题。</p>
-<p><img src="C:/Users/shuxinyin/AppData/Roaming/Typora/typora-user-images/image-20210606230931032.png" alt="image-20210606230931032"></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210613180552.png" alt="lfm"></p>
 <p>做推荐时，则根据user向量与item向量乘积,由余弦或L2等做衡量，选择相应值最大的推荐。</p>
 <p>到这里，SVD与LFM的区别就很好看出来了。</p>
 <p>SVD是由共现矩阵出发，由这个共现矩阵先分解，得到user、item向量矩阵。直白点讲，这个是没有拟合的过程的，就是个数学分解的过程。</p>
-<p>LFM是由user、item向量出发，去拟合原始的user-item共现数据，这是一个模型的拟合过程，也就是说user、item向量矩阵$P<em>Q$是不能还原共现矩阵$A$的，最多只是近似，$P</em>Q≈A$。</p>
+<p>LFM是由user、item向量出发，去拟合原始的user-item共现数据，这是一个模型的拟合过程，也就是说user、item向量矩阵 P<em>Q​ 是不能还原共现矩阵 $A$ 的，最多只是近似，​P</em>Q≈A​。</p>
 <p>将这两种模型分别按上述思想在推荐场景中实践应用，具体的就看代码吧，附上代码：<a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Recommendation_SVD_LFM">LFM-Recommendation</a></p>
 <p>SVD、LFM都属于隐因子分解这一类的模型，看很多文章、paper里也不做严格区分了，都叫做SVD的也挺多，也没必要纠结了，知道这其中基本原理就好了。</p>
 
