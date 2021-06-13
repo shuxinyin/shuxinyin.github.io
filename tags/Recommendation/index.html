@@ -6,23 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>PageRank图算法祥解--整的明明白白的. | Hexo</title>
+  <title>Tag: Recommendation | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="PageRank本质是一个长时间随机游走算法，反复迭代，达到一个稳态">
-<meta property="og:type" content="article">
-<meta property="og:title" content="PageRank图算法祥解--整的明明白白的.">
-<meta property="og:url" content="http://example.com/2020/12/12/PageRank%E6%B3%A8%E8%A7%A3-%E6%95%B4%E7%9A%84%E6%98%8E%E6%98%8E%E7%99%BD%E7%99%BD%E7%9A%84/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/tags/Recommendation/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="PageRank本质是一个长时间随机游走算法，反复迭代，达到一个稳态">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20201211235708.jpg">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20201211235706.jpg">
-<meta property="article:published_time" content="2020-12-11T16:15:37.000Z">
-<meta property="article:modified_time" content="2021-05-16T05:46:02.182Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
-<meta property="article:tag" content="机器学习算法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20201211235708.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -160,299 +152,75 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-PageRank注解-整的明明白白的" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      PageRank图算法祥解--整的明明白白的.
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2021" class="archive-year">2021</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/06/06/SVD-%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/" class="archive-article-date">
+  	<time datetime="2021-06-06T10:23:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-06</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/06/06/SVD-%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/">SVD、LFM-推荐场景实践</a>
     </h1>
   
 
-        
-        <a href="/2020/12/12/PageRank%E6%B3%A8%E8%A7%A3-%E6%95%B4%E7%9A%84%E6%98%8E%E6%98%8E%E7%99%BD%E7%99%BD%E7%9A%84/" class="archive-article-date">
-  	<time datetime="2020-12-11T16:15:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-12</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      <br/>
-      <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
-      <span class="icon-sort"></span>
-      <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
-                阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
-      </span>
-      </a>
-      
-      </header>
-    
-    <!-- 目录内容 -->
-    
-        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
-        <span class="btn-bg"></span>
-        <span class="btn-text">文章导航</span>
-        </p>
-        <div id="toc-article" class="toc-article">
-            <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
-            <strong class="toc-title">文章目录</strong>
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#PagePank%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">PagePank基本模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pagerank%E4%B8%BB%E8%A6%81%E6%9C%89%E4%B8%A4%E4%B8%AA%E9%97%AE%E9%A2%98%E8%A6%81%E8%A7%A3%E5%86%B3%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">Pagerank主要有两个问题要解决：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PR%E7%9A%84%E8%AE%A1%E7%AE%97pr%E5%80%BC%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">PR的计算pr值原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pagerank%E4%B8%BB%E8%A6%81%E6%9C%89%E4%B8%89%E7%A7%8D%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.</span> <span class="toc-text">pagerank主要有三种实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E9%9D%A2%E5%B0%B1networkx%E4%B8%ADpagerank%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="toc-number">5.</span> <span class="toc-text">下面就networkx中pagerank函数分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number"></span> <span class="toc-text">总结</span></a>
-       </div>
-       <script type="text/javascript">
-        function showToc(){
-            var toc_article = document.getElementById("toc-article");
-            var show_toc_btn = document.getElementById("show-toc-btn");
-            toc_article.setAttribute("style","display:block");
-            show_toc_btn.setAttribute("style","display:none");
-            };
-        function showBtn(){
-            var toc_article = document.getElementById("toc-article");
-            var show_toc_btn = document.getElementById("show-toc-btn");
-            toc_article.setAttribute("style","display:none");
-            show_toc_btn.setAttribute("style","display:block");
-            };
-       </script>
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>PageRank本质是一个长时间随机游走算法，反复迭代，达到一个稳态<br><a id="more"></a></p>
-<h3 id="PagePank基本模式"><a href="#PagePank基本模式" class="headerlink" title="PagePank基本模式"></a>PagePank基本模式</h3><p>以下图为例： 四个节点组成的有向图，代表网页之间的链接关系。<br><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20201211235708.jpg" alt="Graph"><br>假设各边的概率是平均分配的，即A有3条出链，则传播权重为1/3,那么该图下的转移关系矩阵应该如下:    </p>
-<script type="math/tex; mode=display">
-M=
-  \begin{bmatrix}
-   0 & 1/2 & 1 & 0\\
-   1/3 & 0 & 0 & 1/2\\
-   1/3 & 0 & 0 & 1/2 \\
-   1/3 & 1/2 & 0 & 0
-  \end{bmatrix}</script><p>假设上网的人浏览每一个网页的概率相等，即1/n，这里有四个网址，故n=4,也表示着节点的初始PR值，下面进行第一此迭代后，即浏览传播后，各节点的PR值变化。</p>
-<script type="math/tex; mode=display">
-P1 = M*P0=
-  \begin{bmatrix}
-   0 & 1/2 & 1 & 0\\
-   1/3 & 0 & 0 & 1/2\\
-   1/3 & 0 & 0 & 1/2 \\
-   1/3 & 1/2 & 0 & 0
-  \end{bmatrix} 
-*
-  \begin{bmatrix}
-   1/4\\
-   1/4\\
-   1/4\\
-   1/4
-  \end{bmatrix}
-=
-  \begin{bmatrix}
-   9/24\\
-   5/24\\
-   5/24\\
-   5/24
-  \end{bmatrix}</script><p>$<br>接下来的第二次，第三次、第n次传播迭代与上类似，转移矩阵M不变，$Pn=M <em> V1 </em> V2 <em>.. </em> Vn-1$,直到一个稳态，也就是前后两次的插差值$Pn - Pn-1 &lt; Δ,  Δ自己定义精度即可。<br><strong>以上是一个基本的传播方式，但是在这里会遇到两个问题</strong></p>
-<h3 id="Pagerank主要有两个问题要解决："><a href="#Pagerank主要有两个问题要解决：" class="headerlink" title="Pagerank主要有两个问题要解决："></a>Pagerank主要有两个问题要解决：</h3><ol>
-<li><p>DeadEnds：零outlink节点,如C点，只入不出；会导致经过反复迭代之后，所有节点的pr值为0，  </p>
-<p> 此时的转移矩阵M:</p>
-<script type="math/tex; mode=display">
-M=
-  \begin{bmatrix}
-0 & 1/2 & 0 & 0\\
-1/3 & 0 & 0 & 1/2\\
-1/3 & 0 & 0 & 1/2 \\
-1/3 & 1/2 & 0 & 0
- \end{bmatrix}</script></li>
-</ol>
-<p>学过矩阵的应该知道，Pn=M <em> V1 </em> V2 <em>.. </em> Vn-1，这样一直迭代下去，节点的PR总和Sum（PR）！=1， 一直衰减，最后会导致所有的节点PR=0.自己可以动手算算试试。</p>
-<p><strong>解决方法</strong>：加上随机的出链，设置固定概率α的随机跳到下一个链接（具体怎么实现的可看最后的源码分析部分）</p>
-<ol>
-<li><strong>SpiderTrap</strong>：零outlink，只入不出但有关系指向自己,如下图C节点<br><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20201211235706.jpg" alt="ZeroOutLinkGraph"><br>这会导致最后PR的值都集中到C节点身上，因为C就是个漩涡，进来了出不去，PR在C点积累，最后随着迭代，C点PR=1，其他为0；这是算法的一个bug，最初还被一些网站拥有人利用过，让自己的网站排名靠前。<br><strong>看看发明者针对这种情况的解决方法</strong>：给每个节点设置随机概率（1-α）的出链。（模拟用户自己输入网址随机进入下一个网页的概率）<br>阻尼系数α（按谷歌实践下来给的默认是0.85，当然你也可以给一个），1-α是输入网址概率</li>
-</ol>
-<h3 id="PR的计算pr值原理："><a href="#PR的计算pr值原理：" class="headerlink" title="PR的计算pr值原理："></a>PR的计算pr值原理：</h3><p><strong>PR得分的来自于三种方式：</strong><br><strong>PR=alpha <em> w </em> PR+aplha<em> dangling分配+(1-alpha) </em> 平均分配 </strong></p>
-<p>其实通俗的来说，这个公式代表的就是三种分配机制。  </p>
-<blockquote>
-<pre><code> 1. w*PR这种是根据入链权重（即关系方向）老老实实按路径分配  
- 2. dangling是强制分配，指的是零OutLink节点（DeadEnds）因为无出链，在矩阵迭代计算过程（30次），会导致所有PR值为0，故给零OutLink节点强制alpha概率的分配给图中每一个节点  
- 3. 平均分配，不让spider trap（自我指向的）这种产生rank sink的节点捞太多油水，表示用户在任何一个界面上通过随机（1-alpha）输入网址到达此节点n的贡献的PR值，其实客观上也是在帮dangling分配。  
-</code></pre><p>从图和矩阵的角度来说，可以这样理解，我们这个矩阵可以看出是个有向图<br>    矩阵要收敛—&gt;矩阵有唯一解—&gt;n阶方阵对应有向图是强连通的—&gt;两个节点相互可达，1能到2,2能到1<br>    如果是个强连通图，就是我们上面说的第1种情况，自由竞争，那么我们可以确定是收敛的<br>    不然就会有spider trap造成rank sink问题  </p>
-</blockquote>
-<h3 id="pagerank主要有三种实现"><a href="#pagerank主要有三种实现" class="headerlink" title="pagerank主要有三种实现"></a>pagerank主要有三种实现</h3><p>1 pagerank函数：以图结构为基础，通过迭代收敛方法计算PR值(PageRank值)</p>
-<p>2 pagerank_numpy函数：将图转换为numpy邻接矩阵，通过google_matrix和numpy矩阵计算，通过计算最大特征值对应的主特征向量，即为所求PR值</p>
-<p>3 pagerank_scipy函数，将图转换为sparse稀疏矩阵，通过迭代收敛方法计算PR值</p>
-<p><strong>小结：</strong>三个不同的人实现，原理效果差不多， pagerank函数<strong>可初始化初始节点PR值</strong></p>
-<h3 id="下面就networkx中pagerank函数分析"><a href="#下面就networkx中pagerank函数分析" class="headerlink" title="下面就networkx中pagerank函数分析"></a>下面就networkx中pagerank函数分析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;&quot;&quot;PageRank analysis of graph structure. &quot;&quot;&quot;</span></span><br><span class="line"><span class="comment">#    BSD license.</span></span><br><span class="line"><span class="comment">#    NetworkX:http://networkx.lanl.gov/</span></span><br><span class="line"><span class="keyword">import</span> networkx <span class="keyword">as</span> nx</span><br><span class="line"> </span><br><span class="line"><span class="meta">@not_implemented_for(&#x27;multigraph&#x27;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pagerank</span>(<span class="params">G, alpha=<span class="number">0.85</span>, personalization=None,</span></span></span><br><span class="line"><span class="function"><span class="params">             max_iter=<span class="number">100</span>, tol=<span class="number">1.0e-6</span>, nstart=None, weight=<span class="string">&#x27;weight&#x27;</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             dangling=None</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;Return the PageRank of the nodes in the graph.</span></span><br><span class="line"><span class="string">    Parameters</span></span><br><span class="line"><span class="string">    -----------</span></span><br><span class="line"><span class="string">    G : graph</span></span><br><span class="line"><span class="string">        A NetworkX graph. 在PageRank算法里面是有向图</span></span><br><span class="line"><span class="string">    alpha : float, optional</span></span><br><span class="line"><span class="string">        稳定系数, 默认0.85, 心灵漂移teleporting系数，用于解决零outlink节点引起的spider trap问题</span></span><br><span class="line"><span class="string">    personalization: dict, optional</span></span><br><span class="line"><span class="string">      个性化向量，确定在分配中各个节点的权重</span></span><br><span class="line"><span class="string">      格式举例，比如四个点的情况: &#123;1:0.25,2:0.25,3:0.25,4:0.25&#125;</span></span><br><span class="line"><span class="string">      默认个点权重相等，也可以给某个节点多分配些权重，需保证权重和为1.</span></span><br><span class="line"><span class="string">    max_iter : integer, optional</span></span><br><span class="line"><span class="string">        最大迭代次数</span></span><br><span class="line"><span class="string">    tol : float, optional</span></span><br><span class="line"><span class="string">        迭代阈值</span></span><br><span class="line"><span class="string">    nstart : dictionary, optional</span></span><br><span class="line"><span class="string">        整个网络各节点PageRank初始值</span></span><br><span class="line"><span class="string">    weight : key, optional</span></span><br><span class="line"><span class="string">      各边权重</span></span><br><span class="line"><span class="string">    dangling: dict, optional</span></span><br><span class="line"><span class="string">      字典存储的是dangling边的信息</span></span><br><span class="line"><span class="string">      key   --dangling node节点（出度为0的节点）</span></span><br><span class="line"><span class="string">      value --dangling边的权重</span></span><br><span class="line"><span class="string">      PR值按多大程度将资源分配给dangling node是根据personalization向量分配的</span></span><br><span class="line"><span class="string">      This must be selected to result in an irreducible transition</span></span><br><span class="line"><span class="string">      matrix (see notes under google_matrix). It may be common to have the</span></span><br><span class="line"><span class="string">      dangling dict to be the same as the personalization dict.</span></span><br><span class="line"><span class="string">    Notes</span></span><br><span class="line"><span class="string">    -----</span></span><br><span class="line"><span class="string">    特征值计算是通过迭代方法进行的，不能保证收敛，当超过最大迭代次数时，还不能减小到阈值内，就会报错</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">#步骤一：图结构的准备--------------------------------------------------------------------------</span></span><br><span class="line">    <span class="keyword">if</span> len(G) == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> &#123;&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> G.is_directed():</span><br><span class="line">        D = G.to_directed()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        D = G</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># Create a copy in (right) stochastic form</span></span><br><span class="line">    W = nx.stochastic_graph(D, weight=weight)</span><br><span class="line">    N = W.number_of_nodes()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 确定PR向量的初值</span></span><br><span class="line">    <span class="keyword">if</span> nstart <span class="keyword">is</span> <span class="literal">None</span>:  </span><br><span class="line">        x = dict.fromkeys(W, <span class="number">1.0</span> / N)  <span class="comment">#和为1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># Normalized nstart vector</span></span><br><span class="line">        s = float(sum(nstart.values()))</span><br><span class="line">        x = dict((k, v / s) <span class="keyword">for</span> k, v <span class="keyword">in</span> nstart.items())</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> personalization <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="comment"># Assign uniform personalization vector if not given</span></span><br><span class="line">        p = dict.fromkeys(W, <span class="number">1.0</span> / N)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        missing = set(G) - set(personalization)</span><br><span class="line">        <span class="keyword">if</span> missing:</span><br><span class="line">            <span class="keyword">raise</span> NetworkXError(<span class="string">&#x27;Personalization dictionary &#x27;</span></span><br><span class="line">                                <span class="string">&#x27;must have a value for every node. &#x27;</span></span><br><span class="line">                                <span class="string">&#x27;Missing nodes %s&#x27;</span> % missing)</span><br><span class="line">        s = float(sum(personalization.values()))</span><br><span class="line">        p = dict((k, v / s) <span class="keyword">for</span> k, v <span class="keyword">in</span> personalization.items()) <span class="comment">#归一化处理</span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> dangling <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">        <span class="comment"># Use personalization vector if dangling vector not specified</span></span><br><span class="line">        dangling_weights = p</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        missing = set(G) - set(dangling)</span><br><span class="line">        <span class="keyword">if</span> missing:</span><br><span class="line">            <span class="keyword">raise</span> NetworkXError(<span class="string">&#x27;Dangling node dictionary &#x27;</span></span><br><span class="line">                                <span class="string">&#x27;must have a value for every node. &#x27;</span></span><br><span class="line">                                <span class="string">&#x27;Missing nodes %s&#x27;</span> % missing)</span><br><span class="line">        s = float(sum(dangling.values()))</span><br><span class="line">        dangling_weights = dict((k, v/s) <span class="keyword">for</span> k, v <span class="keyword">in</span> dangling.items())</span><br><span class="line"> </span><br><span class="line">    dangling_nodes = [n <span class="keyword">for</span> n <span class="keyword">in</span> W <span class="keyword">if</span> W.out_degree(n, weight=weight) == <span class="number">0.0</span>]</span><br><span class="line"> </span><br><span class="line">    <span class="comment">#dangling_nodes  dangling节点</span></span><br><span class="line">    <span class="comment">#danglesum       dangling节点PR总值</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">#dangling初始化  默认为personalization</span></span><br><span class="line">    <span class="comment">#dangling_weights  根据dangling而生成，决定dangling node资源如何分配给全局的矩阵</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 迭代计算--------------------------------------------------------------------</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">#PR=alpha*(A*PR+dangling分配)+(1-alpha)*平均分配</span></span><br><span class="line">    <span class="comment">#分三部分计算，A*PR其实是我们用图矩阵分配的，dangling分配则是对dangling node的PR值进行分配，(1-alpha)分配则是天下为公大家一人一份分配的 </span></span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(max_iter):</span><br><span class="line">        xlast = x</span><br><span class="line">        x = dict.fromkeys(xlast.keys(), <span class="number">0</span>)  <span class="comment">#x初值</span></span><br><span class="line">        danglesum = alpha * sum(xlast[n] <span class="keyword">for</span> n <span class="keyword">in</span> dangling_nodes) <span class="comment">#计算dangling_nodes的PR总值</span></span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> x:        </span><br><span class="line">            <span class="keyword">for</span> nbr <span class="keyword">in</span> W[n]:</span><br><span class="line">                x[nbr] += alpha * xlast[n] * W[n][nbr][weight]    <span class="comment">#第1部分:将节点n的PR资源分配给各个节点，循环之</span></span><br><span class="line">         </span><br><span class="line">            x[n] += danglesum * dangling_weights[n] + (<span class="number">1.0</span> - alpha) * p[n]   <span class="comment">#第2部分 + 第3部分：danglingnodes贡献给此节点n的值 + 随机权重跳转到此节点n的值（输入网址到达此节点的贡献值）</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># 迭代检查</span></span><br><span class="line">        err = sum([abs(x[n] - xlast[n]) <span class="keyword">for</span> n <span class="keyword">in</span> x])</span><br><span class="line">        <span class="keyword">if</span> err &lt; N*tol:</span><br><span class="line">            <span class="keyword">return</span> x</span><br><span class="line">    <span class="keyword">raise</span> NetworkXError(<span class="string">&#x27;pagerank: power iteration failed to converge &#x27;</span></span><br><span class="line">                        <span class="string">&#x27;in %d iterations.&#x27;</span> % max_iter)</span><br></pre></td></tr></table></figure>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本文详细讲解了Pagerank的PR值计算模式，以及算法存在的问题及其解决方法，最后从源码出发，分析了Pagerank的代码的计算模式及解决问题的代码体现。</p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>Thank You！<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/alipay.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/wechatpay.jpg">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">机器学习算法</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Recommendation</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SVD</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Recommendation//" class="article-tag-list-link color5">Recommendation</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
-      
 
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/12/12/PageRank%E6%B3%A8%E8%A7%A3-%E6%95%B4%E7%9A%84%E6%98%8E%E6%98%8E%E7%99%BD%E7%99%BD%E7%9A%84/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2021/03/21/cross-entropy%E3%80%81hingeloss%E8%A7%A3%E6%9E%90/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          cross entropy、hingeloss解析
-        
-      </div>
-    </a>
   
   
-    <a href="/2020/11/07/Java-%E4%B8%80%E6%96%87%E5%BC%84%E6%87%82%E8%A3%85%E9%A5%B0%E8%AF%8Dpublic%E3%80%81private%E3%80%81static%E3%80%81final/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Java 一文弄懂装饰词public、private、static、final等声明词</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#PagePank%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">PagePank基本模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pagerank%E4%B8%BB%E8%A6%81%E6%9C%89%E4%B8%A4%E4%B8%AA%E9%97%AE%E9%A2%98%E8%A6%81%E8%A7%A3%E5%86%B3%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">Pagerank主要有两个问题要解决：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PR%E7%9A%84%E8%AE%A1%E7%AE%97pr%E5%80%BC%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">PR的计算pr值原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pagerank%E4%B8%BB%E8%A6%81%E6%9C%89%E4%B8%89%E7%A7%8D%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.</span> <span class="toc-text">pagerank主要有三种实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E9%9D%A2%E5%B0%B1networkx%E4%B8%ADpagerank%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="toc-number">5.</span> <span class="toc-text">下面就networkx中pagerank函数分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number"></span> <span class="toc-text">总结</span></a>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
+    </div></section>
   
 
-  
-
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -480,9 +248,9 @@ M=
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
