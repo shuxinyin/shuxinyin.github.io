@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232433.png">
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232435.png">
 <meta property="article:published_time" content="2021-07-04T03:32:50.000Z">
-<meta property="article:modified_time" content="2021-07-04T15:25:51.773Z">
+<meta property="article:modified_time" content="2021-07-04T15:34:09.875Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta property="article:tag" content="CNN">
 <meta name="twitter:card" content="summary">
@@ -242,7 +242,7 @@
 <p>max-pooling就放到forward里。为什么要接maxpooling，这里值得思考一下，论文中说是因为输入句子长度不一定，经过卷积之后长度不一定， 导致后linear层不固定，不便于训练。 </p>
 <p>但是如果在处理文本的时候，没有截断长度，而是排序然后按照batch中长读补长，是存在上述问题的，所以需要最大池化。</p>
 <p>最后定义一个linear层，将其flatten后的映射至num_class。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">self.conv_0 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">0</span>], params.embedding_dim), self.stride)</span><br><span class="line">self.conv_1 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">1</span>], params.embedding_dim), self.stride)</span><br><span class="line">self.conv_2 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">2</span>], params.embedding_dim), self.stride)</span><br><span class="line"></span><br><span class="line"><span class="comment"># conv output size: [(w-k)+2p]/s+1</span></span><br><span class="line"><span class="comment"># (batch, channel=1, seq_len, emb_size)</span></span><br><span class="line">self.fc = nn.Linear(len(self.kernel_size) * self.num_kernels, self.num_class)</span><br><span class="line">self.dropout = nn.Dropout(params.dropout)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">self.conv_0 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">0</span>], params.embedding_dim), self.stride)</span><br><span class="line">self.conv_1 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">1</span>], params.embedding_dim), self.stride)</span><br><span class="line">self.conv_2 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">2</span>], params.embedding_dim), self.stride)</span><br><span class="line">   </span><br><span class="line"><span class="comment"># conv output size: [(w-k)+2p]/s+1</span></span><br><span class="line"><span class="comment"># (batch, channel=1, seq_len, emb_size)</span></span><br><span class="line">self.fc = nn.Linear(len(self.kernel_size) * self.num_kernels, self.num_class)</span><br><span class="line">self.dropout = nn.Dropout(params.dropout)</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在重写forward函数就搭完了。写forward函数主要得注意数据流动过程中尺寸的改变（代码中已注明了）。其他的就是按照textcnn结构走就完成了。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, text</span>):</span></span><br><span class="line">    <span class="comment"># input: (B, 512, 312)</span></span><br><span class="line">    <span class="comment"># text (batch, channel=1, seq_len)</span></span><br><span class="line">    emb = self.emb(text)  <span class="comment"># (batch, seq_len, emb_size)</span></span><br><span class="line">    emb = emb.unsqueeze(dim=<span class="number">1</span>)  <span class="comment"># (batch, channel=1, seq_len, emb_size)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># after conv: (batch, num_kernels, seq_len - kernel_size[0] + 1, 1)</span></span><br><span class="line">    conved0 = F.relu(self.conv_0(emb).squeeze(<span class="number">3</span>))</span><br><span class="line">    conved1 = F.relu(self.conv_1(emb).squeeze(<span class="number">3</span>))</span><br><span class="line">    conved2 = F.relu(self.conv_2(emb).squeeze(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># pooled: (batch, n_channel)</span></span><br><span class="line">    pool0 = nn.MaxPool1d(conved0.shape[<span class="number">2</span>], self.stride)</span><br><span class="line">    pool1 = nn.MaxPool1d(conved1.shape[<span class="number">2</span>], self.stride)</span><br><span class="line">    pool2 = nn.MaxPool1d(conved2.shape[<span class="number">2</span>], self.stride)</span><br><span class="line"></span><br><span class="line">    pooled0 = pool0(conved0).squeeze(<span class="number">2</span>)</span><br><span class="line">    pooled1 = pool1(conved1).squeeze(<span class="number">2</span>)</span><br><span class="line">    pooled2 = pool2(conved2).squeeze(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (batch, n_chanel * num_filters)</span></span><br><span class="line">    cat_pool = torch.cat([pooled0, pooled1, pooled2], dim=<span class="number">1</span>)</span><br><span class="line">    fc = self.fc(cat_pool)</span><br><span class="line">    <span class="keyword">return</span> fc</span><br></pre></td></tr></table></figure>
@@ -378,6 +378,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2021/07/17/%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          异构图模型--GATNE
+        
+      </div>
+    </a>
   
   
     <a href="/2021/06/23/CNN%E6%A8%A1%E5%9E%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/" id="article-nav-older" class="article-nav-link-wrap">
@@ -561,6 +570,10 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">loss function</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Recommendation</a>
               </li>
              
@@ -569,11 +582,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">loss function</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color5">heterogeneous graph</a>
               </li>
              
               <li class="article-tag-list-item">
