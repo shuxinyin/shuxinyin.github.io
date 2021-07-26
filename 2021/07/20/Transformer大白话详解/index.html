@@ -6,23 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>TextCNN实践-文本分类利器.md | Hexo</title>
+  <title>Transformer大白话详解 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="引言说到文本分类，目前最通用最有效的方法就是通过bert预训练模型，后接一个简单的下游分类任务。但bert模型，模型参数大，训练时间长，推理时间长，应用上不方便。而textCNN相对于bert，参数少，训练快，模型结构简单，在文本分类上表现也不差，值得一看。">
+  <meta name="description" content="1. 引言Transformer在CV界刮起了一股旋风，说明这个attention的方法确实是经典。这篇文章就用大白话聊下Transformer，并结合代码详解下transformer。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TextCNN实践-文本分类利器.md">
-<meta property="og:url" content="http://example.com/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/index.html">
+<meta property="og:title" content="Transformer大白话详解">
+<meta property="og:url" content="http://example.com/2021/07/20/Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="引言说到文本分类，目前最通用最有效的方法就是通过bert预训练模型，后接一个简单的下游分类任务。但bert模型，模型参数大，训练时间长，推理时间长，应用上不方便。而textCNN相对于bert，参数少，训练快，模型结构简单，在文本分类上表现也不差，值得一看。">
+<meta property="og:description" content="1. 引言Transformer在CV界刮起了一股旋风，说明这个attention的方法确实是经典。这篇文章就用大白话聊下Transformer，并结合代码详解下transformer。">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232433.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232435.png">
-<meta property="article:published_time" content="2021-07-04T03:32:50.000Z">
-<meta property="article:modified_time" content="2021-07-04T15:34:09.875Z">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232202.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232200.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232204.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232205.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232201.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232203.png">
+<meta property="article:published_time" content="2021-07-20T13:29:10.000Z">
+<meta property="article:modified_time" content="2021-07-26T15:27:57.270Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
-<meta property="article:tag" content="CNN">
+<meta property="article:tag" content="Transformer">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232433.png">
+<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232202.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -160,20 +164,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-TextCNN-文本分类利器" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Transformer大白话详解" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      TextCNN实践-文本分类利器.md
+      Transformer大白话详解
     </h1>
   
 
         
-        <a href="/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2021-07-04T03:32:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-04</time>
+        <a href="/2021/07/20/Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2021-07-20T13:29:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-20</time>
 </a>
         
 
@@ -198,7 +202,7 @@
         <div id="toc-article" class="toc-article">
             <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
             <strong class="toc-title">文章目录</strong>
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TextCNN%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">TextCNN结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%AD%E4%B8%80%E4%B8%AATextCNN"><span class="toc-number">3.</span> <span class="toc-text">搭一个TextCNN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">思考总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">参考：</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Transformer%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">2.Transformer结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Attention-%E5%B1%82"><span class="toc-number">3.</span> <span class="toc-text">3.Attention 层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Feed-Farward-%E5%B1%82"><span class="toc-number">4.</span> <span class="toc-text">3.Feed-Farward 层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Embedding-and-Softmax"><span class="toc-number">5.</span> <span class="toc-text">4. Embedding and Softmax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Position-Encoding"><span class="toc-number">6.</span> <span class="toc-text">5. Position Encoding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-why-self-attention"><span class="toc-number">7.</span> <span class="toc-text">6.why self-attention</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="toc-number">8.</span> <span class="toc-text">总结一下</span></a></li></ol>
        </div>
        <script type="text/javascript">
         function showToc(){
@@ -218,42 +222,50 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>说到文本分类，目前最通用最有效的方法就是通过bert预训练模型，后接一个简单的下游分类任务。但bert模型，模型参数大，训练时间长，推理时间长，应用上不方便。而textCNN相对于bert，参数少，训练快，模型结构简单，在文本分类上表现也不差，值得一看。<a id="more"></a></p>
-<h3 id="TextCNN结构"><a href="#TextCNN结构" class="headerlink" title="TextCNN结构"></a>TextCNN结构</h3><p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232433.png" alt="textCNN_explicit"></p>
-<p>TextCNN的结构图，很简洁，就是一个CNN结构。上图是以2个channel举例，即每个sentence模板是双层的，每个channel上做的是一样的事。与CNN一样，就是输入的sentence（num_words*dim），通过不同的卷积核运算（此处卷积核只做竖向移动卷积），然后做max-pooling，最后通过flatten拉直，进行分类。</p>
-<p>但也有几点需要注意。</p>
+        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>Transformer在CV界刮起了一股旋风，说明这个attention的方法确实是经典。这篇文章就用大白话聊下Transformer，并结合代码详解下transformer。<a id="more"></a></p>
+<h3 id="2-Transformer结构"><a href="#2-Transformer结构" class="headerlink" title="2.Transformer结构"></a>2.Transformer结构</h3><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1706.03762.pdf">transformer</a>的结构总体封起来就是一个大盒子，这个大盒子分成两个功能块，一部分叫做encoder，另一部分叫做decoder。其实encoder功能块就是抽取特征的，抽取出来的特征就交给解码功能块decoder，decoder块用encoder抽取到的特征去做你要做的任务，类比到常见的机器学习任务，也是这么回事，先做特征，然后由特征去做分类、回归等任务。</p>
+<p>整体看，transformer是个大盒子，一层层拆下去，看看这里面都有些什么。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232202.png" alt="Transformer_Stru" style="zoom:80%;" /></p>
+<p>拆开来就看就是6个小的encoder堆叠起来组成Encoder特征抽取模块、6个小的decoder堆叠起来组成Decoder解码模块。 具体怎么堆叠在一起的可看原文中的图。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232200.png" alt="model—structure" style="zoom:80%;" /></p>
+<p><strong>Encoder块：</strong></p>
 <ol>
-<li><p>输入：一个sentence（num_words*dim）,复制成n个channels，可看作一个n通道的image。</p>
-</li>
-<li><p>卷积核kernel（length*width）：textCNN的卷积核length可以不规定，可以取2，3，4等等，就好比N-gram的滑动窗口大小N。但width应该是跟输入dim保持一致，因为不可能把一个字的embedding割裂开，这样没有意义。</p>
-</li>
-<li><p>max-pooling取的是每一个feature-map中单独向量的最大值，如下图。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232435.png" alt="textCNN_program"></p>
-</li>
-<li><p>最后，通过flatten合并max-pooling后的所有值，这与图像卷积一致，然后经过linear层输出，达到分类的目的。</p>
-</li>
+<li>N=6，表示6个小的encoder堆叠，inputs就是输入的文本序列，经过self-attention layer + Norm，然后再经过全连接的FeedForward layer。</li>
+<li>为避免网络过深导致的梯度消失问题，加入了残差结构，表达为<script type="math/tex">LayerNorm(x+SubLayer(x))</script>,其中SubLayer就是每层中做的操作，如在self-attention layer中即为做attention计算，在FeedForward layer中做的为fully connected forward处理，这里为保证在残差结构中，维度能对齐，所有输出均统一为512。 </li>
 </ol>
-<h3 id="搭一个TextCNN"><a href="#搭一个TextCNN" class="headerlink" title="搭一个TextCNN"></a>搭一个TextCNN</h3><ol>
-<li>首先定义一些模型参数。看完上面这个结构，大概的参数有卷积核数（num_kernels）、kernel_size（其中width与出入dim一致）、如果有预训练embedding的就载入，没有就随机初始化。如下，基本的网络参数就这些</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNNClassifier</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, params</span>):</span></span><br><span class="line">        super(CNNClassifier, self).__init__()</span><br><span class="line"></span><br><span class="line">        self.num_kernels = params.num_kernels</span><br><span class="line">        self.kernel_size = params.kernel_size</span><br><span class="line">        self.num_class = params.num_class</span><br><span class="line">        self.stride = params.stride</span><br><span class="line">        <span class="comment"># input: (B, 512, 312)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> params.pretrained_weight:</span><br><span class="line">            word_model_emb = np.load(params.pretrained_weight_path)</span><br><span class="line">            weights = torch.tensor(word_model_emb)</span><br><span class="line">            self.emb = nn.Embedding.from_pretrained(weights)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.emb = nn.Embedding(params.vocab_size, params.embedding_dim, padding_idx=params.padding_index)</span><br></pre></td></tr></table></figure>
+<p><strong>Decoder块：</strong></p>
 <ol>
-<li><p>下面就开始搭建网络。(接着上面的init)。定义三个卷积。分别kernel_size为2，3，4。</p>
-<p>max-pooling就放到forward里。为什么要接maxpooling，这里值得思考一下，论文中说是因为输入句子长度不一定，经过卷积之后长度不一定， 导致后linear层不固定，不便于训练。 </p>
-<p>但是如果在处理文本的时候，没有截断长度，而是排序然后按照batch中长读补长，是存在上述问题的，所以需要最大池化。</p>
-<p>最后定义一个linear层，将其flatten后的映射至num_class。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">self.conv_0 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">0</span>], params.embedding_dim), self.stride)</span><br><span class="line">self.conv_1 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">1</span>], params.embedding_dim), self.stride)</span><br><span class="line">self.conv_2 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">2</span>], params.embedding_dim), self.stride)</span><br><span class="line">   </span><br><span class="line"><span class="comment"># conv output size: [(w-k)+2p]/s+1</span></span><br><span class="line"><span class="comment"># (batch, channel=1, seq_len, emb_size)</span></span><br><span class="line">self.fc = nn.Linear(len(self.kernel_size) * self.num_kernels, self.num_class)</span><br><span class="line">self.dropout = nn.Dropout(params.dropout)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在重写forward函数就搭完了。写forward函数主要得注意数据流动过程中尺寸的改变（代码中已注明了）。其他的就是按照textcnn结构走就完成了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, text</span>):</span></span><br><span class="line">    <span class="comment"># input: (B, 512, 312)</span></span><br><span class="line">    <span class="comment"># text (batch, channel=1, seq_len)</span></span><br><span class="line">    emb = self.emb(text)  <span class="comment"># (batch, seq_len, emb_size)</span></span><br><span class="line">    emb = emb.unsqueeze(dim=<span class="number">1</span>)  <span class="comment"># (batch, channel=1, seq_len, emb_size)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># after conv: (batch, num_kernels, seq_len - kernel_size[0] + 1, 1)</span></span><br><span class="line">    conved0 = F.relu(self.conv_0(emb).squeeze(<span class="number">3</span>))</span><br><span class="line">    conved1 = F.relu(self.conv_1(emb).squeeze(<span class="number">3</span>))</span><br><span class="line">    conved2 = F.relu(self.conv_2(emb).squeeze(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># pooled: (batch, n_channel)</span></span><br><span class="line">    pool0 = nn.MaxPool1d(conved0.shape[<span class="number">2</span>], self.stride)</span><br><span class="line">    pool1 = nn.MaxPool1d(conved1.shape[<span class="number">2</span>], self.stride)</span><br><span class="line">    pool2 = nn.MaxPool1d(conved2.shape[<span class="number">2</span>], self.stride)</span><br><span class="line"></span><br><span class="line">    pooled0 = pool0(conved0).squeeze(<span class="number">2</span>)</span><br><span class="line">    pooled1 = pool1(conved1).squeeze(<span class="number">2</span>)</span><br><span class="line">    pooled2 = pool2(conved2).squeeze(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (batch, n_chanel * num_filters)</span></span><br><span class="line">    cat_pool = torch.cat([pooled0, pooled1, pooled2], dim=<span class="number">1</span>)</span><br><span class="line">    fc = self.fc(cat_pool)</span><br><span class="line">    <span class="keyword">return</span> fc</span><br></pre></td></tr></table></figure>
-</li>
+<li>与Encoder类似，N=6，表示6个小的decoder堆叠，<strong>outputs是来自于上一个i-1位置decoder的输出，作为i位置上的decoder输入（曾经的seq2seq也是这样子）</strong>，而在encoder-decoder layer这层，K、V是来自encoder的输出，Q来自self-attention的输出。decoder这里也加入残差结构，与encoder一样。</li>
 </ol>
-<h3 id="思考总结"><a href="#思考总结" class="headerlink" title="思考总结"></a>思考总结</h3><p>采用THNews，5w条数据，随机初始化的embedding，TextCNN只用了两个epoch，准确率达到0.94，速度相比bert快了不少。</p>
-<p>不过，textcnn也是一个类似N-gram的思想，也就是说，<strong>卷积核在原sentence上做卷积时只能抽取到2，3，4个单词之间（当然，也可以定义多个不同length的kernel强化）的联系及特征，相比于bert的双向transformer在对于长文本的抽取特征上还是弱了不少</strong>。归结起来还是那句话：CNN的卷积核只实现了捕捉局部相关性。</p>
-<p>不过对于短文本及数据量较大情况下，textcnn绝对是有应用价值的，值得参考。</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Chinese-Text-Classification/tree/master/text_cnn_classification">完整项目代码看这里，轻松易跑~</a></p>
-<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1408.5882">Convolutional Neural Networks for Sentence Classification</a>.</p>
-<p><a target="_blank" rel="noopener" href="https://colab.research.google.com/github/bentrevett/pytorch-sentiment-analysis/blob/master/4%20-%20Convolutional%20Sentiment%20Analysis.ipynb#scrollTo=mXhgz5RQ64aw">Convolutional Sentiment Analysis</a></p>
+<h3 id="3-Attention-层"><a href="#3-Attention-层" class="headerlink" title="3.Attention 层"></a>3.Attention 层</h3><p>让Transfermer一战成名的结构Attention，attention layer也就做了这一件事，细化的来分解下。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232204.png" alt="attention-style" style="zoom:60%;" /></p>
+<p>公式也很简洁：<script type="math/tex">Attention(Q,K,V)=softmax(QK^T/\sqrt{d_k})V</script></p>
+<p><strong>具体就是</strong></p>
+<p><strong>1.一个<script type="math/tex">token_i</script>会产生<script type="math/tex">q_i,k_i,v_i</script>三个向量 代表这个向量，</strong></p>
+<p><strong>2. <script type="math/tex">q_i</script>会挨个点乘其他token的<script type="math/tex">k_{其他}</script>后，然后做softmax</strong></p>
+<p><strong>3.softmax后得到一串权重再点乘<script type="math/tex">v_i</script>，并做sum就是自己的输出到下一层的向量<script type="math/tex">z_i</script></strong></p>
+<p><strong>原文中，除了点乘（dot-product），也对比了addiadditive attention计算方式，当<script type="math/tex">d_k</script>小时，两个效果差不多，当<script type="math/tex">d_k</script>大时，addiadditive 更好，因为点乘造成的梯度更大，导致经过softmax后产生的gradient就很小了，后续与<script type="math/tex">v_i</script>运算时，self-attention的差异就小了</strong></p>
+<p>Multi-head attention就是把一个attention操作复制成多个，堆叠了起来，过程是一致的，换到工程上就是给token embedding向量、<script type="math/tex">q_i,k_i,v_i</script>等，都额外增加了一个维度，把原来<script type="math/tex">1×d_{model}变成h×d_h, 其中d_h=d_{model}/h</script>，输出时再将多个头的结果concat，刚好维度又回来了，变成<script type="math/tex">d_{model}</script>了，又对应上了。</p>
+<p>进一步借助<a target="_blank" rel="noopener" href="http://jalammar.github.io/">Jay Alammar</a>画的图再刨析一遍，这个图画的很棒，看着图动手过一遍，更清晰。</p>
+<p>输入时将token转化embedding输入（<script type="math/tex">x1，x2</script>），同时由<script type="math/tex">x1，x2</script>分别点乘各自的权重矩阵<script type="math/tex">W_q,W_k,W_v</script>,得到<script type="math/tex">q,k,v</script>，点乘其他token的<script type="math/tex">k_{其他}</script>后，然后做softmax，再点乘<script type="math/tex">v_i</script>，并做sum就是自己的输出到下一层的向量<script type="math/tex">z_i</script></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232205.png" alt="attention-compute" style="zoom:70%;" /></p>
+<p>再看看一下multi-head attention，就是把一个复制成多个，堆叠了起来，增加了一个维度，比如原来的x是1×521的，8个头的multi-attention就是8×512，其他的过程就是一样的。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232201.png" alt="multi-attention" style="zoom:67%;" /></p>
+<h3 id="3-Feed-Farward-层"><a href="#3-Feed-Farward-层" class="headerlink" title="3.Feed-Farward 层"></a>3.Feed-Farward 层</h3><p>一个FFN里包含两个linear transformations，说起来太模糊，看代码。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PositionwiseFeedForward</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="string">&quot;Implements FFN equation.&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, d_model, d_ff, dropout=<span class="number">0.1</span></span>):</span></span><br><span class="line">        super(PositionwiseFeedForward, self).__init__()</span><br><span class="line">        self.w_1 = nn.Linear(d_model, d_ff)</span><br><span class="line">        self.w_2 = nn.Linear(d_ff, d_model)</span><br><span class="line">        self.dropout = nn.Dropout(dropout)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.w_2(self.dropout(F.relu(self.w_1(x))))</span><br></pre></td></tr></table></figure>
+<ol>
+<li>第一个linear transformations为<script type="math/tex">self.w_1</script>，输入为attention层的embedding，维度为<script type="math/tex">d_{model}=512</script>，输出的维度为<script type="math/tex">d_{ff}=2048</script>，同时在这层做完linear transformation后,会用relu进行一个映射处理。</li>
+<li>第二个linear transformations为<script type="math/tex">self.w_2</script>，输入为第一个linear transformations的embedding，维度为<script type="math/tex">d_{ff}=2048</script>，输出的维度为<script type="math/tex">d_{model}=512</script>，维度刚好，进入下一个attention层。</li>
+<li>另外参数<script type="math/tex">self.w_1、 self.w_2</script>是分开的，并没有共享，相当于做了两次卷积，卷积核大小为1。</li>
+</ol>
+<h3 id="4-Embedding-and-Softmax"><a href="#4-Embedding-and-Softmax" class="headerlink" title="4. Embedding and Softmax"></a>4. Embedding and Softmax</h3><p>这里没啥特别的，Embedding分别说的是第二张transformer结构图中Input Embedding与Output Embedding，在Embedding层中，这里的参数会乘以<script type="math/tex">\sqrt{d_{model}}</script>, Input Embedding、Output Embedding（这个好理解，毕竟decoder中的Output Embedding就是第i-1个字符的embedding），Softmax说的的decoder输出预测下一个字符的probabilties用softmax进行转化。softmax前面的linear与embedding层的参数也是共享的。</p>
+<h3 id="5-Position-Encoding"><a href="#5-Position-Encoding" class="headerlink" title="5. Position Encoding"></a>5. Position Encoding</h3><p>这里transformer为什么要加这个position encoding？</p>
+<p>其实一路看下来，也很容易理解。<strong>这里弥补的是transformer丧失捕捉位置信息的缺点，它的主要结构attention做的都是无主次无先后的线性变换，各字符都是处于同一级别（也因为如此，attention可并行计算，相比于RNN（字符有前后之分）可是大幅度提高了计算效率）</strong>，于是人工的加上表达位置信息的Position Encoding embedding。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232203.png" alt="pos_emb" style="zoom:80%;" /></p>
+<p>这里别看错了，公式里的<script type="math/tex">pos</script>表示位置、<script type="math/tex">i</script>是维度，就是说，取定了维度，不同位置的编码就由一个正弦曲线生成好了，其波长为从<script type="math/tex">2\Pi</script> 到<script type="math/tex">10000*2\Pi</script>的等比级数。</p>
+<p><strong>为什么选定了这个position生成函数？文中给出的解释的是是因为对于任何固定的偏移量<script type="math/tex">k</script>,<script type="math/tex">PE_{pos+k}</script>可表示为<script type="math/tex">PE_{pos}</script>的线性函数，它能让模型很容易学会Attend相对位置。 就是说模型不仅注意到绝对位置，还能注意到相对位置</strong></p>
+<h3 id="6-why-self-attention"><a href="#6-why-self-attention" class="headerlink" title="6.why self-attention"></a>6.why self-attention</h3><p>为什么选中了self-attention这种特征计算模式？1.考虑到每一层由句子长度及进行的操作而引起的总计算量。2.attention 计算可并行。3.attention解决了句子中长依赖语义问题（捕捉间隔较远的词之间的语义联系问题）。</p>
+<h3 id="总结一下"><a href="#总结一下" class="headerlink" title="总结一下"></a>总结一下</h3><p>transformer可拿出来说作为缺陷的地方就是它这种结构使得丧失了捕捉位置的能力，所以后续出了很多RNN或CNN与attention结合的模型，但工程上要的就是效率，它强大的并行计算能力带来了极大的效率提升，而且这种attention模式极好的解决了长依赖问题。</p>
 
       
 
@@ -298,7 +310,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CNN</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Transformer</a>
         		</li>
       		
 		</ul>
@@ -365,7 +377,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/20/Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -379,18 +391,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/07/17/%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          异构图模型--GATNE
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/06/23/CNN%E6%A8%A1%E5%9E%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">CNN模型快速上手指南.md</div>
+    <a href="/2021/07/18/Bert%E3%80%81Transformer%E9%9D%A2%E8%AF%95100%E9%97%AE/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Bert、Transformer面试100问</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -417,7 +420,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TextCNN%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">TextCNN结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%AD%E4%B8%80%E4%B8%AATextCNN"><span class="toc-number">3.</span> <span class="toc-text">搭一个TextCNN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">思考总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">参考：</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Transformer%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">2.Transformer结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Attention-%E5%B1%82"><span class="toc-number">3.</span> <span class="toc-text">3.Attention 层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Feed-Farward-%E5%B1%82"><span class="toc-number">4.</span> <span class="toc-text">3.Feed-Farward 层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Embedding-and-Softmax"><span class="toc-number">5.</span> <span class="toc-text">4. Embedding and Softmax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Position-Encoding"><span class="toc-number">6.</span> <span class="toc-text">5. Position Encoding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-why-self-attention"><span class="toc-number">7.</span> <span class="toc-text">6.why self-attention</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="toc-number">8.</span> <span class="toc-text">总结一下</span></a></li></ol>
                     </div>
                 </span>
             </div>
