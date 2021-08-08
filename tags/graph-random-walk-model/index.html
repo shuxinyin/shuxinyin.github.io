@@ -6,19 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Java 一文弄懂装饰词public、private、static、final等声明词 | Hexo</title>
+  <title>Tag: graph random-walk model | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="初看JAVA时，各种声明，public、private、protect、default、static、final，public static class等简直是懵比了。 一、 为什么要有public、private这些权限修饰符">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Java 一文弄懂装饰词public、private、static、final等声明词">
-<meta property="og:url" content="http://example.com/2020/11/07/Java-%E4%B8%80%E6%96%87%E5%BC%84%E6%87%82%E8%A3%85%E9%A5%B0%E8%AF%8Dpublic%E3%80%81private%E3%80%81static%E3%80%81final/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/tags/graph-random-walk-model/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="初看JAVA时，各种声明，public、private、protect、default、static、final，public static class等简直是懵比了。 一、 为什么要有public、private这些权限修饰符">
 <meta property="og:locale" content="zh_CH">
-<meta property="article:published_time" content="2020-11-07T12:58:15.000Z">
-<meta property="article:modified_time" content="2021-05-16T05:31:29.850Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
-<meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -157,301 +152,71 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Java-一文弄懂装饰词public、private、static、final" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      Java 一文弄懂装饰词public、private、static、final等声明词
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2021" class="archive-year">2021</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/07/27/%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/" class="archive-article-date">
+  	<time datetime="2021-07-27T14:21:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-27</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/07/27/%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/">Graph-Learning：三言两语说清DeepWalk（论文解析、实战）</a>
     </h1>
   
 
-        
-        <a href="/2020/11/07/Java-%E4%B8%80%E6%96%87%E5%BC%84%E6%87%82%E8%A3%85%E9%A5%B0%E8%AF%8Dpublic%E3%80%81private%E3%80%81static%E3%80%81final/" class="archive-article-date">
-  	<time datetime="2020-11-07T12:58:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-07</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      <br/>
-      <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
-      <span class="icon-sort"></span>
-      <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
-                阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
-      </span>
-      </a>
-      
-      </header>
-    
-    <!-- 目录内容 -->
-    
-        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
-        <span class="btn-bg"></span>
-        <span class="btn-text">文章导航</span>
-        </p>
-        <div id="toc-article" class="toc-article">
-            <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
-            <strong class="toc-title">文章目录</strong>
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89public%E3%80%81private%E8%BF%99%E4%BA%9B%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="toc-number">1.</span> <span class="toc-text">一、 为什么要有public、private这些权限修饰符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6public%E3%80%81private%E3%80%81protect%E3%80%81default%EF%BC%8C%E8%BF%99%E5%9B%9B%E4%B8%AA%E5%A3%B0%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">二、权限修饰符public、private、protect、default，这四个声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%85%B3%E9%94%AE%E8%AF%8Dstatic%E3%80%81final%E3%80%81Static-final"><span class="toc-number">3.</span> <span class="toc-text">三、关键词static、final、Static final</span></a></li></ol>
-       </div>
-       <script type="text/javascript">
-        function showToc(){
-            var toc_article = document.getElementById("toc-article");
-            var show_toc_btn = document.getElementById("show-toc-btn");
-            toc_article.setAttribute("style","display:block");
-            show_toc_btn.setAttribute("style","display:none");
-            };
-        function showBtn(){
-            var toc_article = document.getElementById("toc-article");
-            var show_toc_btn = document.getElementById("show-toc-btn");
-            toc_article.setAttribute("style","display:none");
-            show_toc_btn.setAttribute("style","display:block");
-            };
-       </script>
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>初看JAVA时，各种声明，public、private、protect、default、static、final，public static class等简直是懵比了。</p>
-<h2 id="一、-为什么要有public、private这些权限修饰符"><a href="#一、-为什么要有public、private这些权限修饰符" class="headerlink" title="一、 为什么要有public、private这些权限修饰符"></a>一、 为什么要有public、private这些权限修饰符</h2><a id="more"></a>
-<p>其实，主要是因为在程序中，访问不同的资源，如变量、方法及类需要有不同限制的需求，<strong>这些声明词就进行了一个权限的设置</strong>。<br>举个例子，在一个办公室里，只有一个饮水机，即大家共同使用它，所以<strong>饮水机是公共的资源</strong>，即大家都可以使用，而大家接水的杯子则是各自的，<strong>即是私有的资源</strong>，不给别人使用。这时候，<strong>饮水机需要用public声明，杯子需要用private声明</strong>。</p>
-<h2 id="二、权限修饰符public、private、protect、default，这四个声明"><a href="#二、权限修饰符public、private、protect、default，这四个声明" class="headerlink" title="二、权限修饰符public、private、protect、default，这四个声明"></a>二、权限修饰符public、private、protect、default，这四个声明</h2><p><strong>1.public:</strong>  具有最大的访问权限，可以访问任何一个在classpath下的类、接口、异常等。它往往用于对外的情况，也就是对象或类对外的一种接口的形式。  </p>
-<p><strong>2.protected：</strong> 主要的作用就是用来保护子类的。它的含义在于<strong>子类可以用它修饰的成员</strong>，其他的不可以，它相当于传递给子类的一种继承的东西.<br><strong>3.default：</strong><br>有时候也称为friendly，<strong>它是针对本包访问而设计的，任何处于本包下的类、接口、异常等</strong>，都可以相互访问，即使是父类没有用protected修饰的成员也可以。<br><strong>4.private：</strong><br><strong>访问权限仅限于类的内部</strong>，是一种封装的体现，例如，大多数成员变量都是修饰符为private的，它们不希望被其他任何外部的类访问。</p>
-<p><strong>总结一下</strong></p>
-<blockquote>
-<p>public：开放，所有用户可直接调用；<br>private：私有，除自己外，其他人不可调用，自己子女也不可以；<br>protected：保护，只有自己，以及自己的子女、同一个包内的朋友可以调用，其他人不行；<br>default：同一包中的类可以访问，不写时默认friendly；</p>
-</blockquote>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">name</th>
-<th style="text-align:center">同一个类</th>
-<th style="text-align:center">同一个包</th>
-<th style="text-align:center">不同包的子类</th>
-<th style="text-align:center">不同包的非子类</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">private</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center">default</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center">protect</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">×</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center">public</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="三、关键词static、final、Static-final"><a href="#三、关键词static、final、Static-final" class="headerlink" title="三、关键词static、final、Static final"></a>三、关键词static、final、Static final</h2><p><strong>1.static：</strong><br>  <strong>加载：</strong>static在类加载时初始化（加载）完成<br>  <strong>含义：</strong>Static意为静态的，但凡被static 修饰说明属于类，不属于类的对象。可直接调用，不需要创建实例<br>  <strong>可修饰的范围</strong>：static 可以修饰 <strong>内部类、方法、成员变量、代码块。</strong><br>  <strong>不可修饰的范围：</strong>Static不可修饰外部类、局部变量【static 属于类的，局部变量属于其方法，并不属于类】<br>  <strong>注意：</strong>static 方法不能兼容this关键字【static代表类层次，this代表当前类的对象】  </p>
-<p><strong>2.final：</strong><br>  <strong>加载：</strong>final可以在编译（类加载）时初始化，也可以在运行时初始化，初始化后不能被改变。<br>  <strong>可修饰的范围：</strong>类、内部类、方法、成员变量、局部变量、基本类型、引用类型。<br>  含义：final“最终的”的意思，<strong>在Java中又有意为常量的意思，也就是被final修饰的只能进行一次初始化！</strong><br>  <strong>final 修饰 方法时</strong>，方法不可以重写，但是可以被子类访问 【前提：方法不是 private 类型】。<br><strong>注意：</strong></p>
-<ol>
-<li>final 修饰基本类型：<strong>值不能被修改</strong>；</li>
-<li>final 修饰引用类型：引用不可以被修改也就是说不能指向其他对象，但是该引用的对象内容可以被修改；</li>
-<li>final 修饰 方法，方法不可以重写，但是可以被子类访问 【前提：方法不是 private 类型】。</li>
-<li>final 修饰 类，<strong>类不可以被继承。</strong></li>
-</ol>
-<p><strong>3.Static final</strong><br><strong>含义：</strong>从字面也可以知道，它代表Static与final二者的共同体。<br><strong>可修饰：</strong>依旧是取二者的共同体，所以只能修饰成员变量、方法、内部类，被Static final修饰意义分别如下：<br>1、成员变量：属于类的变量且只能赋值一次。<br>2、方法：属于类的方法且不可以被重写。<br>3、内部类：属于外部类，且不能被继承</p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>Thank You！<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/alipay.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/wechatpay.jpg">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">graph random-walk model</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
-      
 
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/11/07/Java-%E4%B8%80%E6%96%87%E5%BC%84%E6%87%82%E8%A3%85%E9%A5%B0%E8%AF%8Dpublic%E3%80%81private%E3%80%81static%E3%80%81final/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2020/12/12/PageRank%E6%B3%A8%E8%A7%A3-%E6%95%B4%E7%9A%84%E6%98%8E%E6%98%8E%E7%99%BD%E7%99%BD%E7%9A%84/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          PageRank图算法祥解--整的明明白白的.
-        
-      </div>
-    </a>
   
   
-    <a href="/2020/10/15/%E4%B8%89%E5%88%86%E9%92%9F%E5%BC%84%E6%87%82%E5%A4%9A%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">三分钟弄懂多进程与多线程</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89public%E3%80%81private%E8%BF%99%E4%BA%9B%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="toc-number">1.</span> <span class="toc-text">一、 为什么要有public、private这些权限修饰符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6public%E3%80%81private%E3%80%81protect%E3%80%81default%EF%BC%8C%E8%BF%99%E5%9B%9B%E4%B8%AA%E5%A3%B0%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">二、权限修饰符public、private、protect、default，这四个声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%85%B3%E9%94%AE%E8%AF%8Dstatic%E3%80%81final%E3%80%81Static-final"><span class="toc-number">3.</span> <span class="toc-text">三、关键词static、final、Static final</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
+    </div></section>
   
 
-  
-
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -479,9 +244,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

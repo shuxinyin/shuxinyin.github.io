@@ -6,20 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Java 一文弄懂装饰词public、private、static、final等声明词 | Hexo</title>
+  <title>Graph-Learning：三言两语说清DeepWalk（论文解析、实战） | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="初看JAVA时，各种声明，public、private、protect、default、static、final，public static class等简直是懵比了。 一、 为什么要有public、private这些权限修饰符">
+  <meta name="description" content="1. 引言 图学习模型主要有两类:1. 图游走类算法模型 2.图神经网络算法模型 DeepWalk在图算法里是一个比较经典的图学习模型，算是图模型里图游走模型的开山鼻祖了，虽然效果上跟现在的新模型是没法比了，但它的random walk+skip-gram训练思想绝对是具有重要的参考意义。另外DeepWalk模型简单、思路清晰，作为一个图学习入门学习的模型绝对是不二之选，以上也是现在各个文章都会提">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java 一文弄懂装饰词public、private、static、final等声明词">
-<meta property="og:url" content="http://example.com/2020/11/07/Java-%E4%B8%80%E6%96%87%E5%BC%84%E6%87%82%E8%A3%85%E9%A5%B0%E8%AF%8Dpublic%E3%80%81private%E3%80%81static%E3%80%81final/index.html">
+<meta property="og:title" content="Graph-Learning：三言两语说清DeepWalk（论文解析、实战）">
+<meta property="og:url" content="http://example.com/2021/07/27/%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="初看JAVA时，各种声明，public、private、protect、default、static、final，public static class等简直是懵比了。 一、 为什么要有public、private这些权限修饰符">
+<meta property="og:description" content="1. 引言 图学习模型主要有两类:1. 图游走类算法模型 2.图神经网络算法模型 DeepWalk在图算法里是一个比较经典的图学习模型，算是图模型里图游走模型的开山鼻祖了，虽然效果上跟现在的新模型是没法比了，但它的random walk+skip-gram训练思想绝对是具有重要的参考意义。另外DeepWalk模型简单、思路清晰，作为一个图学习入门学习的模型绝对是不二之选，以上也是现在各个文章都会提">
 <meta property="og:locale" content="zh_CH">
-<meta property="article:published_time" content="2020-11-07T12:58:15.000Z">
-<meta property="article:modified_time" content="2021-05-16T05:31:29.850Z">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013607.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013603.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013606.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013605.png">
+<meta property="article:published_time" content="2021-07-27T14:21:11.000Z">
+<meta property="article:modified_time" content="2021-08-08T17:40:33.074Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
-<meta property="article:tag" content="Java">
+<meta property="article:tag" content="graph random-walk model">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013607.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -157,20 +162,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Java-一文弄懂装饰词public、private、static、final" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-三言两语说清DeepWalk" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Java 一文弄懂装饰词public、private、static、final等声明词
+      Graph-Learning：三言两语说清DeepWalk（论文解析、实战）
     </h1>
   
 
         
-        <a href="/2020/11/07/Java-%E4%B8%80%E6%96%87%E5%BC%84%E6%87%82%E8%A3%85%E9%A5%B0%E8%AF%8Dpublic%E3%80%81private%E3%80%81static%E3%80%81final/" class="archive-article-date">
-  	<time datetime="2020-11-07T12:58:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-07</time>
+        <a href="/2021/07/27/%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/" class="archive-article-date">
+  	<time datetime="2021-07-27T14:21:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-27</time>
 </a>
         
 
@@ -188,98 +193,61 @@
     
     <!-- 目录内容 -->
     
-        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
-        <span class="btn-bg"></span>
-        <span class="btn-text">文章导航</span>
-        </p>
-        <div id="toc-article" class="toc-article">
-            <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
-            <strong class="toc-title">文章目录</strong>
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89public%E3%80%81private%E8%BF%99%E4%BA%9B%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="toc-number">1.</span> <span class="toc-text">一、 为什么要有public、private这些权限修饰符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6public%E3%80%81private%E3%80%81protect%E3%80%81default%EF%BC%8C%E8%BF%99%E5%9B%9B%E4%B8%AA%E5%A3%B0%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">二、权限修饰符public、private、protect、default，这四个声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%85%B3%E9%94%AE%E8%AF%8Dstatic%E3%80%81final%E3%80%81Static-final"><span class="toc-number">3.</span> <span class="toc-text">三、关键词static、final、Static final</span></a></li></ol>
-       </div>
-       <script type="text/javascript">
-        function showToc(){
-            var toc_article = document.getElementById("toc-article");
-            var show_toc_btn = document.getElementById("show-toc-btn");
-            toc_article.setAttribute("style","display:block");
-            show_toc_btn.setAttribute("style","display:none");
-            };
-        function showBtn(){
-            var toc_article = document.getElementById("toc-article");
-            var show_toc_btn = document.getElementById("show-toc-btn");
-            toc_article.setAttribute("style","display:none");
-            show_toc_btn.setAttribute("style","display:block");
-            };
-       </script>
-    
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p>初看JAVA时，各种声明，public、private、protect、default、static、final，public static class等简直是懵比了。</p>
-<h2 id="一、-为什么要有public、private这些权限修饰符"><a href="#一、-为什么要有public、private这些权限修饰符" class="headerlink" title="一、 为什么要有public、private这些权限修饰符"></a>一、 为什么要有public、private这些权限修饰符</h2><a id="more"></a>
-<p>其实，主要是因为在程序中，访问不同的资源，如变量、方法及类需要有不同限制的需求，<strong>这些声明词就进行了一个权限的设置</strong>。<br>举个例子，在一个办公室里，只有一个饮水机，即大家共同使用它，所以<strong>饮水机是公共的资源</strong>，即大家都可以使用，而大家接水的杯子则是各自的，<strong>即是私有的资源</strong>，不给别人使用。这时候，<strong>饮水机需要用public声明，杯子需要用private声明</strong>。</p>
-<h2 id="二、权限修饰符public、private、protect、default，这四个声明"><a href="#二、权限修饰符public、private、protect、default，这四个声明" class="headerlink" title="二、权限修饰符public、private、protect、default，这四个声明"></a>二、权限修饰符public、private、protect、default，这四个声明</h2><p><strong>1.public:</strong>  具有最大的访问权限，可以访问任何一个在classpath下的类、接口、异常等。它往往用于对外的情况，也就是对象或类对外的一种接口的形式。  </p>
-<p><strong>2.protected：</strong> 主要的作用就是用来保护子类的。它的含义在于<strong>子类可以用它修饰的成员</strong>，其他的不可以，它相当于传递给子类的一种继承的东西.<br><strong>3.default：</strong><br>有时候也称为friendly，<strong>它是针对本包访问而设计的，任何处于本包下的类、接口、异常等</strong>，都可以相互访问，即使是父类没有用protected修饰的成员也可以。<br><strong>4.private：</strong><br><strong>访问权限仅限于类的内部</strong>，是一种封装的体现，例如，大多数成员变量都是修饰符为private的，它们不希望被其他任何外部的类访问。</p>
-<p><strong>总结一下</strong></p>
-<blockquote>
-<p>public：开放，所有用户可直接调用；<br>private：私有，除自己外，其他人不可调用，自己子女也不可以；<br>protected：保护，只有自己，以及自己的子女、同一个包内的朋友可以调用，其他人不行；<br>default：同一包中的类可以访问，不写时默认friendly；</p>
-</blockquote>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">name</th>
-<th style="text-align:center">同一个类</th>
-<th style="text-align:center">同一个包</th>
-<th style="text-align:center">不同包的子类</th>
-<th style="text-align:center">不同包的非子类</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">private</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center">default</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">×</td>
-<td style="text-align:center">×</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center">protect</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">×</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center">public</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td style="text-align:center">√</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="三、关键词static、final、Static-final"><a href="#三、关键词static、final、Static-final" class="headerlink" title="三、关键词static、final、Static final"></a>三、关键词static、final、Static final</h2><p><strong>1.static：</strong><br>  <strong>加载：</strong>static在类加载时初始化（加载）完成<br>  <strong>含义：</strong>Static意为静态的，但凡被static 修饰说明属于类，不属于类的对象。可直接调用，不需要创建实例<br>  <strong>可修饰的范围</strong>：static 可以修饰 <strong>内部类、方法、成员变量、代码块。</strong><br>  <strong>不可修饰的范围：</strong>Static不可修饰外部类、局部变量【static 属于类的，局部变量属于其方法，并不属于类】<br>  <strong>注意：</strong>static 方法不能兼容this关键字【static代表类层次，this代表当前类的对象】  </p>
-<p><strong>2.final：</strong><br>  <strong>加载：</strong>final可以在编译（类加载）时初始化，也可以在运行时初始化，初始化后不能被改变。<br>  <strong>可修饰的范围：</strong>类、内部类、方法、成员变量、局部变量、基本类型、引用类型。<br>  含义：final“最终的”的意思，<strong>在Java中又有意为常量的意思，也就是被final修饰的只能进行一次初始化！</strong><br>  <strong>final 修饰 方法时</strong>，方法不可以重写，但是可以被子类访问 【前提：方法不是 private 类型】。<br><strong>注意：</strong></p>
+        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013607.png" style="zoom:80%;" /></p>
+<p>图学习模型主要有两类:1. 图游走类算法模型 2.图神经网络算法模型</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1403.6652.pdf">DeepWalk</a>在图算法里是一个比较经典的图学习模型，算是图模型里图游走模型的开山鼻祖了，虽然效果上跟现在的新模型是没法比了，但它的random walk+skip-gram训练思想绝对是具有重要的参考意义。另外DeepWalk模型简单、思路清晰，作为一个图学习入门学习的模型绝对是不二之选，以上也是现在各个文章都会提及这个模型的重要原因了。<a id="more"></a></p>
+<h3 id="2-Rand-Walk-Skip-Gram"><a href="#2-Rand-Walk-Skip-Gram" class="headerlink" title="2. Rand-Walk + Skip-Gram"></a>2. Rand-Walk + Skip-Gram</h3><p>DeepWalk的图训练方式很简单，就是Rand-Walk + Skip-Gram，了解过word2vec的知道，word2vec也是这么训练语言模型的，而DeepWalk借鉴的就是这个思想。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013603.png" alt="deepwalk-algorithm" style="zoom:80%;" /></p>
+<p>DeepWalk的训练方式就在上面这张图了，短短几行，真是三言两语就概括了，这里尽量按它的顺序解释，以便于大家对照伪代码原汁原味的自我理解。</p>
 <ol>
-<li>final 修饰基本类型：<strong>值不能被修改</strong>；</li>
-<li>final 修饰引用类型：引用不可以被修改也就是说不能指向其他对象，但是该引用的对象内容可以被修改；</li>
-<li>final 修饰 方法，方法不可以重写，但是可以被子类访问 【前提：方法不是 private 类型】。</li>
-<li>final 修饰 类，<strong>类不可以被继承。</strong></li>
+<li><p>输入：所有点<script type="math/tex">V</script>与边<script type="math/tex">E</script>集合组成的图<script type="math/tex">G</script>、window size <script type="math/tex">d</script> 、每一个点产生的<script type="math/tex">\gamma</script>条walks 、walk的长度<script type="math/tex">t</script></p>
+<p>输出：点的embedding<script type="math/tex">\Phi</script></p>
+</li>
+<li><p>初始化一个点的embedding矩阵<script type="math/tex">u^{|V|×d}</script>​​,建一颗二叉树（这个树是为后续的Hierarchical Softmax做准备，后面再来分析它）</p>
+</li>
+<li><p>训练开始：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(r):</span><br><span class="line">    O = shuffle(V) <span class="comment"># 打乱点，随机取一个点</span></span><br><span class="line">    <span class="keyword">for</span> v_i <span class="keyword">in</span> O:</span><br><span class="line">        W_vi = RandWalk(G, v_i, t) <span class="comment"># 随机游走产生一条路径walk</span></span><br><span class="line">        SkipGram(emb, W_vi, w)  <span class="comment"># 有路径后，采用word2vec的skip-gram进行训练</span></span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<p><strong>3.Static final</strong><br><strong>含义：</strong>从字面也可以知道，它代表Static与final二者的共同体。<br><strong>可修饰：</strong>依旧是取二者的共同体，所以只能修饰成员变量、方法、内部类，被Static final修饰意义分别如下：<br>1、成员变量：属于类的变量且只能赋值一次。<br>2、方法：属于类的方法且不可以被重写。<br>3、内部类：属于外部类，且不能被继承</p>
+<p>上面按它的算法步骤写的还是太费劲，<strong>总结起来， 就是先沿着图的边采出一条条walk，这条walk就相当于一个word2vec中的sequence序列，然后进行skip-gram滑窗采样，进行训练。</strong></p>
+<h3 id="3-DeepWalk-核心代码"><a href="#3-DeepWalk-核心代码" class="headerlink" title="3. DeepWalk 核心代码"></a>3. DeepWalk 核心代码</h3><h4 id="3-1-建图"><a href="#3-1-建图" class="headerlink" title="3.1 建图"></a>3.1 建图</h4><p>这里调用亚马逊的框架dgl来构建网络，把关系edge的src node 和dst node丢进去构建图网络。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> dgl</span><br><span class="line">edges=[src_nodes_list, dst_node_list]</span><br><span class="line">G = dgl.graph((torch.tensor(edges[<span class="number">0</span>]), torch.tensor(edges[<span class="number">1</span>])))</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-采路径-random-walk-sample"><a href="#3-2-采路径-random-walk-sample" class="headerlink" title="3.2 采路径-random_walk sample"></a>3.2 采路径-random_walk sample</h3><p>graph就是上面建的图网络，seed_nodes为路径的起点node，walk_length表示路径走多长。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sample_walks</span>(<span class="params">self, graph, seed_nodes, walk_length</span>):</span></span><br><span class="line">    walks = dgl.sampling.random_walk(graph, seed_nodes, length=walk_length)</span><br><span class="line">    <span class="keyword">return</span> walks</span><br></pre></td></tr></table></figure>
+<h4 id="3-3-skip-gram，滑动窗口采pair"><a href="#3-3-skip-gram，滑动窗口采pair" class="headerlink" title="3.3 skip-gram，滑动窗口采pair"></a>3.3 skip-gram，滑动窗口采pair</h4><p>采出路径后，接下来就得根据skip-gram方法采出用来训练的node pair了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">skip_gram_gen_pairs</span>(<span class="params">self, walk, half_win_size=<span class="number">2</span></span>):</span></span><br><span class="line">    src, dst = list(), list()</span><br><span class="line"></span><br><span class="line">    l = len(walk)</span><br><span class="line">    <span class="comment"># rnd = np.random.randint(1,  half_win_size+1, dtype=np.int64, size=l)</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(l):</span><br><span class="line">        real_win_size = half_win_size</span><br><span class="line">        left = i - real_win_size</span><br><span class="line">        <span class="keyword">if</span> left &lt; <span class="number">0</span>:</span><br><span class="line">            left = <span class="number">0</span></span><br><span class="line">            right = i + real_win_size</span><br><span class="line">            <span class="keyword">if</span> right &gt;= l:</span><br><span class="line">                right = l - <span class="number">1</span></span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> range(left, right + <span class="number">1</span>):</span><br><span class="line">                    <span class="keyword">if</span> walk[i] == walk[j]:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                        src.append(walk[i])</span><br><span class="line">                        dst.append(walk[j])</span><br><span class="line">                        <span class="keyword">return</span> src, dst</span><br></pre></td></tr></table></figure>
+<h4 id="3-4-skip-gram模型训练"><a href="#3-4-skip-gram模型训练" class="headerlink" title="3.4 skip-gram模型训练"></a>3.4 skip-gram模型训练</h4><p>模型方面比较简单，加了一个negative sample 部分，即与src点没有关系的node作为负样本，loss由两部分组成，pos loss 与 neg loss。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SkipGramModel</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, num_nodes, embed_dim</span>):</span></span><br><span class="line">        super(SkipGramModel, self).__init__()</span><br><span class="line">        self.num_nodes = num_nodes</span><br><span class="line">        self.emb_dimension = embed_dim</span><br><span class="line"></span><br><span class="line">        self.embed_nodes = nn.Embedding(self.num_nodes, self.emb_dimension, sparse=<span class="literal">True</span>)</span><br><span class="line">        nn.init.xavier_uniform_(self.embed_nodes.weight)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, src, pos, neg</span>):</span></span><br><span class="line">        embed_src = self.embed_nodes(src)  <span class="comment"># (B, d)</span></span><br><span class="line">        embed_pos = self.embed_nodes(pos)  <span class="comment"># (B, d)</span></span><br><span class="line">        embed_neg = self.embed_nodes(neg)  <span class="comment"># (B, neg_num, d)</span></span><br><span class="line"></span><br><span class="line">        pos_socre = torch.sum(torch.matmul(embed_src, embed_pos.transpose(<span class="number">0</span>, <span class="number">1</span>)), <span class="number">1</span>)</span><br><span class="line">        pos_socre = -F.logsigmoid(pos_socre)</span><br><span class="line"></span><br><span class="line">        neg_socre = torch.sum(torch.matmul(embed_src, embed_neg.transpose(<span class="number">1</span>, <span class="number">2</span>)), (<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line">        neg_socre = -F.logsigmoid(-neg_socre)</span><br><span class="line"></span><br><span class="line">        loss = torch.mean(pos_socre + neg_socre)</span><br><span class="line">        <span class="keyword">return</span> loss</span><br></pre></td></tr></table></figure>
+<p><strong>具体的可以看看完整代码，持续更新、码字不易、欢迎点赞、转载、交流学习。</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Graph-Learning">Graph-Learning-DeepwalkCode-Github</a></p>
+<p>到这里，deepwalk的原理就讲完了，很简单也很清晰，下面说点不一样的</p>
+<h3 id="4-为什么skip-gram有效？"><a href="#4-为什么skip-gram有效？" class="headerlink" title="4.  为什么skip-gram有效？"></a>4.  为什么skip-gram有效？</h3><p>作为游走类图模型的开山鼻祖，deepwalk怎么想到了引入skip-gram的方法来训练图模型的？了</p>
+<p> 文中提到图结构中采样出来random walks的vertex分布与文本sequence中的word分布极其相似，都符合幂律分布，因此可以按照学习文本表达的方式（如word2vec）来训练图的网络结构。</p>
+<p>简单说一下什么是幂律分布，也就是常说的二八原则，如20%的人口拥有80%的财富。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013606.png" style="zoom:80%;" /></p>
+<p> 文中提到图结构中采样出来random walks的vertex分布与文本sequence中的word分布极其相似，都符合幂律分布，因此可以按照学习文本表达的方式（如word2vec）来训练图的网络结构。</p>
+<p>简单说一下什么是幂律分布，也就是常说的二八原则，如20%的人口拥有80%的财富。</p>
+<ul>
+<li><p>幂律（power laws）：<script type="math/tex">y=ax^{-k}</script></p>
+</li>
+<li><p>上式两边取对数，变形一下：<script type="math/tex">lny=lna - klnx</script></p>
+</li>
+<li><script type="math/tex">y替换lny，x替换lnx, b替换lna 得y=b-x</script>，这个函数的图像画出来是不是就是上面这个图画的形状了。</li>
+</ul>
+<h3 id="5-Hierarchical-Softmax"><a href="#5-Hierarchical-Softmax" class="headerlink" title="5. Hierarchical  Softmax"></a>5. Hierarchical  Softmax</h3><p>skip-gram 目标函数：<script type="math/tex">max(P(vi|Φ(v1),Φ(v2),···,Φ(vi−1))</script></p>
+<p>由skip-gram滑窗采样出邻居节点形成不同的邻居pair<script type="math/tex">(x_k, x_{k+1})</script>​, 最大化<script type="math/tex">p(x_{k+1}|x_k)</script>​。</p>
+<p>但是用softmax转化为probability预测下一个是哪个词，而当词汇表即点数量<script type="math/tex">|V|</script>​​比较大时，计算所有词的概率（相当于做<script type="math/tex">|V|</script>​​次二分类）,这样代价太大且效率极低，于是引入Hierarchical  Softmax。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013605.png" style="zoom:80%;" /></p>
+<p>建立一颗由点构成的Huffman树，这样就变成只用做<script type="math/tex">log|V|</script>​​次二分类，如上图，假设采出的source点为v1，skip-gram采出的邻居节点为v3、v5，则使用 Hierarchical Softmax去计算P(v3 | Φ(v1))以及P(v5 | Φ(v1))，通过maximize 这个概率，去更新embeddingΦ(v1)、Φ(v3)、Φ(v5)。</p>
+<p>用公式表达上述Hierarchical  Softmax：<script type="math/tex">P(u_k|\Phi(v_j)) = \prod_{l=1}^{log|V|}P(b_l|\Phi(v_j))|</script></p>
+<p>若是当<script type="math/tex">|V|</script>​​​​​比较大时，这样就减少了运算极大提高了效率。</p>
+<h3 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h3><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1403.6652.pdf">DeepWalk</a>是一个旧却经典的Graph Learning模型，是在2014年提出的，因为DeepWalk开创了图游走类型模型的先河，算是图模型里图游走模型的鼻祖了，它的random-walk path采样以及skip-gram的这种模型训练思想直到现在许多的游走类图模型（node2vec、metapath2vec、GATNE等）还能看到影子。DeepWalk模型简单、思路清晰、学习极具性价比，绝对值得一看。</p>
+<p><strong>本栏目持续更新、码字不易、欢迎点赞、转载、交流学习</strong></p>
+<h3 id="系列其他相关文章"><a href="#系列其他相关文章" class="headerlink" title="系列其他相关文章"></a>系列其他相关文章</h3><p><a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Graph-Learning">Graph-Learning-DeepwalkCode-Github</a></p>
+<p><a target="_blank" rel="noopener" href="https://shuxinyin.github.io/2021/07/17/%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/">异构图模型—GATNE</a></p>
 
       
 
@@ -324,13 +292,24 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">graph random-walk model</a>
         		</li>
       		
 		</ul>
 	</div>
 
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -380,7 +359,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/11/07/Java-%E4%B8%80%E6%96%87%E5%BC%84%E6%87%82%E8%A3%85%E9%A5%B0%E8%AF%8Dpublic%E3%80%81private%E3%80%81static%E3%80%81final/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/27/%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -394,18 +373,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2020/12/12/PageRank%E6%B3%A8%E8%A7%A3-%E6%95%B4%E7%9A%84%E6%98%8E%E6%98%8E%E7%99%BD%E7%99%BD%E7%9A%84/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          PageRank图算法祥解--整的明明白白的.
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/10/15/%E4%B8%89%E5%88%86%E9%92%9F%E5%BC%84%E6%87%82%E5%A4%9A%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">三分钟弄懂多进程与多线程</div>
+    <a href="/2021/07/20/Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Transformer大白话详解</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -432,7 +402,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%9C%89public%E3%80%81private%E8%BF%99%E4%BA%9B%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6"><span class="toc-number">1.</span> <span class="toc-text">一、 为什么要有public、private这些权限修饰符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%9D%83%E9%99%90%E4%BF%AE%E9%A5%B0%E7%AC%A6public%E3%80%81private%E3%80%81protect%E3%80%81default%EF%BC%8C%E8%BF%99%E5%9B%9B%E4%B8%AA%E5%A3%B0%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">二、权限修饰符public、private、protect、default，这四个声明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%85%B3%E9%94%AE%E8%AF%8Dstatic%E3%80%81final%E3%80%81Static-final"><span class="toc-number">3.</span> <span class="toc-text">三、关键词static、final、Static final</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Rand-Walk-Skip-Gram"><span class="toc-number">2.</span> <span class="toc-text">2. Rand-Walk + Skip-Gram</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-DeepWalk-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">3. DeepWalk 核心代码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E5%BB%BA%E5%9B%BE"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 建图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E9%87%87%E8%B7%AF%E5%BE%84-random-walk-sample"><span class="toc-number">4.</span> <span class="toc-text">3.2 采路径-random_walk sample</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-skip-gram%EF%BC%8C%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E9%87%87pair"><span class="toc-number">4.1.</span> <span class="toc-text">3.3 skip-gram，滑动窗口采pair</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-skip-gram%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="toc-number">4.2.</span> <span class="toc-text">3.4 skip-gram模型训练</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%B8%BA%E4%BB%80%E4%B9%88skip-gram%E6%9C%89%E6%95%88%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">4.  为什么skip-gram有效？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Hierarchical-Softmax"><span class="toc-number">6.</span> <span class="toc-text">5. Hierarchical  Softmax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-number">7.</span> <span class="toc-text">6. 总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E5%88%97%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0"><span class="toc-number">8.</span> <span class="toc-text">系列其他相关文章</span></a></li></ol>
                     </div>
                 </span>
             </div>
