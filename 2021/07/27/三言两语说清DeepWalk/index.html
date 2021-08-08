@@ -20,7 +20,7 @@
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013606.png">
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013605.png">
 <meta property="article:published_time" content="2021-07-27T14:21:11.000Z">
-<meta property="article:modified_time" content="2021-08-08T17:40:33.074Z">
+<meta property="article:modified_time" content="2021-08-08T17:45:51.143Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta property="article:tag" content="graph random-walk model">
 <meta name="twitter:card" content="summary">
@@ -196,22 +196,17 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013607.png" style="zoom:80%;" /></p>
+        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013607.png" style="zoom:100%;" /></p>
 <p>图学习模型主要有两类:1. 图游走类算法模型 2.图神经网络算法模型</p>
 <p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1403.6652.pdf">DeepWalk</a>在图算法里是一个比较经典的图学习模型，算是图模型里图游走模型的开山鼻祖了，虽然效果上跟现在的新模型是没法比了，但它的random walk+skip-gram训练思想绝对是具有重要的参考意义。另外DeepWalk模型简单、思路清晰，作为一个图学习入门学习的模型绝对是不二之选，以上也是现在各个文章都会提及这个模型的重要原因了。<a id="more"></a></p>
 <h3 id="2-Rand-Walk-Skip-Gram"><a href="#2-Rand-Walk-Skip-Gram" class="headerlink" title="2. Rand-Walk + Skip-Gram"></a>2. Rand-Walk + Skip-Gram</h3><p>DeepWalk的图训练方式很简单，就是Rand-Walk + Skip-Gram，了解过word2vec的知道，word2vec也是这么训练语言模型的，而DeepWalk借鉴的就是这个思想。</p>
 <p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013603.png" alt="deepwalk-algorithm" style="zoom:80%;" /></p>
 <p>DeepWalk的训练方式就在上面这张图了，短短几行，真是三言两语就概括了，这里尽量按它的顺序解释，以便于大家对照伪代码原汁原味的自我理解。</p>
-<ol>
-<li><p>输入：所有点<script type="math/tex">V</script>与边<script type="math/tex">E</script>集合组成的图<script type="math/tex">G</script>、window size <script type="math/tex">d</script> 、每一个点产生的<script type="math/tex">\gamma</script>条walks 、walk的长度<script type="math/tex">t</script></p>
+<p>1.输入：所有点<script type="math/tex">V</script>与边<script type="math/tex">E</script>集合组成的图<script type="math/tex">G</script>、window size <script type="math/tex">d</script> 、每一个点产生的<script type="math/tex">\gamma</script>条walks 、walk的长度<script type="math/tex">t</script></p>
 <p>输出：点的embedding<script type="math/tex">\Phi</script></p>
-</li>
-<li><p>初始化一个点的embedding矩阵<script type="math/tex">u^{|V|×d}</script>​​,建一颗二叉树（这个树是为后续的Hierarchical Softmax做准备，后面再来分析它）</p>
-</li>
-<li><p>训练开始：</p>
+<p>2.初始化一个点的embedding矩阵<script type="math/tex">u^{|V|×d}</script>​​,建一颗二叉树（这个树是为后续的Hierarchical Softmax做准备，后面再来分析它）</p>
+<p>3.训练开始：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(r):</span><br><span class="line">    O = shuffle(V) <span class="comment"># 打乱点，随机取一个点</span></span><br><span class="line">    <span class="keyword">for</span> v_i <span class="keyword">in</span> O:</span><br><span class="line">        W_vi = RandWalk(G, v_i, t) <span class="comment"># 随机游走产生一条路径walk</span></span><br><span class="line">        SkipGram(emb, W_vi, w)  <span class="comment"># 有路径后，采用word2vec的skip-gram进行训练</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
 <p>上面按它的算法步骤写的还是太费劲，<strong>总结起来， 就是先沿着图的边采出一条条walk，这条walk就相当于一个word2vec中的sequence序列，然后进行skip-gram滑窗采样，进行训练。</strong></p>
 <h3 id="3-DeepWalk-核心代码"><a href="#3-DeepWalk-核心代码" class="headerlink" title="3. DeepWalk 核心代码"></a>3. DeepWalk 核心代码</h3><h4 id="3-1-建图"><a href="#3-1-建图" class="headerlink" title="3.1 建图"></a>3.1 建图</h4><p>这里调用亚马逊的框架dgl来构建网络，把关系edge的src node 和dst node丢进去构建图网络。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> dgl</span><br><span class="line">edges=[src_nodes_list, dst_node_list]</span><br><span class="line">G = dgl.graph((torch.tensor(edges[<span class="number">0</span>]), torch.tensor(edges[<span class="number">1</span>])))</span><br></pre></td></tr></table></figure>
