@@ -6,25 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Graph-Learning：三言两语说清DeepWalk（论文解析、实战） | Hexo</title>
+  <title>进阶版游走图模型Node2Vec | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 引言 图学习模型主要有两类:1. 图游走类算法模型 2.图神经网络算法模型 DeepWalk在图算法里是一个比较经典的图学习模型，算是图模型里图游走模型的开山鼻祖了，虽然效果上跟现在的新模型是没法比了，但它的random walk+skip-gram训练思想绝对是具有重要的参考意义。另外DeepWalk模型简单、思路清晰，作为一个图学习入门学习的模型绝对是不二之选，以上也是现在各个文章都会提">
+  <meta name="description" content="1. 引言前面有介绍过deepwalk，它是一种基于DFS游走的Graph embedding模型。 游走图模型—同构图DeepWalk node2vec算是deepwalk的进阶版。模型训练原理与deepwalk差不多，但它通过调节边参数，融合DFS、BFS两种方式进行图游走，增加了游走的灵活性，进一步丰富了图表达。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Graph-Learning：三言两语说清DeepWalk（论文解析、实战）">
-<meta property="og:url" content="http://example.com/2021/07/27/%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/index.html">
+<meta property="og:title" content="进阶版游走图模型Node2Vec">
+<meta property="og:url" content="http://example.com/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 引言 图学习模型主要有两类:1. 图游走类算法模型 2.图神经网络算法模型 DeepWalk在图算法里是一个比较经典的图学习模型，算是图模型里图游走模型的开山鼻祖了，虽然效果上跟现在的新模型是没法比了，但它的random walk+skip-gram训练思想绝对是具有重要的参考意义。另外DeepWalk模型简单、思路清晰，作为一个图学习入门学习的模型绝对是不二之选，以上也是现在各个文章都会提">
+<meta property="og:description" content="1. 引言前面有介绍过deepwalk，它是一种基于DFS游走的Graph embedding模型。 游走图模型—同构图DeepWalk node2vec算是deepwalk的进阶版。模型训练原理与deepwalk差不多，但它通过调节边参数，融合DFS、BFS两种方式进行图游走，增加了游走的灵活性，进一步丰富了图表达。">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013607.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013603.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013606.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013605.png">
-<meta property="article:published_time" content="2021-07-27T14:21:11.000Z">
-<meta property="article:modified_time" content="2021-08-08T17:45:51.143Z">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210818000832.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210818000833.png">
+<meta property="article:published_time" content="2021-08-09T14:23:15.000Z">
+<meta property="article:modified_time" content="2021-08-17T16:09:56.324Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta property="article:tag" content="graph random-walk model">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013607.png">
+<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210818000832.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -162,20 +160,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-三言两语说清DeepWalk" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-【Graph-Learning】聊聊Node2Vec（论文解析、实践）" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Graph-Learning：三言两语说清DeepWalk（论文解析、实战）
+      进阶版游走图模型Node2Vec
     </h1>
   
 
         
-        <a href="/2021/07/27/%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/" class="archive-article-date">
-  	<time datetime="2021-07-27T14:21:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-27</time>
+        <a href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2021-08-09T14:23:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-09</time>
 </a>
         
 
@@ -193,56 +191,71 @@
     
     <!-- 目录内容 -->
     
+        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+        <span class="btn-bg"></span>
+        <span class="btn-text">文章导航</span>
+        </p>
+        <div id="toc-article" class="toc-article">
+            <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+            <strong class="toc-title">文章目录</strong>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A8%A1%E5%9E%8B%E4%BC%98%E5%8C%96%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">2. 模型优化目标函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%B7%AF%E5%BE%84-%E9%87%87%E6%A0%B7%E7%AD%96%E7%95%A5"><span class="toc-number">3.</span> <span class="toc-text">3. 路径 采样策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="toc-number">4.</span> <span class="toc-text">4.核心代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%BB%BB%E5%8A%A1"><span class="toc-number">5.</span> <span class="toc-text">5. 任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">6.总结</span></a></li></ol>
+       </div>
+       <script type="text/javascript">
+        function showToc(){
+            var toc_article = document.getElementById("toc-article");
+            var show_toc_btn = document.getElementById("show-toc-btn");
+            toc_article.setAttribute("style","display:block");
+            show_toc_btn.setAttribute("style","display:none");
+            };
+        function showBtn(){
+            var toc_article = document.getElementById("toc-article");
+            var show_toc_btn = document.getElementById("show-toc-btn");
+            toc_article.setAttribute("style","display:none");
+            show_toc_btn.setAttribute("style","display:block");
+            };
+       </script>
+    
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013607.png" style="zoom:100%;" /></p>
-<p>图学习模型主要有两类:1. 图游走类算法模型 2.图神经网络算法模型</p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1403.6652.pdf">DeepWalk</a>在图算法里是一个比较经典的图学习模型，算是图模型里图游走模型的开山鼻祖了，虽然效果上跟现在的新模型是没法比了，但它的random walk+skip-gram训练思想绝对是具有重要的参考意义。另外DeepWalk模型简单、思路清晰，作为一个图学习入门学习的模型绝对是不二之选，以上也是现在各个文章都会提及这个模型的重要原因了。<a id="more"></a></p>
-<h3 id="2-Rand-Walk-Skip-Gram"><a href="#2-Rand-Walk-Skip-Gram" class="headerlink" title="2. Rand-Walk + Skip-Gram"></a>2. Rand-Walk + Skip-Gram</h3><p>DeepWalk的图训练方式很简单，就是Rand-Walk + Skip-Gram，了解过word2vec的知道，word2vec也是这么训练语言模型的，而DeepWalk借鉴的就是这个思想。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013603.png" alt="deepwalk-algorithm" style="zoom:80%;" /></p>
-<p>DeepWalk的训练方式就在上面这张图了，短短几行，真是三言两语就概括了，这里尽量按它的顺序解释，以便于大家对照伪代码原汁原味的自我理解。</p>
-<p>1.输入：所有点<script type="math/tex">V</script>与边<script type="math/tex">E</script>集合组成的图<script type="math/tex">G</script>、window size <script type="math/tex">d</script> 、每一个点产生的<script type="math/tex">\gamma</script>条walks 、walk的长度<script type="math/tex">t</script></p>
-<p>输出：点的embedding<script type="math/tex">\Phi</script></p>
-<p>2.初始化一个点的embedding矩阵<script type="math/tex">u^{|V|×d}</script>​​,建一颗二叉树（这个树是为后续的Hierarchical Softmax做准备，后面再来分析它）</p>
-<p>3.训练开始：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(r):</span><br><span class="line">    O = shuffle(V) <span class="comment"># 打乱点，随机取一个点</span></span><br><span class="line">    <span class="keyword">for</span> v_i <span class="keyword">in</span> O:</span><br><span class="line">        W_vi = RandWalk(G, v_i, t) <span class="comment"># 随机游走产生一条路径walk</span></span><br><span class="line">        SkipGram(emb, W_vi, w)  <span class="comment"># 有路径后，采用word2vec的skip-gram进行训练</span></span><br></pre></td></tr></table></figure>
-<p>上面按它的算法步骤写的还是太费劲，<strong>总结起来， 就是先沿着图的边采出一条条walk，这条walk就相当于一个word2vec中的sequence序列，然后进行skip-gram滑窗采样，进行训练。</strong></p>
-<h3 id="3-DeepWalk-核心代码"><a href="#3-DeepWalk-核心代码" class="headerlink" title="3. DeepWalk 核心代码"></a>3. DeepWalk 核心代码</h3><h4 id="3-1-建图"><a href="#3-1-建图" class="headerlink" title="3.1 建图"></a>3.1 建图</h4><p>这里调用亚马逊的框架dgl来构建网络，把关系edge的src node 和dst node丢进去构建图网络。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> dgl</span><br><span class="line">edges=[src_nodes_list, dst_node_list]</span><br><span class="line">G = dgl.graph((torch.tensor(edges[<span class="number">0</span>]), torch.tensor(edges[<span class="number">1</span>])))</span><br></pre></td></tr></table></figure>
-<h3 id="3-2-采路径-random-walk-sample"><a href="#3-2-采路径-random-walk-sample" class="headerlink" title="3.2 采路径-random_walk sample"></a>3.2 采路径-random_walk sample</h3><p>graph就是上面建的图网络，seed_nodes为路径的起点node，walk_length表示路径走多长。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sample_walks</span>(<span class="params">self, graph, seed_nodes, walk_length</span>):</span></span><br><span class="line">    walks = dgl.sampling.random_walk(graph, seed_nodes, length=walk_length)</span><br><span class="line">    <span class="keyword">return</span> walks</span><br></pre></td></tr></table></figure>
-<h4 id="3-3-skip-gram，滑动窗口采pair"><a href="#3-3-skip-gram，滑动窗口采pair" class="headerlink" title="3.3 skip-gram，滑动窗口采pair"></a>3.3 skip-gram，滑动窗口采pair</h4><p>采出路径后，接下来就得根据skip-gram方法采出用来训练的node pair了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">skip_gram_gen_pairs</span>(<span class="params">self, walk, half_win_size=<span class="number">2</span></span>):</span></span><br><span class="line">    src, dst = list(), list()</span><br><span class="line"></span><br><span class="line">    l = len(walk)</span><br><span class="line">    <span class="comment"># rnd = np.random.randint(1,  half_win_size+1, dtype=np.int64, size=l)</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(l):</span><br><span class="line">        real_win_size = half_win_size</span><br><span class="line">        left = i - real_win_size</span><br><span class="line">        <span class="keyword">if</span> left &lt; <span class="number">0</span>:</span><br><span class="line">            left = <span class="number">0</span></span><br><span class="line">            right = i + real_win_size</span><br><span class="line">            <span class="keyword">if</span> right &gt;= l:</span><br><span class="line">                right = l - <span class="number">1</span></span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> range(left, right + <span class="number">1</span>):</span><br><span class="line">                    <span class="keyword">if</span> walk[i] == walk[j]:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                        src.append(walk[i])</span><br><span class="line">                        dst.append(walk[j])</span><br><span class="line">                        <span class="keyword">return</span> src, dst</span><br></pre></td></tr></table></figure>
-<h4 id="3-4-skip-gram模型训练"><a href="#3-4-skip-gram模型训练" class="headerlink" title="3.4 skip-gram模型训练"></a>3.4 skip-gram模型训练</h4><p>模型方面比较简单，加了一个negative sample 部分，即与src点没有关系的node作为负样本，loss由两部分组成，pos loss 与 neg loss。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SkipGramModel</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, num_nodes, embed_dim</span>):</span></span><br><span class="line">        super(SkipGramModel, self).__init__()</span><br><span class="line">        self.num_nodes = num_nodes</span><br><span class="line">        self.emb_dimension = embed_dim</span><br><span class="line"></span><br><span class="line">        self.embed_nodes = nn.Embedding(self.num_nodes, self.emb_dimension, sparse=<span class="literal">True</span>)</span><br><span class="line">        nn.init.xavier_uniform_(self.embed_nodes.weight)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, src, pos, neg</span>):</span></span><br><span class="line">        embed_src = self.embed_nodes(src)  <span class="comment"># (B, d)</span></span><br><span class="line">        embed_pos = self.embed_nodes(pos)  <span class="comment"># (B, d)</span></span><br><span class="line">        embed_neg = self.embed_nodes(neg)  <span class="comment"># (B, neg_num, d)</span></span><br><span class="line"></span><br><span class="line">        pos_socre = torch.sum(torch.matmul(embed_src, embed_pos.transpose(<span class="number">0</span>, <span class="number">1</span>)), <span class="number">1</span>)</span><br><span class="line">        pos_socre = -F.logsigmoid(pos_socre)</span><br><span class="line"></span><br><span class="line">        neg_socre = torch.sum(torch.matmul(embed_src, embed_neg.transpose(<span class="number">1</span>, <span class="number">2</span>)), (<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line">        neg_socre = -F.logsigmoid(-neg_socre)</span><br><span class="line"></span><br><span class="line">        loss = torch.mean(pos_socre + neg_socre)</span><br><span class="line">        <span class="keyword">return</span> loss</span><br></pre></td></tr></table></figure>
-<p><strong>具体的可以看看完整代码，持续更新、码字不易、欢迎点赞、转载、交流学习。</strong></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Graph-Learning">Graph-Learning-DeepwalkCode-Github</a></p>
-<p>到这里，deepwalk的原理就讲完了，很简单也很清晰，下面说点不一样的</p>
-<h3 id="4-为什么skip-gram有效？"><a href="#4-为什么skip-gram有效？" class="headerlink" title="4.  为什么skip-gram有效？"></a>4.  为什么skip-gram有效？</h3><p>作为游走类图模型的开山鼻祖，deepwalk怎么想到了引入skip-gram的方法来训练图模型的？了</p>
-<p> 文中提到图结构中采样出来random walks的vertex分布与文本sequence中的word分布极其相似，都符合幂律分布，因此可以按照学习文本表达的方式（如word2vec）来训练图的网络结构。</p>
-<p>简单说一下什么是幂律分布，也就是常说的二八原则，如20%的人口拥有80%的财富。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013606.png" style="zoom:80%;" /></p>
-<p> 文中提到图结构中采样出来random walks的vertex分布与文本sequence中的word分布极其相似，都符合幂律分布，因此可以按照学习文本表达的方式（如word2vec）来训练图的网络结构。</p>
-<p>简单说一下什么是幂律分布，也就是常说的二八原则，如20%的人口拥有80%的财富。</p>
-<ul>
-<li><p>幂律（power laws）：<script type="math/tex">y=ax^{-k}</script></p>
-</li>
-<li><p>上式两边取对数，变形一下：<script type="math/tex">lny=lna - klnx</script></p>
-</li>
-<li><script type="math/tex">y替换lny，x替换lnx, b替换lna 得y=b-x</script>，这个函数的图像画出来是不是就是上面这个图画的形状了。</li>
-</ul>
-<h3 id="5-Hierarchical-Softmax"><a href="#5-Hierarchical-Softmax" class="headerlink" title="5. Hierarchical  Softmax"></a>5. Hierarchical  Softmax</h3><p>skip-gram 目标函数：<script type="math/tex">max(P(vi|Φ(v1),Φ(v2),···,Φ(vi−1))</script></p>
-<p>由skip-gram滑窗采样出邻居节点形成不同的邻居pair<script type="math/tex">(x_k, x_{k+1})</script>​, 最大化<script type="math/tex">p(x_{k+1}|x_k)</script>​。</p>
-<p>但是用softmax转化为probability预测下一个是哪个词，而当词汇表即点数量<script type="math/tex">|V|</script>​​比较大时，计算所有词的概率（相当于做<script type="math/tex">|V|</script>​​次二分类）,这样代价太大且效率极低，于是引入Hierarchical  Softmax。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013605.png" style="zoom:80%;" /></p>
-<p>建立一颗由点构成的Huffman树，这样就变成只用做<script type="math/tex">log|V|</script>​​次二分类，如上图，假设采出的source点为v1，skip-gram采出的邻居节点为v3、v5，则使用 Hierarchical Softmax去计算P(v3 | Φ(v1))以及P(v5 | Φ(v1))，通过maximize 这个概率，去更新embeddingΦ(v1)、Φ(v3)、Φ(v5)。</p>
-<p>用公式表达上述Hierarchical  Softmax：<script type="math/tex">P(u_k|\Phi(v_j)) = \prod_{l=1}^{log|V|}P(b_l|\Phi(v_j))|</script></p>
-<p>若是当<script type="math/tex">|V|</script>​​​​​比较大时，这样就减少了运算极大提高了效率。</p>
-<h3 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h3><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1403.6652.pdf">DeepWalk</a>是一个旧却经典的Graph Learning模型，是在2014年提出的，因为DeepWalk开创了图游走类型模型的先河，算是图模型里图游走模型的鼻祖了，它的random-walk path采样以及skip-gram的这种模型训练思想直到现在许多的游走类图模型（node2vec、metapath2vec、GATNE等）还能看到影子。DeepWalk模型简单、思路清晰、学习极具性价比，绝对值得一看。</p>
-<p><strong>本栏目持续更新、码字不易、欢迎点赞、转载、交流学习</strong></p>
-<h3 id="系列其他相关文章"><a href="#系列其他相关文章" class="headerlink" title="系列其他相关文章"></a>系列其他相关文章</h3><p><a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Graph-Learning">Graph-Learning-DeepwalkCode-Github</a></p>
-<p><a target="_blank" rel="noopener" href="https://shuxinyin.github.io/2021/07/17/%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/">异构图模型—GATNE</a></p>
+        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>前面有介绍过deepwalk，它是一种基于DFS游走的Graph embedding模型。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/397710211">游走图模型—同构图DeepWalk</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1607.00653">node2vec</a>算是deepwalk的进阶版。模型训练原理与deepwalk差不多，但它通过调节边参数，融合DFS、BFS两种方式进行图游走，增加了游走的灵活性，进一步丰富了图表达。<a id="more"></a></p>
+<h3 id="2-模型优化目标函数"><a href="#2-模型优化目标函数" class="headerlink" title="2. 模型优化目标函数"></a>2. 模型优化目标函数</h3><p>node2vec的目标函数：<script type="math/tex">max\sum_{u∈V}[{-logZ_u}  + \sum_{n_i∈N_iS (u)} f(ni)·f(u)]</script>​​</p>
+<p>其中，u为中心点，<script type="math/tex">n_i</script>为邻居点， <script type="math/tex">Z_u=\sum_{v∈V}exp(f(u)*f(v))</script>, v为非邻居点，这个目标函数由两部分构成，min(非邻居点乘积) + max(邻居点乘积)，与deepwalk一样，都是基于skip-gram的方法进行此目标函数的优化。</p>
+<h3 id="3-路径-采样策略"><a href="#3-路径-采样策略" class="headerlink" title="3. 路径 采样策略"></a>3. 路径 采样策略</h3><p>目标函数确定了，skip-gram的训练策略确定了，那就剩下路径采样（walks sample）没解决了。</p>
+<p>deepwalk里就是直接沿着边关系进行路径采用，这种方式很直观，但太简单，它只是体现了点与点之间是存在关系的，没有体现图的结构性质，比如两个非邻居点在图里各自都有 三个邻居点。</p>
+<p>node2vec综合了BFS、DFS图遍历算法，将其融合起来，采用赋予边一些权重参数来控制沿着哪条边行进，从而完成路径采样。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210818000832.png" style="zoom:80%;" /></p>
+<p>node2vec边的权重定义<script type="math/tex">\pi_{vx}=\alpha_{pq}(t, x)*w_{vx}</script>，由两部分组成,<script type="math/tex">w_{vx}</script>为边本身的权重大小（无边权重的<script type="math/tex">w_{vx}</script>=1）,<script type="math/tex">\alpha_{pq}(t,x)</script>为控制BFS/DFS 采路径模式的权重， 具体定义：</p>
+<script type="math/tex; mode=display">
+\begin{gather*}α_{pq}(t, x) =\left\{
+\begin{matrix}
+1/p,d_{tx} = 0\\
+1, d_{tx} = 1 \\
+1/q,d_{tx} = 2
+\end{matrix}
+\right.\end{gather*}</script><p>结合这个公式与上面那张图，看看是怎么来通过调节p、q来实现控制BFS/DFS的。</p>
+<p><strong><script type="math/tex">d_{tx}</script>​表示的是点t到点x的距离。举个例子，假设当前点节为v，v的上一个点为t（由t-v，当前在v），下一步走去下个点为x，<script type="math/tex">d_{tx}</script>​​表示的就是点t到点x的距离。（有点绕，但对理解这个图与这个公式很重要）</strong>。展开一下（看图并结合文）</p>
+<ol>
+<li>当x为t时， 说明下一步访问t,  此时<script type="math/tex">d_{tx}=d_{tt}=0</script>，这条边的路径模式权重<script type="math/tex">α_{pq}(t, x)=1/p</script></li>
+<li>当x为x1时，说明下一步访问x1, 此时<script type="math/tex">d_{tx}=d_{tx1}=1， α_{pq}(t, x)=1</script></li>
+<li>当x为x2或x3时，说明下一步访问x2或x3, 此时<script type="math/tex">d_{tx}=d_{tx2}=d_{tx2}=3, α_{pq}(t, x)=1/q</script></li>
+</ol>
+<p>这样的定义下，可以发现，<strong>参数p叫做return-parameter p，控制重复访问的概率，也就是继续回到上一点的概率，p越大，则回到上一个点的几率就小。参数q叫做In-out parameter，控制着向外还是向内，即BFS/DFS游走模式的权重，q&gt;1,倾向于访问与t接近的点（如x1，偏向于BFS），q&lt;1,倾向于访问远离t的顶点（如x2、x3,偏向于DFS）。</strong></p>
+<p>以上就是node2vec的路径采样模式。采出序列后，把序列丢尽skip-gram训练，模型就完成了。</p>
+<h3 id="4-核心代码"><a href="#4-核心代码" class="headerlink" title="4.核心代码"></a>4.核心代码</h3><p>在代码实现上，主要的难点就是得计算出当前点到下一点的各个概率，也就是上文涉及的p、q。因此，代码需要记录这几个信息：1.当前点的子节点。2.当前点的前一个父节点。3.当前点的父节点的所有子节点。</p>
+<p>可以在外层记录以上信息，然后传上述三个信息进去，单独用一个函数去计算各边的概率，从而选出下一个点。</p>
+<p>外层的伪代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">node2vec_walk</span>(<span class="params">graph, nodes, max_depth, p, q</span>):</span></span><br><span class="line">    <span class="comment"># 初始化 walks的起点为nodes</span></span><br><span class="line">    初始化: walks, succ = nodes, graph.succssor(nodes)</span><br><span class="line">         	prev_succ, prev_node = [<span class="number">-1</span>], [<span class="number">-1</span>]</span><br><span class="line">    <span class="keyword">for</span> l <span class="keyword">in</span> range(max_depth):</span><br><span class="line">        <span class="comment"># node2vec_sample 选出下一个点的函数</span></span><br><span class="line">        sampled_succ = node2vec_sample(succ, prev_succ, prev_node, p, q)</span><br><span class="line">        walks.append(sampled_succ)</span><br><span class="line">        prev_nodes, prev_succs = cur_nodes, cur_succs</span><br><span class="line">        cur_nodes = sampled_succ</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> walks</span><br></pre></td></tr></table></figure>
+<p>内层的计算各边概率p，q，选出下一个点的函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">node2vec_sample</span>(<span class="params">succ, prev_succ, prev_node, p, q</span>):</span></span><br><span class="line">    succ_len = len(succ)</span><br><span class="line">    prev_succ_len = len(prev_succ)</span><br><span class="line"></span><br><span class="line">    probs = list()</span><br><span class="line">    prob_sum = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    prev_succ_set = list()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(prev_succ_len):</span><br><span class="line">        prev_succ_set.insert(<span class="number">0</span>, prev_succ[i])</span><br><span class="line">	<span class="comment"># 计算node2vec的各边权重</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(succ_len):</span><br><span class="line">        <span class="keyword">if</span> succ[i] == prev_node:</span><br><span class="line">            prob = <span class="number">1.</span> / p</span><br><span class="line">        <span class="keyword">elif</span> len(prev_succ_set) &gt; <span class="number">0</span> <span class="keyword">and</span> succ[i] != prev_succ_set[<span class="number">-1</span>]:</span><br><span class="line">            prob = <span class="number">1.</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            prob = <span class="number">1.</span> / q</span><br><span class="line">        probs.append(prob)</span><br><span class="line">        prob_sum += prob</span><br><span class="line"></span><br><span class="line">    rand_num = random.uniform(<span class="number">0</span>, <span class="number">1</span>) * prob_sum</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(succ_len):</span><br><span class="line">        rand_num -= probs[i]</span><br><span class="line">        <span class="keyword">if</span> rand_num &lt;= <span class="number">0</span>:</span><br><span class="line">            sample_succ = succ[i]</span><br><span class="line">            <span class="keyword">return</span> sample_succ</span><br></pre></td></tr></table></figure>
+<p>具体代码细节可以看这里</p>
+<p>​    <a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Graph-Learning">Github-Node2vec</a></p>
+<h3 id="5-任务"><a href="#5-任务" class="headerlink" title="5. 任务"></a>5. 任务</h3><p>node2vec主要是做了两种任务，1. node classification 2. link prediction</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210818000833.png" alt=""></p>
+<p>结果这里就没啥好说的，肯定是好了。文中采用网格搜参 p, q ∈ {0.25, 0.50, 1, 2, 4}，做出的结果在上述两个任务上比deepwalk与node2vec要有更好的表现。</p>
+<h3 id="6-总结"><a href="#6-总结" class="headerlink" title="6.总结"></a>6.总结</h3><p>node2vec在原来deepwalk的基础上，增加路径采样的多样性，进一步的挖掘出更多的图结构的信息，同质性、同构性），有效改善了graph embedding的结果。node2vec主要研究的还是同构图，即不区分点与边的类型，现实中还是多以异构图为主，但异构图也可以按边拆解成同构图进行研究，node2vec这种方式为研究图的结构提供了很大的参考意义。</p>
 
       
 
@@ -354,7 +367,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/27/%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -369,8 +382,8 @@
 <nav id="article-nav">
   
   
-    <a href="/2021/07/20/Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Transformer大白话详解</div>
+    <a href="/2021/07/27/%E3%80%90Graph-Learning%E3%80%91%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Graph-Learning：三言两语说清DeepWalk（论文解析、实战）</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -397,7 +410,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Rand-Walk-Skip-Gram"><span class="toc-number">2.</span> <span class="toc-text">2. Rand-Walk + Skip-Gram</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-DeepWalk-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">3. DeepWalk 核心代码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E5%BB%BA%E5%9B%BE"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 建图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E9%87%87%E8%B7%AF%E5%BE%84-random-walk-sample"><span class="toc-number">4.</span> <span class="toc-text">3.2 采路径-random_walk sample</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-skip-gram%EF%BC%8C%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E9%87%87pair"><span class="toc-number">4.1.</span> <span class="toc-text">3.3 skip-gram，滑动窗口采pair</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-skip-gram%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="toc-number">4.2.</span> <span class="toc-text">3.4 skip-gram模型训练</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%B8%BA%E4%BB%80%E4%B9%88skip-gram%E6%9C%89%E6%95%88%EF%BC%9F"><span class="toc-number">5.</span> <span class="toc-text">4.  为什么skip-gram有效？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Hierarchical-Softmax"><span class="toc-number">6.</span> <span class="toc-text">5. Hierarchical  Softmax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-number">7.</span> <span class="toc-text">6. 总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E5%88%97%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0"><span class="toc-number">8.</span> <span class="toc-text">系列其他相关文章</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A8%A1%E5%9E%8B%E4%BC%98%E5%8C%96%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">2. 模型优化目标函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%B7%AF%E5%BE%84-%E9%87%87%E6%A0%B7%E7%AD%96%E7%95%A5"><span class="toc-number">3.</span> <span class="toc-text">3. 路径 采样策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="toc-number">4.</span> <span class="toc-text">4.核心代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E4%BB%BB%E5%8A%A1"><span class="toc-number">5.</span> <span class="toc-text">5. 任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">6.总结</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -546,11 +559,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">CNN</a>
+                <a href="javascript:void(0)" class="js-tag color5">Java</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">Java</a>
+                <a href="javascript:void(0)" class="js-tag color4">CNN</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -570,11 +583,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
+                <a href="javascript:void(0)" class="js-tag color4">graph random-walk model</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">graph random-walk model</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">

@@ -6,23 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>TextCNN实践-文本分类利器.md | Hexo</title>
+  <title>Graph-Learning：三言两语说清DeepWalk（论文解析、实战） | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="引言说到文本分类，目前最通用最有效的方法就是通过bert预训练模型，后接一个简单的下游分类任务。但bert模型，模型参数大，训练时间长，推理时间长，应用上不方便。而textCNN相对于bert，参数少，训练快，模型结构简单，在文本分类上表现也不差，值得一看。">
+  <meta name="description" content="1. 引言 图学习模型主要有两类:1. 图游走类算法模型 2.图神经网络算法模型 DeepWalk在图算法里是一个比较经典的图学习模型，算是图模型里图游走模型的开山鼻祖了，虽然效果上跟现在的新模型是没法比了，但它的random walk+skip-gram训练思想绝对是具有重要的参考意义。另外DeepWalk模型简单、思路清晰，作为一个图学习入门学习的模型绝对是不二之选，以上也是现在各个文章都会提">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TextCNN实践-文本分类利器.md">
-<meta property="og:url" content="http://example.com/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/index.html">
+<meta property="og:title" content="Graph-Learning：三言两语说清DeepWalk（论文解析、实战）">
+<meta property="og:url" content="http://example.com/2021/07/27/%E3%80%90Graph-Learning%E3%80%91%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="引言说到文本分类，目前最通用最有效的方法就是通过bert预训练模型，后接一个简单的下游分类任务。但bert模型，模型参数大，训练时间长，推理时间长，应用上不方便。而textCNN相对于bert，参数少，训练快，模型结构简单，在文本分类上表现也不差，值得一看。">
+<meta property="og:description" content="1. 引言 图学习模型主要有两类:1. 图游走类算法模型 2.图神经网络算法模型 DeepWalk在图算法里是一个比较经典的图学习模型，算是图模型里图游走模型的开山鼻祖了，虽然效果上跟现在的新模型是没法比了，但它的random walk+skip-gram训练思想绝对是具有重要的参考意义。另外DeepWalk模型简单、思路清晰，作为一个图学习入门学习的模型绝对是不二之选，以上也是现在各个文章都会提">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232433.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232435.png">
-<meta property="article:published_time" content="2021-07-04T03:32:50.000Z">
-<meta property="article:modified_time" content="2021-07-04T15:34:09.875Z">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013607.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013603.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013606.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013605.png">
+<meta property="article:published_time" content="2021-07-27T14:21:11.000Z">
+<meta property="article:modified_time" content="2021-08-10T13:58:30.853Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
-<meta property="article:tag" content="CNN">
+<meta property="article:tag" content="graph random-walk model">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232433.png">
+<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013607.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -160,20 +162,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-TextCNN-文本分类利器" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-【Graph-Learning】三言两语说清DeepWalk" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      TextCNN实践-文本分类利器.md
+      Graph-Learning：三言两语说清DeepWalk（论文解析、实战）
     </h1>
   
 
         
-        <a href="/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2021-07-04T03:32:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-04</time>
+        <a href="/2021/07/27/%E3%80%90Graph-Learning%E3%80%91%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/" class="archive-article-date">
+  	<time datetime="2021-07-27T14:21:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-27</time>
 </a>
         
 
@@ -198,7 +200,7 @@
         <div id="toc-article" class="toc-article">
             <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
             <strong class="toc-title">文章目录</strong>
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TextCNN%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">TextCNN结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%AD%E4%B8%80%E4%B8%AATextCNN"><span class="toc-number">3.</span> <span class="toc-text">搭一个TextCNN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">思考总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">参考：</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Rand-Walk-Skip-Gram"><span class="toc-number">2.</span> <span class="toc-text">2. Rand-Walk + Skip-Gram</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-DeepWalk-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">3. DeepWalk 核心代码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E5%BB%BA%E5%9B%BE"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 建图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E9%87%87%E8%B7%AF%E5%BE%84-random-walk-sample"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 采路径-random_walk sample</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-skip-gram%EF%BC%8C%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E9%87%87pair"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 skip-gram，滑动窗口采pair</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-skip-gram%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 skip-gram模型训练</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%B8%BA%E4%BB%80%E4%B9%88skip-gram%E6%9C%89%E6%95%88%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">4.  为什么skip-gram有效？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Hierarchical-Softmax"><span class="toc-number">5.</span> <span class="toc-text">5. Hierarchical  Softmax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">6. 总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E5%88%97%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0"><span class="toc-number">7.</span> <span class="toc-text">系列其他相关文章</span></a></li></ol>
        </div>
        <script type="text/javascript">
         function showToc(){
@@ -218,42 +220,53 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>说到文本分类，目前最通用最有效的方法就是通过bert预训练模型，后接一个简单的下游分类任务。但bert模型，模型参数大，训练时间长，推理时间长，应用上不方便。而textCNN相对于bert，参数少，训练快，模型结构简单，在文本分类上表现也不差，值得一看。<a id="more"></a></p>
-<h3 id="TextCNN结构"><a href="#TextCNN结构" class="headerlink" title="TextCNN结构"></a>TextCNN结构</h3><p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232433.png" alt="textCNN_explicit"></p>
-<p>TextCNN的结构图，很简洁，就是一个CNN结构。上图是以2个channel举例，即每个sentence模板是双层的，每个channel上做的是一样的事。与CNN一样，就是输入的sentence（num_words*dim），通过不同的卷积核运算（此处卷积核只做竖向移动卷积），然后做max-pooling，最后通过flatten拉直，进行分类。</p>
-<p>但也有几点需要注意。</p>
-<ol>
-<li><p>输入：一个sentence（num_words*dim）,复制成n个channels，可看作一个n通道的image。</p>
+        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013607.png" style="zoom:100%;" /></p>
+<p>图学习模型主要有两类:1. 图游走类算法模型 2.图神经网络算法模型</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1403.6652.pdf">DeepWalk</a>在图算法里是一个比较经典的图学习模型，算是图模型里图游走模型的开山鼻祖了，虽然效果上跟现在的新模型是没法比了，但它的random walk+skip-gram训练思想绝对是具有重要的参考意义。另外DeepWalk模型简单、思路清晰，作为一个图学习入门学习的模型绝对是不二之选，以上也是现在各个文章都会提及这个模型的重要原因了。<a id="more"></a></p>
+<h3 id="2-Rand-Walk-Skip-Gram"><a href="#2-Rand-Walk-Skip-Gram" class="headerlink" title="2. Rand-Walk + Skip-Gram"></a>2. Rand-Walk + Skip-Gram</h3><p>DeepWalk的图训练方式很简单，就是Rand-Walk + Skip-Gram，了解过word2vec的知道，word2vec也是这么训练语言模型的，而DeepWalk借鉴的就是这个思想。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013603.png" alt="deepwalk-algorithm" style="zoom:80%;" /></p>
+<p>DeepWalk的训练方式就在上面这张图了，短短几行，真是三言两语就概括了，这里尽量按它的顺序解释，以便于大家对照伪代码原汁原味的自我理解。</p>
+<p>1.输入：所有点<script type="math/tex">V</script>与边<script type="math/tex">E</script>集合组成的图<script type="math/tex">G</script>、window size <script type="math/tex">d</script> 、每一个点产生的<script type="math/tex">\gamma</script>条walks 、walk的长度<script type="math/tex">t</script></p>
+<p>输出：点的embedding<script type="math/tex">\Phi</script></p>
+<p>2.初始化一个点的embedding矩阵<script type="math/tex">u^{|V|×d}</script>​​,建一颗二叉树（这个树是为后续的Hierarchical Softmax做准备，后面再来分析它）</p>
+<p>3.训练开始：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(r):</span><br><span class="line">    O = shuffle(V) <span class="comment"># 打乱点，随机取一个点</span></span><br><span class="line">    <span class="keyword">for</span> v_i <span class="keyword">in</span> O:</span><br><span class="line">        W_vi = RandWalk(G, v_i, t) <span class="comment"># 随机游走产生一条路径walk</span></span><br><span class="line">        SkipGram(emb, W_vi, w)  <span class="comment"># 有路径后，采用word2vec的skip-gram进行训练</span></span><br></pre></td></tr></table></figure>
+<p>上面按它的算法步骤写的还是太费劲，<strong>总结起来， 就是先沿着图的边采出一条条walk，这条walk就相当于一个word2vec中的sequence序列，然后进行skip-gram滑窗采样，进行训练。</strong></p>
+<h3 id="3-DeepWalk-核心代码"><a href="#3-DeepWalk-核心代码" class="headerlink" title="3. DeepWalk 核心代码"></a>3. DeepWalk 核心代码</h3><h4 id="3-1-建图"><a href="#3-1-建图" class="headerlink" title="3.1 建图"></a>3.1 建图</h4><p>这里调用亚马逊的框架dgl来构建网络，把关系edge的src node 和dst node丢进去构建图网络。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> dgl</span><br><span class="line">edges=[src_nodes_list, dst_node_list]</span><br><span class="line">G = dgl.graph((torch.tensor(edges[<span class="number">0</span>]), torch.tensor(edges[<span class="number">1</span>])))</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-采路径-random-walk-sample"><a href="#3-2-采路径-random-walk-sample" class="headerlink" title="3.2 采路径-random_walk sample"></a>3.2 采路径-random_walk sample</h4><p>graph就是上面建的图网络，seed_nodes为路径的起点node，walk_length表示路径走多长。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sample_walks</span>(<span class="params">self, graph, seed_nodes, walk_length</span>):</span></span><br><span class="line">    walks = dgl.sampling.random_walk(graph, seed_nodes, length=walk_length)</span><br><span class="line">    <span class="keyword">return</span> walks</span><br></pre></td></tr></table></figure>
+<h4 id="3-3-skip-gram，滑动窗口采pair"><a href="#3-3-skip-gram，滑动窗口采pair" class="headerlink" title="3.3 skip-gram，滑动窗口采pair"></a>3.3 skip-gram，滑动窗口采pair</h4><p>采出路径后，接下来就得根据skip-gram方法采出用来训练的node pair了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">skip_gram_gen_pairs</span>(<span class="params">self, walk, half_win_size=<span class="number">2</span></span>):</span></span><br><span class="line">    src, dst = list(), list()</span><br><span class="line"></span><br><span class="line">    l = len(walk)</span><br><span class="line">    <span class="comment"># rnd = np.random.randint(1,  half_win_size+1, dtype=np.int64, size=l)</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(l):</span><br><span class="line">        real_win_size = half_win_size</span><br><span class="line">        left = i - real_win_size</span><br><span class="line">        <span class="keyword">if</span> left &lt; <span class="number">0</span>:</span><br><span class="line">            left = <span class="number">0</span></span><br><span class="line">            right = i + real_win_size</span><br><span class="line">            <span class="keyword">if</span> right &gt;= l:</span><br><span class="line">                right = l - <span class="number">1</span></span><br><span class="line">                <span class="keyword">for</span> j <span class="keyword">in</span> range(left, right + <span class="number">1</span>):</span><br><span class="line">                    <span class="keyword">if</span> walk[i] == walk[j]:</span><br><span class="line">                        <span class="keyword">continue</span></span><br><span class="line">                        src.append(walk[i])</span><br><span class="line">                        dst.append(walk[j])</span><br><span class="line">                        <span class="keyword">return</span> src, dst</span><br></pre></td></tr></table></figure>
+<h4 id="3-4-skip-gram模型训练"><a href="#3-4-skip-gram模型训练" class="headerlink" title="3.4 skip-gram模型训练"></a>3.4 skip-gram模型训练</h4><p>模型方面比较简单，加了一个negative sample 部分，即与src点没有关系的node作为负样本，loss由两部分组成，pos loss 与 neg loss。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SkipGramModel</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, num_nodes, embed_dim</span>):</span></span><br><span class="line">        super(SkipGramModel, self).__init__()</span><br><span class="line">        self.num_nodes = num_nodes</span><br><span class="line">        self.emb_dimension = embed_dim</span><br><span class="line"></span><br><span class="line">        self.embed_nodes = nn.Embedding(self.num_nodes, self.emb_dimension, sparse=<span class="literal">True</span>)</span><br><span class="line">        nn.init.xavier_uniform_(self.embed_nodes.weight)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, src, pos, neg</span>):</span></span><br><span class="line">        embed_src = self.embed_nodes(src)  <span class="comment"># (B, d)</span></span><br><span class="line">        embed_pos = self.embed_nodes(pos)  <span class="comment"># (B, d)</span></span><br><span class="line">        embed_neg = self.embed_nodes(neg)  <span class="comment"># (B, neg_num, d)</span></span><br><span class="line"></span><br><span class="line">        pos_socre = torch.sum(torch.matmul(embed_src, embed_pos.transpose(<span class="number">0</span>, <span class="number">1</span>)), <span class="number">1</span>)</span><br><span class="line">        pos_socre = -F.logsigmoid(pos_socre)</span><br><span class="line"></span><br><span class="line">        neg_socre = torch.sum(torch.matmul(embed_src, embed_neg.transpose(<span class="number">1</span>, <span class="number">2</span>)), (<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line">        neg_socre = -F.logsigmoid(-neg_socre)</span><br><span class="line">        </span><br><span class="line">        loss = torch.mean(pos_socre + neg_socre)</span><br><span class="line">        <span class="keyword">return</span> loss</span><br></pre></td></tr></table></figure>
+<p><strong>具体的可以看看完整代码，持续更新、码字不易、欢迎点赞、转载、交流学习。</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Graph-Learning">Graph-Learning-DeepwalkCode-Github</a></p>
+<p>到这里，deepwalk的原理就讲完了，很简单也很清晰，下面说点不一样的</p>
+<h3 id="4-为什么skip-gram有效？"><a href="#4-为什么skip-gram有效？" class="headerlink" title="4.  为什么skip-gram有效？"></a>4.  为什么skip-gram有效？</h3><p>作为游走类图模型的开山鼻祖，deepwalk怎么想到了引入skip-gram的方法来训练图模型的？了</p>
+<p> 文中提到图结构中采样出来random walks的vertex分布与文本sequence中的word分布极其相似，都符合幂律分布，因此可以按照学习文本表达的方式（如word2vec）来训练图的网络结构。</p>
+<p>简单说一下什么是幂律分布，也就是常说的二八原则，如20%的人口拥有80%的财富。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013606.png" style="zoom:80%;" /></p>
+<p> 文中提到图结构中采样出来random walks的vertex分布与文本sequence中的word分布极其相似，都符合幂律分布，因此可以按照学习文本表达的方式（如word2vec）来训练图的网络结构。</p>
+<p>简单说一下什么是幂律分布，也就是常说的二八原则，如20%的人口拥有80%的财富。</p>
+<ul>
+<li><p>幂律（power laws）：<script type="math/tex">y=ax^{-k}</script></p>
 </li>
-<li><p>卷积核kernel（length*width）：textCNN的卷积核length可以不规定，可以取2，3，4等等，就好比N-gram的滑动窗口大小N。但width应该是跟输入dim保持一致，因为不可能把一个字的embedding割裂开，这样没有意义。</p>
+<li><p>上式两边取对数，变形一下：<script type="math/tex">lny=lna - klnx</script></p>
 </li>
-<li><p>max-pooling取的是每一个feature-map中单独向量的最大值，如下图。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232435.png" alt="textCNN_program"></p>
-</li>
-<li><p>最后，通过flatten合并max-pooling后的所有值，这与图像卷积一致，然后经过linear层输出，达到分类的目的。</p>
-</li>
-</ol>
-<h3 id="搭一个TextCNN"><a href="#搭一个TextCNN" class="headerlink" title="搭一个TextCNN"></a>搭一个TextCNN</h3><ol>
-<li>首先定义一些模型参数。看完上面这个结构，大概的参数有卷积核数（num_kernels）、kernel_size（其中width与出入dim一致）、如果有预训练embedding的就载入，没有就随机初始化。如下，基本的网络参数就这些</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNNClassifier</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, params</span>):</span></span><br><span class="line">        super(CNNClassifier, self).__init__()</span><br><span class="line"></span><br><span class="line">        self.num_kernels = params.num_kernels</span><br><span class="line">        self.kernel_size = params.kernel_size</span><br><span class="line">        self.num_class = params.num_class</span><br><span class="line">        self.stride = params.stride</span><br><span class="line">        <span class="comment"># input: (B, 512, 312)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> params.pretrained_weight:</span><br><span class="line">            word_model_emb = np.load(params.pretrained_weight_path)</span><br><span class="line">            weights = torch.tensor(word_model_emb)</span><br><span class="line">            self.emb = nn.Embedding.from_pretrained(weights)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.emb = nn.Embedding(params.vocab_size, params.embedding_dim, padding_idx=params.padding_index)</span><br></pre></td></tr></table></figure>
-<ol>
-<li><p>下面就开始搭建网络。(接着上面的init)。定义三个卷积。分别kernel_size为2，3，4。</p>
-<p>max-pooling就放到forward里。为什么要接maxpooling，这里值得思考一下，论文中说是因为输入句子长度不一定，经过卷积之后长度不一定， 导致后linear层不固定，不便于训练。 </p>
-<p>但是如果在处理文本的时候，没有截断长度，而是排序然后按照batch中长读补长，是存在上述问题的，所以需要最大池化。</p>
-<p>最后定义一个linear层，将其flatten后的映射至num_class。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">self.conv_0 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">0</span>], params.embedding_dim), self.stride)</span><br><span class="line">self.conv_1 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">1</span>], params.embedding_dim), self.stride)</span><br><span class="line">self.conv_2 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">2</span>], params.embedding_dim), self.stride)</span><br><span class="line">   </span><br><span class="line"><span class="comment"># conv output size: [(w-k)+2p]/s+1</span></span><br><span class="line"><span class="comment"># (batch, channel=1, seq_len, emb_size)</span></span><br><span class="line">self.fc = nn.Linear(len(self.kernel_size) * self.num_kernels, self.num_class)</span><br><span class="line">self.dropout = nn.Dropout(params.dropout)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在重写forward函数就搭完了。写forward函数主要得注意数据流动过程中尺寸的改变（代码中已注明了）。其他的就是按照textcnn结构走就完成了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, text</span>):</span></span><br><span class="line">    <span class="comment"># input: (B, 512, 312)</span></span><br><span class="line">    <span class="comment"># text (batch, channel=1, seq_len)</span></span><br><span class="line">    emb = self.emb(text)  <span class="comment"># (batch, seq_len, emb_size)</span></span><br><span class="line">    emb = emb.unsqueeze(dim=<span class="number">1</span>)  <span class="comment"># (batch, channel=1, seq_len, emb_size)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># after conv: (batch, num_kernels, seq_len - kernel_size[0] + 1, 1)</span></span><br><span class="line">    conved0 = F.relu(self.conv_0(emb).squeeze(<span class="number">3</span>))</span><br><span class="line">    conved1 = F.relu(self.conv_1(emb).squeeze(<span class="number">3</span>))</span><br><span class="line">    conved2 = F.relu(self.conv_2(emb).squeeze(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># pooled: (batch, n_channel)</span></span><br><span class="line">    pool0 = nn.MaxPool1d(conved0.shape[<span class="number">2</span>], self.stride)</span><br><span class="line">    pool1 = nn.MaxPool1d(conved1.shape[<span class="number">2</span>], self.stride)</span><br><span class="line">    pool2 = nn.MaxPool1d(conved2.shape[<span class="number">2</span>], self.stride)</span><br><span class="line"></span><br><span class="line">    pooled0 = pool0(conved0).squeeze(<span class="number">2</span>)</span><br><span class="line">    pooled1 = pool1(conved1).squeeze(<span class="number">2</span>)</span><br><span class="line">    pooled2 = pool2(conved2).squeeze(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (batch, n_chanel * num_filters)</span></span><br><span class="line">    cat_pool = torch.cat([pooled0, pooled1, pooled2], dim=<span class="number">1</span>)</span><br><span class="line">    fc = self.fc(cat_pool)</span><br><span class="line">    <span class="keyword">return</span> fc</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="思考总结"><a href="#思考总结" class="headerlink" title="思考总结"></a>思考总结</h3><p>采用THNews，5w条数据，随机初始化的embedding，TextCNN只用了两个epoch，准确率达到0.94，速度相比bert快了不少。</p>
-<p>不过，textcnn也是一个类似N-gram的思想，也就是说，<strong>卷积核在原sentence上做卷积时只能抽取到2，3，4个单词之间（当然，也可以定义多个不同length的kernel强化）的联系及特征，相比于bert的双向transformer在对于长文本的抽取特征上还是弱了不少</strong>。归结起来还是那句话：CNN的卷积核只实现了捕捉局部相关性。</p>
-<p>不过对于短文本及数据量较大情况下，textcnn绝对是有应用价值的，值得参考。</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Chinese-Text-Classification/tree/master/text_cnn_classification">完整项目代码看这里，轻松易跑~</a></p>
-<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1408.5882">Convolutional Neural Networks for Sentence Classification</a>.</p>
-<p><a target="_blank" rel="noopener" href="https://colab.research.google.com/github/bentrevett/pytorch-sentiment-analysis/blob/master/4%20-%20Convolutional%20Sentiment%20Analysis.ipynb#scrollTo=mXhgz5RQ64aw">Convolutional Sentiment Analysis</a></p>
+<li><script type="math/tex">y替换lny，x替换lnx, b替换lna 得y=b-x</script>，这个函数的图像画出来是不是就是上面这个图画的形状了。</li>
+</ul>
+<h3 id="5-Hierarchical-Softmax"><a href="#5-Hierarchical-Softmax" class="headerlink" title="5. Hierarchical  Softmax"></a>5. Hierarchical  Softmax</h3><p>skip-gram 目标函数：<script type="math/tex">max(P(vi|Φ(v1),Φ(v2),···,Φ(vi−1))</script></p>
+<p>由skip-gram滑窗采样出邻居节点形成不同的邻居pair<script type="math/tex">(x_k, x_{k+1})</script>​, 最大化<script type="math/tex">p(x_{k+1}|x_k)</script>​。</p>
+<p>但是用softmax转化为probability预测下一个是哪个词，而当词汇表即点数量<script type="math/tex">|V|</script>​​比较大时，计算所有词的概率（相当于做<script type="math/tex">|V|</script>​​次二分类）,这样代价太大且效率极低，于是引入Hierarchical  Softmax。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013605.png" style="zoom:80%;" /></p>
+<p>建立一颗由点构成的Huffman树，这样就变成只用做<script type="math/tex">log|V|</script>​​次二分类，如上图，假设采出的source点为v1，skip-gram采出的邻居节点为v3、v5，则使用 Hierarchical Softmax去计算P(v3 | Φ(v1))以及P(v5 | Φ(v1))，通过maximize 这个概率，去更新embeddingΦ(v1)、Φ(v3)、Φ(v5)。</p>
+<p>用公式表达上述Hierarchical  Softmax：<script type="math/tex">P(u_k|\Phi(v_j)) = \prod_{l=1}^{log|V|}P(b_l|\Phi(v_j))|</script></p>
+<p>若是当<script type="math/tex">|V|</script>​​​​​比较大时，这样就减少了运算极大提高了效率。</p>
+<h3 id="6-总结"><a href="#6-总结" class="headerlink" title="6. 总结"></a>6. 总结</h3><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1403.6652.pdf">DeepWalk</a>是一个旧却经典的Graph Learning模型，是在2014年提出的，因为DeepWalk开创了图游走类型模型的先河，算是图模型里图游走模型的鼻祖了，它的random-walk path采样以及skip-gram的这种模型训练思想直到现在许多的游走类图模型（node2vec、metapath2vec、GATNE等）还能看到影子。DeepWalk模型简单、思路清晰、学习极具性价比，绝对值得一看。</p>
+<p><strong>本栏目持续更新、码字不易、欢迎点赞、转载、交流学习</strong></p>
+<h3 id="系列其他相关文章"><a href="#系列其他相关文章" class="headerlink" title="系列其他相关文章"></a>系列其他相关文章</h3><p><a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Graph-Learning">Graph-Learning-DeepwalkCode-Github</a></p>
+<p><a target="_blank" rel="noopener" href="https://shuxinyin.github.io/2021/07/17/%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/">异构图模型—GATNE</a></p>
 
       
 
@@ -298,7 +311,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CNN</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">graph random-walk model</a>
         		</li>
       		
 		</ul>
@@ -310,7 +323,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/NLP//" class="article-tag-list-link color4">NLP</a>
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
         		</li>
       		
 		</ul>
@@ -365,7 +378,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/27/%E3%80%90Graph-Learning%E3%80%91%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -379,18 +392,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/07/17/%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          异构图模型--GATNE
+          进阶版游走图模型Node2Vec
         
       </div>
     </a>
   
   
-    <a href="/2021/06/23/CNN%E6%A8%A1%E5%9E%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">CNN模型快速上手指南.md</div>
+    <a href="/2021/07/20/Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Transformer大白话详解</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -417,7 +430,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TextCNN%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">TextCNN结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%AD%E4%B8%80%E4%B8%AATextCNN"><span class="toc-number">3.</span> <span class="toc-text">搭一个TextCNN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">思考总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">参考：</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Rand-Walk-Skip-Gram"><span class="toc-number">2.</span> <span class="toc-text">2. Rand-Walk + Skip-Gram</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-DeepWalk-%E6%A0%B8%E5%BF%83%E4%BB%A3%E7%A0%81"><span class="toc-number">3.</span> <span class="toc-text">3. DeepWalk 核心代码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E5%BB%BA%E5%9B%BE"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 建图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E9%87%87%E8%B7%AF%E5%BE%84-random-walk-sample"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 采路径-random_walk sample</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-skip-gram%EF%BC%8C%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E9%87%87pair"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 skip-gram，滑动窗口采pair</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-skip-gram%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 skip-gram模型训练</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%B8%BA%E4%BB%80%E4%B9%88skip-gram%E6%9C%89%E6%95%88%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">4.  为什么skip-gram有效？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Hierarchical-Softmax"><span class="toc-number">5.</span> <span class="toc-text">5. Hierarchical  Softmax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93"><span class="toc-number">6.</span> <span class="toc-text">6. 总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E5%88%97%E5%85%B6%E4%BB%96%E7%9B%B8%E5%85%B3%E6%96%87%E7%AB%A0"><span class="toc-number">7.</span> <span class="toc-text">系列其他相关文章</span></a></li></ol>
                     </div>
                 </span>
             </div>

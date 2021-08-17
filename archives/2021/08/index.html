@@ -6,23 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>TextCNN实践-文本分类利器.md | Hexo</title>
+  <title>Archives: 2021/8 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="引言说到文本分类，目前最通用最有效的方法就是通过bert预训练模型，后接一个简单的下游分类任务。但bert模型，模型参数大，训练时间长，推理时间长，应用上不方便。而textCNN相对于bert，参数少，训练快，模型结构简单，在文本分类上表现也不差，值得一看。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="TextCNN实践-文本分类利器.md">
-<meta property="og:url" content="http://example.com/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/archives/2021/08/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="引言说到文本分类，目前最通用最有效的方法就是通过bert预训练模型，后接一个简单的下游分类任务。但bert模型，模型参数大，训练时间长，推理时间长，应用上不方便。而textCNN相对于bert，参数少，训练快，模型结构简单，在文本分类上表现也不差，值得一看。">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232433.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232435.png">
-<meta property="article:published_time" content="2021-07-04T03:32:50.000Z">
-<meta property="article:modified_time" content="2021-07-04T15:34:09.875Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
-<meta property="article:tag" content="CNN">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232433.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -160,283 +152,71 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-TextCNN-文本分类利器" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      TextCNN实践-文本分类利器.md
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2021" class="archive-year">2021</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2021-08-09T14:23:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-09</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/">进阶版游走图模型Node2Vec</a>
     </h1>
   
 
-        
-        <a href="/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2021-07-04T03:32:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-04</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      <br/>
-      <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
-      <span class="icon-sort"></span>
-      <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
-                阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
-      </span>
-      </a>
-      
-      </header>
-    
-    <!-- 目录内容 -->
-    
-        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
-        <span class="btn-bg"></span>
-        <span class="btn-text">文章导航</span>
-        </p>
-        <div id="toc-article" class="toc-article">
-            <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
-            <strong class="toc-title">文章目录</strong>
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TextCNN%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">TextCNN结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%AD%E4%B8%80%E4%B8%AATextCNN"><span class="toc-number">3.</span> <span class="toc-text">搭一个TextCNN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">思考总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">参考：</span></a></li></ol>
-       </div>
-       <script type="text/javascript">
-        function showToc(){
-            var toc_article = document.getElementById("toc-article");
-            var show_toc_btn = document.getElementById("show-toc-btn");
-            toc_article.setAttribute("style","display:block");
-            show_toc_btn.setAttribute("style","display:none");
-            };
-        function showBtn(){
-            var toc_article = document.getElementById("toc-article");
-            var show_toc_btn = document.getElementById("show-toc-btn");
-            toc_article.setAttribute("style","display:none");
-            show_toc_btn.setAttribute("style","display:block");
-            };
-       </script>
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>说到文本分类，目前最通用最有效的方法就是通过bert预训练模型，后接一个简单的下游分类任务。但bert模型，模型参数大，训练时间长，推理时间长，应用上不方便。而textCNN相对于bert，参数少，训练快，模型结构简单，在文本分类上表现也不差，值得一看。<a id="more"></a></p>
-<h3 id="TextCNN结构"><a href="#TextCNN结构" class="headerlink" title="TextCNN结构"></a>TextCNN结构</h3><p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232433.png" alt="textCNN_explicit"></p>
-<p>TextCNN的结构图，很简洁，就是一个CNN结构。上图是以2个channel举例，即每个sentence模板是双层的，每个channel上做的是一样的事。与CNN一样，就是输入的sentence（num_words*dim），通过不同的卷积核运算（此处卷积核只做竖向移动卷积），然后做max-pooling，最后通过flatten拉直，进行分类。</p>
-<p>但也有几点需要注意。</p>
-<ol>
-<li><p>输入：一个sentence（num_words*dim）,复制成n个channels，可看作一个n通道的image。</p>
-</li>
-<li><p>卷积核kernel（length*width）：textCNN的卷积核length可以不规定，可以取2，3，4等等，就好比N-gram的滑动窗口大小N。但width应该是跟输入dim保持一致，因为不可能把一个字的embedding割裂开，这样没有意义。</p>
-</li>
-<li><p>max-pooling取的是每一个feature-map中单独向量的最大值，如下图。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210704232435.png" alt="textCNN_program"></p>
-</li>
-<li><p>最后，通过flatten合并max-pooling后的所有值，这与图像卷积一致，然后经过linear层输出，达到分类的目的。</p>
-</li>
-</ol>
-<h3 id="搭一个TextCNN"><a href="#搭一个TextCNN" class="headerlink" title="搭一个TextCNN"></a>搭一个TextCNN</h3><ol>
-<li>首先定义一些模型参数。看完上面这个结构，大概的参数有卷积核数（num_kernels）、kernel_size（其中width与出入dim一致）、如果有预训练embedding的就载入，没有就随机初始化。如下，基本的网络参数就这些</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CNNClassifier</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, params</span>):</span></span><br><span class="line">        super(CNNClassifier, self).__init__()</span><br><span class="line"></span><br><span class="line">        self.num_kernels = params.num_kernels</span><br><span class="line">        self.kernel_size = params.kernel_size</span><br><span class="line">        self.num_class = params.num_class</span><br><span class="line">        self.stride = params.stride</span><br><span class="line">        <span class="comment"># input: (B, 512, 312)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> params.pretrained_weight:</span><br><span class="line">            word_model_emb = np.load(params.pretrained_weight_path)</span><br><span class="line">            weights = torch.tensor(word_model_emb)</span><br><span class="line">            self.emb = nn.Embedding.from_pretrained(weights)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.emb = nn.Embedding(params.vocab_size, params.embedding_dim, padding_idx=params.padding_index)</span><br></pre></td></tr></table></figure>
-<ol>
-<li><p>下面就开始搭建网络。(接着上面的init)。定义三个卷积。分别kernel_size为2，3，4。</p>
-<p>max-pooling就放到forward里。为什么要接maxpooling，这里值得思考一下，论文中说是因为输入句子长度不一定，经过卷积之后长度不一定， 导致后linear层不固定，不便于训练。 </p>
-<p>但是如果在处理文本的时候，没有截断长度，而是排序然后按照batch中长读补长，是存在上述问题的，所以需要最大池化。</p>
-<p>最后定义一个linear层，将其flatten后的映射至num_class。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">self.conv_0 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">0</span>], params.embedding_dim), self.stride)</span><br><span class="line">self.conv_1 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">1</span>], params.embedding_dim), self.stride)</span><br><span class="line">self.conv_2 = nn.Conv2d(<span class="number">1</span>, self.num_kernels, (self.kernel_size[<span class="number">2</span>], params.embedding_dim), self.stride)</span><br><span class="line">   </span><br><span class="line"><span class="comment"># conv output size: [(w-k)+2p]/s+1</span></span><br><span class="line"><span class="comment"># (batch, channel=1, seq_len, emb_size)</span></span><br><span class="line">self.fc = nn.Linear(len(self.kernel_size) * self.num_kernels, self.num_class)</span><br><span class="line">self.dropout = nn.Dropout(params.dropout)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在重写forward函数就搭完了。写forward函数主要得注意数据流动过程中尺寸的改变（代码中已注明了）。其他的就是按照textcnn结构走就完成了。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, text</span>):</span></span><br><span class="line">    <span class="comment"># input: (B, 512, 312)</span></span><br><span class="line">    <span class="comment"># text (batch, channel=1, seq_len)</span></span><br><span class="line">    emb = self.emb(text)  <span class="comment"># (batch, seq_len, emb_size)</span></span><br><span class="line">    emb = emb.unsqueeze(dim=<span class="number">1</span>)  <span class="comment"># (batch, channel=1, seq_len, emb_size)</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># after conv: (batch, num_kernels, seq_len - kernel_size[0] + 1, 1)</span></span><br><span class="line">    conved0 = F.relu(self.conv_0(emb).squeeze(<span class="number">3</span>))</span><br><span class="line">    conved1 = F.relu(self.conv_1(emb).squeeze(<span class="number">3</span>))</span><br><span class="line">    conved2 = F.relu(self.conv_2(emb).squeeze(<span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment"># pooled: (batch, n_channel)</span></span><br><span class="line">    pool0 = nn.MaxPool1d(conved0.shape[<span class="number">2</span>], self.stride)</span><br><span class="line">    pool1 = nn.MaxPool1d(conved1.shape[<span class="number">2</span>], self.stride)</span><br><span class="line">    pool2 = nn.MaxPool1d(conved2.shape[<span class="number">2</span>], self.stride)</span><br><span class="line"></span><br><span class="line">    pooled0 = pool0(conved0).squeeze(<span class="number">2</span>)</span><br><span class="line">    pooled1 = pool1(conved1).squeeze(<span class="number">2</span>)</span><br><span class="line">    pooled2 = pool2(conved2).squeeze(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># (batch, n_chanel * num_filters)</span></span><br><span class="line">    cat_pool = torch.cat([pooled0, pooled1, pooled2], dim=<span class="number">1</span>)</span><br><span class="line">    fc = self.fc(cat_pool)</span><br><span class="line">    <span class="keyword">return</span> fc</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="思考总结"><a href="#思考总结" class="headerlink" title="思考总结"></a>思考总结</h3><p>采用THNews，5w条数据，随机初始化的embedding，TextCNN只用了两个epoch，准确率达到0.94，速度相比bert快了不少。</p>
-<p>不过，textcnn也是一个类似N-gram的思想，也就是说，<strong>卷积核在原sentence上做卷积时只能抽取到2，3，4个单词之间（当然，也可以定义多个不同length的kernel强化）的联系及特征，相比于bert的双向transformer在对于长文本的抽取特征上还是弱了不少</strong>。归结起来还是那句话：CNN的卷积核只实现了捕捉局部相关性。</p>
-<p>不过对于短文本及数据量较大情况下，textcnn绝对是有应用价值的，值得参考。</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Chinese-Text-Classification/tree/master/text_cnn_classification">完整项目代码看这里，轻松易跑~</a></p>
-<h3 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h3><p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1408.5882">Convolutional Neural Networks for Sentence Classification</a>.</p>
-<p><a target="_blank" rel="noopener" href="https://colab.research.google.com/github/bentrevett/pytorch-sentiment-analysis/blob/master/4%20-%20Convolutional%20Sentiment%20Analysis.ipynb#scrollTo=mXhgz5RQ64aw">Convolutional Sentiment Analysis</a></p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>Thank You！<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/alipay.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/wechatpay.jpg">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CNN</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">graph random-walk model</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/NLP//" class="article-tag-list-link color4">NLP</a>
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2021/07/17/%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          异构图模型--GATNE
-        
-      </div>
-    </a>
   
   
-    <a href="/2021/06/23/CNN%E6%A8%A1%E5%9E%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">CNN模型快速上手指南.md</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TextCNN%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">TextCNN结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%90%AD%E4%B8%80%E4%B8%AATextCNN"><span class="toc-number">3.</span> <span class="toc-text">搭一个TextCNN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">思考总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E8%80%83%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">参考：</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
+    </div></section>
   
 
-  
-
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -464,8 +244,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
