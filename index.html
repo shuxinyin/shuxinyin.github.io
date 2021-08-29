@@ -187,11 +187,11 @@
 <h3 id="2-GCN的计算原理"><a href="#2-GCN的计算原理" class="headerlink" title="2. GCN的计算原理"></a>2. GCN的计算原理</h3><p>GCN的卷积核心公式：<script type="math/tex">H^{l+1}=\sigma(D^{-1/2}AD^{-1/2}H^{l}W^{l})</script></p>
 <script type="math/tex; mode=display">H^{l}、H^{l+1}$$分别是第l层、第l+1的节点，D为度矩阵，A为邻接矩阵,如下图。
 
-![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215530.png)
+![1](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215530.png)
 
 GCN计算方式上很好理解，本质上跟CNN卷积过程一样，是一个加权求和的过程，就是将邻居点通过度矩阵及其邻接矩阵，计算出各边的权重，然后加权求和。
 
-![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215555.png)
+![2](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215555.png)
 
 **D负责提供权值的矩阵，邻接A矩阵控制应该融合哪些点, H表示上一层的embedding参数**
 
@@ -209,11 +209,11 @@ GAT就来解决问题1的，GraphSAGE就来解决这个问题2的，DeepGCN等�
 
 attention这么流行，看完GCN就容易想到，GCN每次做卷积时，边上的权重每次融合都是固定的，那能不能灵活一点，加个attention，让模型自己去学，那GAT就来干这个事了。
 
-![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232122.png)
+![3](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232122.png)
 
 结合下面这两各公式，看看这个attention是怎么定义的。
 
-![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232153.png)
+![4](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232153.png)
 
 $$\alpha_{i,j}$$表示第i个点与第j个点之间的attention系数，$$h_i、h_j、h_k$$是node feature，其他a、W的为模型参数。
 
@@ -221,15 +221,15 @@ $$\alpha_{i,j}$$就是通过计算$$LeakycReLU(concat[Wh_i,Wh_j])$$,在经过Nor
 
 得到各条边的$$\alpha_{i,j}$$之后，第i个点的融合attention过后的node feature可以表示下面这个公式，实质上还是一个加权的feature求和过程，只是每次融合中的权重系数是随模型训练学习的，最后在经过一个非线性的激活函数去做对应的任务。
 
-![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215651.png)
+![5](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215651.png)
 
 在这个基础上，文中还提到了，为了使attention机制更具扩展性，定义multi-head attention机制（K代表K个attention head），去做attention权重的计算，然后concat起来，得到node feature。
 
-![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215648.png)
+![6](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215648.png)
 
 当在网络最后一层时，concat输出的维度就node feature太大，不太合理，就改用累加再平均，然后输出，做具体任务。
 
-![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215656.png)
+![7](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215656.png)
 
 以上就是第一个图中右边示意的结构了。
 
@@ -250,7 +250,7 @@ GAT中的attention机制还是很直观的，通过给每条边加了一个模�
 
 **GraphSAGE**就是inductive的模式，GraphSAGE提出随机采子图的方式去采样，通过子图更新node embedding， 这样采出的子图结构本身就是变化，从而让模型学到的是一种采样及聚合的参数的方式，有效解决了unseen nodes问题，同时避免了训练中需要把整个图的node embedding一起更新的窘境，有效的增加了扩展性。
 
-![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215704.png)
+![8](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215704.png)
 
 具体的思想就是分三步：
 
@@ -260,7 +260,7 @@ GAT中的attention机制还是很直观的，通过给每条边加了一个模�
 
 具体到代码实现思路上，也是与上述思路高度一致。
 
-![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215707.png)
+![9](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215707.png)
 
 也是针对每一个node采出子图，然后进行聚合，最后得到node embedding。
 
@@ -1359,15 +1359,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">loss function</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">graph random-walk model</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
