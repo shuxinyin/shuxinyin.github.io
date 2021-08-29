@@ -8,18 +8,23 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>图卷积：从GCN到GAT、GraphSAGE | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="图模型总体上可以分为两大类：一是random-walk游走类模型，另一类就是GCN、GAT等卷积模型了。 下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。 1. 为什么出现GCN来处理图结构在图像领域，CNN被拿来自动提取图像特征的结构，但是CNN处理的图像或者视频数据中像素点（pixel）是排列成成很整齐的矩阵，虽然图结构不整齐（不同点具有">
+  <meta name="description" content="图模型总体上可以分为两大类：一是random-walk游走类模型，另一类就是GCN、GAT等卷积模型了。 下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="图卷积：从GCN到GAT、GraphSAGE">
 <meta property="og:url" content="http://example.com/2021/08/22/%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="图模型总体上可以分为两大类：一是random-walk游走类模型，另一类就是GCN、GAT等卷积模型了。 下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。 1. 为什么出现GCN来处理图结构在图像领域，CNN被拿来自动提取图像特征的结构，但是CNN处理的图像或者视频数据中像素点（pixel）是排列成成很整齐的矩阵，虽然图结构不整齐（不同点具有">
+<meta property="og:description" content="图模型总体上可以分为两大类：一是random-walk游走类模型，另一类就是GCN、GAT等卷积模型了。 下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。">
 <meta property="og:locale" content="zh_CH">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215530.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215555.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232122.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232153.png">
 <meta property="article:published_time" content="2021-08-22T09:49:11.000Z">
-<meta property="article:modified_time" content="2021-08-29T15:25:22.124Z">
+<meta property="article:modified_time" content="2021-08-29T15:27:59.156Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta property="article:tag" content="graph random-walk model">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215530.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -195,7 +200,7 @@
         <div id="toc-article" class="toc-article">
             <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
             <strong class="toc-title">文章目录</strong>
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%87%BA%E7%8E%B0GCN%E6%9D%A5%E5%A4%84%E7%90%86%E5%9B%BE%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">1. 为什么出现GCN来处理图结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GCN%E7%9A%84%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">2. GCN的计算原理</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%87%BA%E7%8E%B0GCN%E6%9D%A5%E5%A4%84%E7%90%86%E5%9B%BE%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">1. 为什么出现GCN来处理图结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GCN%E7%9A%84%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">2. GCN的计算原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B8%A6attention%E7%9A%84%E5%9B%BE%E6%B3%A8%E6%84%8F%E7%BD%91%E7%BB%9CGAT"><span class="toc-number">3.</span> <span class="toc-text">3. 带attention的图注意网络GAT</span></a></li></ol>
        </div>
        <script type="text/javascript">
         function showToc(){
@@ -216,41 +221,25 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>图模型总体上可以分为两大类：一是random-walk游走类模型，另一类就是GCN、GAT等卷积模型了。</p>
-<p>下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。</p>
+<p>下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。<a id="more"></a></p>
 <h3 id="1-为什么出现GCN来处理图结构"><a href="#1-为什么出现GCN来处理图结构" class="headerlink" title="1. 为什么出现GCN来处理图结构"></a>1. 为什么出现GCN来处理图结构</h3><p>在图像领域，CNN被拿来自动提取图像特征的结构，但是CNN处理的图像或者视频数据中像素点（pixel）是排列成成很整齐的矩阵，虽然图结构不整齐（不同点具有不同数目neighbors），但是不是可以用同样的方法去抽取图的的特征呢？</p>
 <p>于是就出现了两种方式来提取图的特征。一是空间域卷积（spatial domain)，二是频域卷积（spectral domain）。第一种方式由于每个顶点提取出来的neighbors不同，处理上比较麻烦，同时它的效果没有频域卷积效果好，没有做深究。因此，现在比较流行、工程上应用较多的为频域卷积。</p>
 <h3 id="2-GCN的计算原理"><a href="#2-GCN的计算原理" class="headerlink" title="2. GCN的计算原理"></a>2. GCN的计算原理</h3><p>GCN的卷积核心公式：<script type="math/tex">H^{l+1}=\sigma(D^{-1/2}AD^{-1/2}H^{l}W^{l})</script></p>
-<script type="math/tex; mode=display">H^{l}、H^{l+1}$$分别是第l层、第l+1的节点，D为度矩阵，A为邻接矩阵,如下图。
-
-![1](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215530.png)
-
-GCN计算方式上很好理解，本质上跟CNN卷积过程一样，是一个加权求和的过程，就是将邻居点通过度矩阵及其邻接矩阵，计算出各边的权重，然后加权求和。
-
-![2](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215555.png)
-
-**D负责提供权值的矩阵，邻接A矩阵控制应该融合哪些点, H表示上一层的embedding参数**
-
-结合上面两张图，动手算一算$$D^{-1/2}AD^{-1/2}$$，能很清楚的看到，这个加权求和的卷积过程是怎么做的。
-
----------------**分割线：GCN 小结一下**------------------------------------------------------------------------------------------------
-
-GCN首次提出了卷积的方式融合图结构特征，提供一个全新的视角。
-
-主要缺点：1.融合时边权值是固定的，不够灵活。2.可扩展性差，因为它是全图卷积融合，全图做梯度更新，当图比较大时，这样的方式就太慢了，不合适。3.层数加深时，结果会极容易平滑，每个点的特征结果都十分相似。
-
-GAT就来解决问题1的，GraphSAGE就来解决这个问题2的，DeepGCN等一系列文章就来讨论问题3的。基本上，GCN提出之后，后续就是各路神仙打架了，都是针对GCN的各个不同点进行讨论改进了。
-
-### 3. 带attention的图注意网络GAT
-
-attention这么流行，看完GCN就容易想到，GCN每次做卷积时，边上的权重每次融合都是固定的，那能不能灵活一点，加个attention，让模型自己去学，那GAT就来干这个事了。
-
-![3](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232122.png)
-
-结合下面这两各公式，看看这个attention是怎么定义的。
-
-![4](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232153.png)
-
-$$\alpha_{i,j}$$表示第i个点与第j个点之间的attention系数，$$h_i、h_j、h_k$$是node feature，其他a、W的为模型参数。
+<p>同时<script type="math/tex">H^{l}、H^{l+1}</script>分别是第l层、第l+1的节点，D为度矩阵，A为邻接矩阵,如下图。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215530.png" alt="1"></p>
+<p>GCN计算方式上很好理解，本质上跟CNN卷积过程一样，是一个加权求和的过程，就是将邻居点通过度矩阵及其邻接矩阵，计算出各边的权重，然后加权求和。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215555.png" alt="2"></p>
+<p><strong>D负责提供权值的矩阵，邻接A矩阵控制应该融合哪些点, H表示上一层的embedding参数</strong></p>
+<p>结合上面两张图，动手算一算<script type="math/tex">D^{-1/2}AD^{-1/2}</script>，能很清楚的看到，这个加权求和的卷积过程是怎么做的。</p>
+<p>———————-<strong>分割线：GCN 小结一下</strong>————————————————————————————————————————————————</p>
+<p>GCN首次提出了卷积的方式融合图结构特征，提供一个全新的视角。</p>
+<p>主要缺点：1.融合时边权值是固定的，不够灵活。2.可扩展性差，因为它是全图卷积融合，全图做梯度更新，当图比较大时，这样的方式就太慢了，不合适。3.层数加深时，结果会极容易平滑，每个点的特征结果都十分相似。</p>
+<p>GAT就来解决问题1的，GraphSAGE就来解决这个问题2的，DeepGCN等一系列文章就来讨论问题3的。基本上，GCN提出之后，后续就是各路神仙打架了，都是针对GCN的各个不同点进行讨论改进了。</p>
+<h3 id="3-带attention的图注意网络GAT"><a href="#3-带attention的图注意网络GAT" class="headerlink" title="3. 带attention的图注意网络GAT"></a>3. 带attention的图注意网络GAT</h3><p>attention这么流行，看完GCN就容易想到，GCN每次做卷积时，边上的权重每次融合都是固定的，那能不能灵活一点，加个attention，让模型自己去学，那GAT就来干这个事了。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232122.png" alt="3"></p>
+<p>结合下面这两各公式，看看这个attention是怎么定义的。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232153.png" alt="4"></p>
+<script type="math/tex; mode=display">\alpha_{i,j}$$表示第i个点与第j个点之间的attention系数，$$h_i、h_j、h_k$$是node feature，其他a、W的为模型参数。
 
 $$\alpha_{i,j}$$就是通过计算$$LeakycReLU(concat[Wh_i,Wh_j])$$,在经过Normalize处理一下得到。
 
@@ -467,7 +456,7 @@ GAT中的attention机制还是很直观的，通过给每条边加了一个模�
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%87%BA%E7%8E%B0GCN%E6%9D%A5%E5%A4%84%E7%90%86%E5%9B%BE%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">1. 为什么出现GCN来处理图结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GCN%E7%9A%84%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">2. GCN的计算原理</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%87%BA%E7%8E%B0GCN%E6%9D%A5%E5%A4%84%E7%90%86%E5%9B%BE%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">1. 为什么出现GCN来处理图结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GCN%E7%9A%84%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">2. GCN的计算原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B8%A6attention%E7%9A%84%E5%9B%BE%E6%B3%A8%E6%84%8F%E7%BD%91%E7%BB%9CGAT"><span class="toc-number">3.</span> <span class="toc-text">3. 带attention的图注意网络GAT</span></a></li></ol>
                     </div>
                 </span>
             </div>
