@@ -6,26 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>异构图模型--GATNE | Hexo</title>
+  <title>图卷积：从GCN到GAT、GraphSAGE | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 引言图算法模型种类繁多，但可以根据图结构来进行分类，根据不同的图结构选取适应的图模型。以图结构分类主要是两大类。">
+  <meta name="description" content="图模型总体上可以分为两大类：一是random-walk游走类模型，另一类就是GCN、GAT等卷积模型了。 下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。 1. 为什么出现GCN来处理图结构在图像领域，CNN被拿来自动提取图像特征的结构，但是CNN处理的图像或者视频数据中像素点（pixel）是排列成成很整齐的矩阵，虽然图结构不整齐（不同点具有">
 <meta property="og:type" content="article">
-<meta property="og:title" content="异构图模型--GATNE">
-<meta property="og:url" content="http://example.com/2021/07/17/%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/index.html">
+<meta property="og:title" content="图卷积：从GCN到GAT、GraphSAGE">
+<meta property="og:url" content="http://example.com/2021/08/22/%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 引言图算法模型种类繁多，但可以根据图结构来进行分类，根据不同的图结构选取适应的图模型。以图结构分类主要是两大类。">
+<meta property="og:description" content="图模型总体上可以分为两大类：一是random-walk游走类模型，另一类就是GCN、GAT等卷积模型了。 下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。 1. 为什么出现GCN来处理图结构在图像领域，CNN被拿来自动提取图像特征的结构，但是CNN处理的图像或者视频数据中像素点（pixel）是排列成成很整齐的矩阵，虽然图结构不整齐（不同点具有">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000955.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000958.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000954.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000957.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000956.png">
-<meta property="article:published_time" content="2021-07-17T08:33:29.000Z">
-<meta property="article:modified_time" content="2021-07-17T16:13:18.706Z">
+<meta property="article:published_time" content="2021-08-22T09:49:11.000Z">
+<meta property="article:modified_time" content="2021-08-29T15:22:39.280Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
-<meta property="article:tag" content="heterogeneous graph">
+<meta property="article:tag" content="graph random-walk model">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000955.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -163,20 +157,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-异构图模型-GATNE" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-图卷积：从GCN到GAT、GraphSAGE" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      异构图模型--GATNE
+      图卷积：从GCN到GAT、GraphSAGE
     </h1>
   
 
         
-        <a href="/2021/07/17/%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/" class="archive-article-date">
-  	<time datetime="2021-07-17T08:33:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-17</time>
+        <a href="/2021/08/22/%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/" class="archive-article-date">
+  	<time datetime="2021-08-22T09:49:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-22</time>
 </a>
         
 
@@ -201,7 +195,7 @@
         <div id="toc-article" class="toc-article">
             <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
             <strong class="toc-title">文章目录</strong>
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GATNE%E5%9C%BA%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">2. GATNE场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">3.模型结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-embedding%E8%9E%8D%E5%90%88%E6%96%B9%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">4. embedding融合方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%BB%93%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">5. 结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="toc-number">6.</span> <span class="toc-text">6. 总结一下</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%87%BA%E7%8E%B0GCN%E6%9D%A5%E5%A4%84%E7%90%86%E5%9B%BE%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">1. 为什么出现GCN来处理图结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GCN%E7%9A%84%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">2. GCN的计算原理</span></a></li></ol>
        </div>
        <script type="text/javascript">
         function showToc(){
@@ -221,64 +215,104 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>图算法模型种类繁多，但可以根据图结构来进行分类，根据不同的图结构选取适应的图模型。以图结构分类主要是两大类。<a id="more"></a></p>
-<p>1.同构图: 点类型 + 边类型=2(也就是不区分点与边类型)</p>
-<p>2.异构图：点类型 + 边类型&gt;2 </p>
-<p>根据图结构的定义，很明显，实际场景中存在的多是异构图。下面就分享一下最近研究过的一个阿里的异构图模型-<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.01669.pdf">GATNE</a></p>
-<p>GATNE解决了异构图中multi-relationship（两个节点间含多种关系）且能兼容节点属性特性，基本上可以满足实际场景中任意情况了。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000955.png" alt="heter—graph" style="zoom:60%;" /></p>
-<h3 id="2-GATNE场景"><a href="#2-GATNE场景" class="headerlink" title="2. GATNE场景"></a>2. GATNE场景</h3><p>阿里的GATNE应用场景是定义在淘宝的商品推荐上，定义了四种关系（click、add-to-preference、add-to-cart、conversation），两种节点（user、item）。论文中主要提出了一个异构图的模型GATNE，但有两种结构。</p>
-<ol>
-<li>GATNE-T（transductive）：异构图结构（节点不带属性）</li>
-<li>GATNE-I（inductive）：异构图结构（节点带属性，也就是说有些刚注册的新用户它没有产生任何关系，但它注册时提供了性别、年龄等属性）</li>
-</ol>
-<p>在此异构图场景下，论文对比了以同构图模型与异构图模型去做图计算结果的F1-score。同构图模型Deepwalk、异构图模型（node不带属性-GATNE-T）、异构图模型（node带属性-GATNE-I），明显异构图结果指标高的多。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000958.png" alt="GATNE-Scene"></p>
-<p><strong>通过自我实践之后，说一点对这个模型的体会。</strong></p>
-<ol>
-<li>解释下transductive learning、inductive learning的区别，看了很多资料，说<strong>transductive</strong>是说要预测的数据在训练时模型也能看到。进一步解释一下，就是说训练前，构建的图结构已经是固定的，你要预测的点或边关系结构都应该已经在这个图里了，训练跟预测时 的图结构都是一样的。<strong>inductive</strong>是说要预测的数据在训练时模型不用看到，也就是我们平常做算法模型的样子，训练预测时的数据是分开的，也就是上面的说可以加入新的用户，图结构是变化的。</li>
-<li>GATNE-T（推理式）学习的是图的结构表达。易训，且真实效果不比GATNE-I差。</li>
-<li>GATNE-I（总结式）带属性，在推荐场景中适应于冷启动的数据，但是需好好考虑用什么属性丢到图里去，对结果影响还挺大的，属性特征可能会掩盖模型学到的结构特征，较于GATNE-T难训练，且需要的内存及计算资源都大的多。</li>
-</ol>
-<h3 id="3-模型结构"><a href="#3-模型结构" class="headerlink" title="3.模型结构"></a>3.模型结构</h3><p>GATNE模型结构总统上是比较简单的，但在node embedding 跟edge embedding表达及融合上还挺特别的。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000954.png" style="zoom:80%;" /></p>
-<p><strong>transductive下</strong></p>
-<ol>
-<li>就是通过sum或mean方式融合base node embedding与edge embedding作为节点的embedding。（这部分融合做的挺特别的，大部分公式也都这部分了，拆出来放下面说）</li>
-<li>然后通过图结构构建metapath，也就是沿着图结构采取出一条条walk_path</li>
-<li>然后对每一条walk_path,采取的Skip-gram的模型生成训练样本进行训练,这个就跟word2vec的训练方式一样。</li>
-</ol>
-<p><strong>inductive下</strong>，模型会加多融入一个属性attributes特征，原文中这部分都是给的10010这种作为属性。比如性别用男女0-1表达，年龄划分几个年龄段等 。</p>
-<p><strong>这里有个缺点就是不能融合文本特征，比如有些用户可能还存在一些标签，比如文艺青年、稳重大叔等这种，这也是很重要的信息</strong>，想结合这部分的可以去看看百度的文本图模型ERNIESage，它是采用ERNIE做文本编码，融合文本信息，但是它的ERNIE文本编码是融合在这个图模型中，文本编码的特征也是跟着整体网络一起优化的。</p>
-<h3 id="4-embedding融合方式"><a href="#4-embedding融合方式" class="headerlink" title="4. embedding融合方式"></a>4. embedding融合方式</h3><p>看看GATNE是怎么融合embedding的，论文的公式基本上都集中在这一块了。首先先说一下文章中embedding设计的模式，每一个node上初始化时有两种embedding，它分为base embedding，edge embedding。就是说每<script type="math/tex">i</script>个node初始化时有一个<script type="math/tex">b_i</script>(base embedding)，这个node在不同relationship上的edge，则会有对应<script type="math/tex">u_{i,r}</script>。</p>
-<p><strong>transductive模式：</strong></p>
-<p>主要是两步融合：</p>
-<ol>
-<li><p>message passing：相邻节点下，相同类型边的edge embedding融合见公式1, aggregator方式原文中提到了mean及pooling，实践下来其实sum也不错。</p>
-<script type="math/tex; mode=display">u^{(k)}_{i,r} = aggregator({u^{(k−1)}_{j,r}, ∀v_j∈N_{i,r}})\tag{1}</script></li>
-<li><p>某一节点下，不同edge embedding作attention的融合见公式2。<script type="math/tex">w^T_r，W_r</script>就是需要在训练的过程中学出来的参数矩阵，从而得到attention系数矩阵<script type="math/tex">a_{i,r}</script>，<script type="math/tex">a_{i,r}</script>其实就是个作用于edge embedding的权重矩阵。</p>
-<script type="math/tex; mode=display">a_{i,r}=softmax(w^T_rtanh(W_rU_i))^T\tag{2}</script></li>
-<li><p>最后加上base embedding，见公式3，做最后一步融合得到最后的node embedding<script type="math/tex">v_{i,r}</script>。<strong>提醒一下这里<script type="math/tex">v_{i,r}</script>表示的是第i个节点在第r条关系上的表达。就是说训练完成后一个节点会有多个embedding表达，图有4种类型的edge，一个点就会得到4个<script type="math/tex">v_{i,r}</script>，r表示不同的relationship</strong></p>
-<script type="math/tex; mode=display">v_{i,r} = b_i + α_r M^T_rU_ia_{i,r} \tag{3}</script></li>
-</ol>
-<p><strong>inductive模式：</strong></p>
-<p>inductive模式与transdtrauctive模式的区别主要就在于base embedding及edge embedding的初始化,见公式4。</p>
-<p>transdtrauctive是随机初始化的，而inductive的base embedding及edge embedding是通过属性特征<script type="math/tex">x_i</script>转换来的, <script type="math/tex">b_i等价于h_z(xi),u^{(0)}_{i,r}等价于g_{z,r}(xi),  h_z,g_{z,r}</script>为两个转换函数。</p>
-<p>最后多的这一项<script type="math/tex">β_rD^T_zx_i</script>就是额外添加的这个属性的feature，也就是比transductive多加了一项属性特征，从而得到最后的<script type="math/tex">v_{i,r}</script></p>
-<script type="math/tex; mode=display">v_{i,r} = h_z(xi) + α_rM^T_rU_ia_{i,r} + β_rD^T_zx_i\tag{4}</script><p><strong>最后在提一下模型的loss function</strong></p>
-<p>这里用到loss function没啥特别的，只是加了个negative sample 的值部分。还是常规的推荐中常用的一个计算loss技巧，就是loss由positive跟negative两部分相加组成，pos就是与邻居点得到的一个target的值，neg就是与随机取的点计算得到的target值，简化一下就是<script type="math/tex">loss = max（loss_{pos}）+min(loss_{neg})</script></p>
-<p>原文中用的是log 的loss方法，就是这种形式<script type="math/tex">loss=log(pos)/(neg)</script>,最大化pos的值，最小化neg的值。其实把计算pos或neg的值的方式改成由cross entropy计算效果也差不多。</p>
-<h3 id="5-结果"><a href="#5-结果" class="headerlink" title="5. 结果"></a>5. 结果</h3><p>到了结果这一部分，也没啥好说的，就是强就完事了。但有几个地方值得一看。</p>
-<ol>
-<li>GATNE-T与GATNE-I在公开数据集上各有优劣，推特那个数据集也是带属性的，而GATNE-T 的表现更好，可见GATNE-I效果不一定就比GATNE-T要好，在阿里自己切出来的真实小数据集Alibaba-S上，指标也并不高，可见真实数据上，图模型还是不好应用的，这点给大家打个预防针（可能ali的人没有好好构图、调参，毕竟在它的真实大数据集上给出的指标挺好）。</li>
-</ol>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000957.png" alt="GATNE"></p>
-<ol>
-<li><p>工程应用上，公布的ali的数据集是4000万nodes、5亿edges，150个wokers，训练两小时左右（顺带提一下这个workers的详细意义，Every two workers share an NVIDIA Tesla P100 GPU with 16GB memory，大家慢慢体会…）</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000956.png" alt="GATN_scalability"></p>
-</li>
-</ol>
-<h3 id="6-总结一下"><a href="#6-总结一下" class="headerlink" title="6. 总结一下"></a>6. 总结一下</h3><p>GATNE这个模型厉害的地方不仅是在于它的指标高、效果好，而且这是一个在ali应用了的工程模型，<strong>而且它解决了异构图中multi-relationship且能兼容attribute-feature的，基本上是满足实际场景中任意情况了</strong>，值得借鉴。另外这篇文章不仅提到它的新模型，在文中也总结一些常见的图算法模型比如deepwalk、metapath、GraphSAGE等，也可以当作一个图算法的总结型文章，还是挺值得大家作为图学习方面的资料去看看学习一下的。</p>
+        <p>图模型总体上可以分为两大类：一是random-walk游走类模型，另一类就是GCN、GAT等卷积模型了。</p>
+<p>下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。</p>
+<h3 id="1-为什么出现GCN来处理图结构"><a href="#1-为什么出现GCN来处理图结构" class="headerlink" title="1. 为什么出现GCN来处理图结构"></a>1. 为什么出现GCN来处理图结构</h3><p>在图像领域，CNN被拿来自动提取图像特征的结构，但是CNN处理的图像或者视频数据中像素点（pixel）是排列成成很整齐的矩阵，虽然图结构不整齐（不同点具有不同数目neighbors），但是不是可以用同样的方法去抽取图的的特征呢？</p>
+<p>于是就出现了两种方式来提取图的特征。一是空间域卷积（spatial domain)，二是频域卷积（spectral domain）。第一种方式由于每个顶点提取出来的neighbors不同，处理上比较麻烦，同时它的效果没有频域卷积效果好，没有做深究。因此，现在比较流行、工程上应用较多的为频域卷积。</p>
+<h3 id="2-GCN的计算原理"><a href="#2-GCN的计算原理" class="headerlink" title="2. GCN的计算原理"></a>2. GCN的计算原理</h3><p>GCN的卷积核心公式：<script type="math/tex">H^{l+1}=\sigma(D^{-1/2}AD^{-1/2}H^{l}W^{l})</script></p>
+<script type="math/tex; mode=display">H^{l}、H^{l+1}$$分别是第l层、第l+1的节点，D为度矩阵，A为邻接矩阵,如下图。
+
+![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215530.png)
+
+GCN计算方式上很好理解，本质上跟CNN卷积过程一样，是一个加权求和的过程，就是将邻居点通过度矩阵及其邻接矩阵，计算出各边的权重，然后加权求和。
+
+![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215555.png)
+
+**D负责提供权值的矩阵，邻接A矩阵控制应该融合哪些点, H表示上一层的embedding参数**
+
+结合上面两张图，动手算一算$$D^{-1/2}AD^{-1/2}$$，能很清楚的看到，这个加权求和的卷积过程是怎么做的。
+
+---------------**分割线：GCN 小结一下**------------------------------------------------------------------------------------------------
+
+GCN首次提出了卷积的方式融合图结构特征，提供一个全新的视角。
+
+主要缺点：1.融合时边权值是固定的，不够灵活。2.可扩展性差，因为它是全图卷积融合，全图做梯度更新，当图比较大时，这样的方式就太慢了，不合适。3.层数加深时，结果会极容易平滑，每个点的特征结果都十分相似。
+
+GAT就来解决问题1的，GraphSAGE就来解决这个问题2的，DeepGCN等一系列文章就来讨论问题3的。基本上，GCN提出之后，后续就是各路神仙打架了，都是针对GCN的各个不同点进行讨论改进了。
+
+### 3. 带attention的图注意网络GAT
+
+attention这么流行，看完GCN就容易想到，GCN每次做卷积时，边上的权重每次融合都是固定的，那能不能灵活一点，加个attention，让模型自己去学，那GAT就来干这个事了。
+
+![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232122.png)
+
+结合下面这两各公式，看看这个attention是怎么定义的。
+
+![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232153.png)
+
+$$\alpha_{i,j}$$表示第i个点与第j个点之间的attention系数，$$h_i、h_j、h_k$$是node feature，其他a、W的为模型参数。
+
+$$\alpha_{i,j}$$就是通过计算$$LeakycReLU(concat[Wh_i,Wh_j])$$,在经过Normalize处理一下得到。
+
+得到各条边的$$\alpha_{i,j}$$之后，第i个点的融合attention过后的node feature可以表示下面这个公式，实质上还是一个加权的feature求和过程，只是每次融合中的权重系数是随模型训练学习的，最后在经过一个非线性的激活函数去做对应的任务。
+
+![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215651.png)
+
+在这个基础上，文中还提到了，为了使attention机制更具扩展性，定义multi-head attention机制（K代表K个attention head），去做attention权重的计算，然后concat起来，得到node feature。
+
+![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215648.png)
+
+当在网络最后一层时，concat输出的维度就node feature太大，不太合理，就改用累加再平均，然后输出，做具体任务。
+
+![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215656.png)
+
+以上就是第一个图中右边示意的结构了。
+
+---------------**分割线：GAT 小结一下**-------------------------------------------------------------------------------------------
+
+GAT中的attention机制还是很直观的，通过给每条边加了一个模型可学习的系数$$\alpha_{i,j}$$，进行带attention系数的node feature融合，使得在做卷积融合feature的过程，能够根据任务调整模型参数，变得自适应使得效果更好。
+
+今年还出了一篇专门讨论GAT的工作的，讨论attention到底学到了的是什么，感兴趣的可以去看看[How Attentive are Graph Attention Networks?](https://arxiv.org/abs/2105.14491)
+
+### 4.可扩展的图网络GraphSAGE
+
+前面说到，GCN中做卷积融合是全图的，梯度是基于全图更新，若是图比较大，每个点邻居节点也较多，这样的融合效率必然是很低的。于是GraphSAGE出现了。
+
+在提GraphSAGE前，先解释下transductive learning、inductive learning的概念，这也是GraphSAGE与其他图模型的区别。
+
+1. **transductive是说要预测的数据在训练时模型也能看到。进一步解释一下，就是说训练前，构建的图结构已经是固定的，你要预测的点或边关系结构都应该已经在这个图里了，训练跟预测时的图结构都是一样的。**
+2. **inductive是说要预测的数据在训练时模型不用看到，也就是我们平常做算法模型的样子，训练预测时的数据是分开的，也就是上面说的可以图结构不是固定的，加入新的节点。**
+
+**GraphSAGE**就是inductive的模式，GraphSAGE提出随机采子图的方式去采样，通过子图更新node embedding， 这样采出的子图结构本身就是变化，从而让模型学到的是一种采样及聚合的参数的方式，有效解决了unseen nodes问题，同时避免了训练中需要把整个图的node embedding一起更新的窘境，有效的增加了扩展性。
+
+![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215704.png)
+
+具体的思想就是分三步：
+
+1. 采子图：训练过程中，对于每一个节点采用切子图的方法，随机sample出部分的邻居点，作为聚合的feature点。如上图最左边，对于中心点，采两度，同时sample出部分邻居节点组成训练中的子图。
+2. 聚合：采出子图后，做feature聚合。这里与GCN的方式是一致的，从最外层往里聚合，从而聚合得到中心点的node embedding。聚合这里可操作的地方很多，比如你可以修改聚合函数（一般是用的mean、sum，pooling等），或增加边权值都是可以的。
+3. 任务预测：得到node embedding后，就可以接下游任务了，比如做node classification，node embedding后接一个linear层+softmax做分类即可。
+
+具体到代码实现思路上，也是与上述思路高度一致。
+
+![](https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215707.png)
+
+也是针对每一个node采出子图，然后进行聚合，最后得到node embedding。
+
+举例：假设中心点为v，采点v的K度子图
+
+1.采出中心点v的K层子图中邻居点u，然后一层层聚合，聚合得到邻居节点node feature $$h_{N(V)}^k=AGGREGATEk({h^{k−1}_u, ∀u∈N(v)})</script><p>2.中心点与它的邻居点通过concat方式聚合，<script type="math/tex">h_v^k=CONCAT(h^{k−1}_v, h^k_{N(v)})</script>,在经过一个非线性函数处理。</p>
+<p>3.最后再Normalize归一化处理一下，得到最后的node embedding</p>
+<p>4.以上述这种方式，从最外层往里聚合,一直聚合到最初的中心点v，点v的node embedding 就更新完成了。</p>
+<p>———————<strong>分割线：GraphSAGE小结一下</strong>—————————————————————————————————————————————————-</p>
+<p>GraphSAGE主要解决了两个问题：1.解决了预测中unseen nodes的问题，原来的GCN训练时，需要看到所有nodes的图数据。2.解决了图规模较大，全图进行梯度更新，内存消耗大，计算慢的问题</p>
+<p>以上两点都是通过一个方式解决的，也就是采子图的方式，由于采取的子图是局部图且是随机的，从而大大增加模型的可扩展性，但这也有一个问题可以思考一下，这个随机采子图的方式是合理的吗？这种方式会不会损失掉部分这个图的node信息。</p>
+<p>对以上感兴趣的还可以看看Cluster-GCN，它通过图聚类的方式去划分子图分区，从而，进一步提高了计算效率。</p>
+<p>———————<strong>分割线：其他的文章系列</strong>————————————————————————————————————————————————————————</p>
+<p>1.<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/390705175">异构图多关系图模型GATNE</a></p>
+<p>2.<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/397710211">游走图模型—同构图DeepWalk</a></p>
+<p>3.<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/400849086">游走图模型-聊聊Node2Vec</a></p>
+<p>4.<a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Graph-Learning">图网络对应代码Github</a></p>
 
       
 
@@ -323,7 +357,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">heterogeneous graph</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">graph random-walk model</a>
         		</li>
       		
 		</ul>
@@ -390,7 +424,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/17/%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/08/22/%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -404,18 +438,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/07/18/Bert%E3%80%81Transformer%E9%9D%A2%E8%AF%95100%E9%97%AE/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Bert、Transformer面试100问
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">TextCNN实践-文本分类利器.md</div>
+    <a href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">进阶版游走图模型Node2Vec</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -442,7 +467,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GATNE%E5%9C%BA%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">2. GATNE场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">3.模型结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-embedding%E8%9E%8D%E5%90%88%E6%96%B9%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">4. embedding融合方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%BB%93%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">5. 结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="toc-number">6.</span> <span class="toc-text">6. 总结一下</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%87%BA%E7%8E%B0GCN%E6%9D%A5%E5%A4%84%E7%90%86%E5%9B%BE%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">1. 为什么出现GCN来处理图结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GCN%E7%9A%84%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">2. GCN的计算原理</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -615,19 +640,19 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">git</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">graph random-walk model</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">bert</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">heterogeneous graph</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">bert</a>
               </li>
             
             <div class="clearfix"></div>

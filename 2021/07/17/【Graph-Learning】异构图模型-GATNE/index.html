@@ -6,15 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2021/3 | Hexo</title>
+  <title>异构图模型--GATNE | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2021/03/index.html">
+  <meta name="description" content="1. 引言图算法模型种类繁多，但可以根据图结构来进行分类，根据不同的图结构选取适应的图模型。以图结构分类主要是两大类。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="异构图模型--GATNE">
+<meta property="og:url" content="http://example.com/2021/07/17/%E3%80%90Graph-Learning%E3%80%91%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. 引言图算法模型种类繁多，但可以根据图结构来进行分类，根据不同的图结构选取适应的图模型。以图结构分类主要是两大类。">
 <meta property="og:locale" content="zh_CH">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000955.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000958.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000954.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000957.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000956.png">
+<meta property="article:published_time" content="2021-07-17T08:33:29.000Z">
+<meta property="article:modified_time" content="2021-07-17T16:13:18.706Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
+<meta property="article:tag" content="heterogeneous graph">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000955.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -152,60 +163,305 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-【Graph-Learning】异构图模型-GATNE" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/03/21/cross-entropy%E3%80%81hingeloss%E8%A7%A3%E6%9E%90/" class="archive-article-date">
-  	<time datetime="2021-03-21T13:09:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-21</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/03/21/cross-entropy%E3%80%81hingeloss%E8%A7%A3%E6%9E%90/">cross entropy、hingeloss解析</a>
+    <h1 class="article-title" itemprop="name">
+      异构图模型--GATNE
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2021/07/17/%E3%80%90Graph-Learning%E3%80%91%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/" class="archive-article-date">
+  	<time datetime="2021-07-17T08:33:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-17</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      <br/>
+      <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
+      <span class="icon-sort"></span>
+      <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
+                阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
+      </span>
+      </a>
+      
+      </header>
+    
+    <!-- 目录内容 -->
+    
+        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+        <span class="btn-bg"></span>
+        <span class="btn-text">文章导航</span>
+        </p>
+        <div id="toc-article" class="toc-article">
+            <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+            <strong class="toc-title">文章目录</strong>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GATNE%E5%9C%BA%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">2. GATNE场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">3.模型结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-embedding%E8%9E%8D%E5%90%88%E6%96%B9%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">4. embedding融合方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%BB%93%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">5. 结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="toc-number">6.</span> <span class="toc-text">6. 总结一下</span></a></li></ol>
+       </div>
+       <script type="text/javascript">
+        function showToc(){
+            var toc_article = document.getElementById("toc-article");
+            var show_toc_btn = document.getElementById("show-toc-btn");
+            toc_article.setAttribute("style","display:block");
+            show_toc_btn.setAttribute("style","display:none");
+            };
+        function showBtn(){
+            var toc_article = document.getElementById("toc-article");
+            var show_toc_btn = document.getElementById("show-toc-btn");
+            toc_article.setAttribute("style","display:none");
+            show_toc_btn.setAttribute("style","display:block");
+            };
+       </script>
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>图算法模型种类繁多，但可以根据图结构来进行分类，根据不同的图结构选取适应的图模型。以图结构分类主要是两大类。<a id="more"></a></p>
+<p>1.同构图: 点类型 + 边类型=2(也就是不区分点与边类型)</p>
+<p>2.异构图：点类型 + 边类型&gt;2 </p>
+<p>根据图结构的定义，很明显，实际场景中存在的多是异构图。下面就分享一下最近研究过的一个阿里的异构图模型-<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1905.01669.pdf">GATNE</a></p>
+<p>GATNE解决了异构图中multi-relationship（两个节点间含多种关系）且能兼容节点属性特性，基本上可以满足实际场景中任意情况了。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000955.png" alt="heter—graph" style="zoom:60%;" /></p>
+<h3 id="2-GATNE场景"><a href="#2-GATNE场景" class="headerlink" title="2. GATNE场景"></a>2. GATNE场景</h3><p>阿里的GATNE应用场景是定义在淘宝的商品推荐上，定义了四种关系（click、add-to-preference、add-to-cart、conversation），两种节点（user、item）。论文中主要提出了一个异构图的模型GATNE，但有两种结构。</p>
+<ol>
+<li>GATNE-T（transductive）：异构图结构（节点不带属性）</li>
+<li>GATNE-I（inductive）：异构图结构（节点带属性，也就是说有些刚注册的新用户它没有产生任何关系，但它注册时提供了性别、年龄等属性）</li>
+</ol>
+<p>在此异构图场景下，论文对比了以同构图模型与异构图模型去做图计算结果的F1-score。同构图模型Deepwalk、异构图模型（node不带属性-GATNE-T）、异构图模型（node带属性-GATNE-I），明显异构图结果指标高的多。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000958.png" alt="GATNE-Scene"></p>
+<p><strong>通过自我实践之后，说一点对这个模型的体会。</strong></p>
+<ol>
+<li>解释下transductive learning、inductive learning的区别，看了很多资料，说<strong>transductive</strong>是说要预测的数据在训练时模型也能看到。进一步解释一下，就是说训练前，构建的图结构已经是固定的，你要预测的点或边关系结构都应该已经在这个图里了，训练跟预测时 的图结构都是一样的。<strong>inductive</strong>是说要预测的数据在训练时模型不用看到，也就是我们平常做算法模型的样子，训练预测时的数据是分开的，也就是上面的说可以加入新的用户，图结构是变化的。</li>
+<li>GATNE-T（推理式）学习的是图的结构表达。易训，且真实效果不比GATNE-I差。</li>
+<li>GATNE-I（总结式）带属性，在推荐场景中适应于冷启动的数据，但是需好好考虑用什么属性丢到图里去，对结果影响还挺大的，属性特征可能会掩盖模型学到的结构特征，较于GATNE-T难训练，且需要的内存及计算资源都大的多。</li>
+</ol>
+<h3 id="3-模型结构"><a href="#3-模型结构" class="headerlink" title="3.模型结构"></a>3.模型结构</h3><p>GATNE模型结构总统上是比较简单的，但在node embedding 跟edge embedding表达及融合上还挺特别的。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000954.png" style="zoom:80%;" /></p>
+<p><strong>transductive下</strong></p>
+<ol>
+<li>就是通过sum或mean方式融合base node embedding与edge embedding作为节点的embedding。（这部分融合做的挺特别的，大部分公式也都这部分了，拆出来放下面说）</li>
+<li>然后通过图结构构建metapath，也就是沿着图结构采取出一条条walk_path</li>
+<li>然后对每一条walk_path,采取的Skip-gram的模型生成训练样本进行训练,这个就跟word2vec的训练方式一样。</li>
+</ol>
+<p><strong>inductive下</strong>，模型会加多融入一个属性attributes特征，原文中这部分都是给的10010这种作为属性。比如性别用男女0-1表达，年龄划分几个年龄段等 。</p>
+<p><strong>这里有个缺点就是不能融合文本特征，比如有些用户可能还存在一些标签，比如文艺青年、稳重大叔等这种，这也是很重要的信息</strong>，想结合这部分的可以去看看百度的文本图模型ERNIESage，它是采用ERNIE做文本编码，融合文本信息，但是它的ERNIE文本编码是融合在这个图模型中，文本编码的特征也是跟着整体网络一起优化的。</p>
+<h3 id="4-embedding融合方式"><a href="#4-embedding融合方式" class="headerlink" title="4. embedding融合方式"></a>4. embedding融合方式</h3><p>看看GATNE是怎么融合embedding的，论文的公式基本上都集中在这一块了。首先先说一下文章中embedding设计的模式，每一个node上初始化时有两种embedding，它分为base embedding，edge embedding。就是说每<script type="math/tex">i</script>个node初始化时有一个<script type="math/tex">b_i</script>(base embedding)，这个node在不同relationship上的edge，则会有对应<script type="math/tex">u_{i,r}</script>。</p>
+<p><strong>transductive模式：</strong></p>
+<p>主要是两步融合：</p>
+<ol>
+<li><p>message passing：相邻节点下，相同类型边的edge embedding融合见公式1, aggregator方式原文中提到了mean及pooling，实践下来其实sum也不错。</p>
+<script type="math/tex; mode=display">u^{(k)}_{i,r} = aggregator({u^{(k−1)}_{j,r}, ∀v_j∈N_{i,r}})\tag{1}</script></li>
+<li><p>某一节点下，不同edge embedding作attention的融合见公式2。<script type="math/tex">w^T_r，W_r</script>就是需要在训练的过程中学出来的参数矩阵，从而得到attention系数矩阵<script type="math/tex">a_{i,r}</script>，<script type="math/tex">a_{i,r}</script>其实就是个作用于edge embedding的权重矩阵。</p>
+<script type="math/tex; mode=display">a_{i,r}=softmax(w^T_rtanh(W_rU_i))^T\tag{2}</script></li>
+<li><p>最后加上base embedding，见公式3，做最后一步融合得到最后的node embedding<script type="math/tex">v_{i,r}</script>。<strong>提醒一下这里<script type="math/tex">v_{i,r}</script>表示的是第i个节点在第r条关系上的表达。就是说训练完成后一个节点会有多个embedding表达，图有4种类型的edge，一个点就会得到4个<script type="math/tex">v_{i,r}</script>，r表示不同的relationship</strong></p>
+<script type="math/tex; mode=display">v_{i,r} = b_i + α_r M^T_rU_ia_{i,r} \tag{3}</script></li>
+</ol>
+<p><strong>inductive模式：</strong></p>
+<p>inductive模式与transdtrauctive模式的区别主要就在于base embedding及edge embedding的初始化,见公式4。</p>
+<p>transdtrauctive是随机初始化的，而inductive的base embedding及edge embedding是通过属性特征<script type="math/tex">x_i</script>转换来的, <script type="math/tex">b_i等价于h_z(xi),u^{(0)}_{i,r}等价于g_{z,r}(xi),  h_z,g_{z,r}</script>为两个转换函数。</p>
+<p>最后多的这一项<script type="math/tex">β_rD^T_zx_i</script>就是额外添加的这个属性的feature，也就是比transductive多加了一项属性特征，从而得到最后的<script type="math/tex">v_{i,r}</script></p>
+<script type="math/tex; mode=display">v_{i,r} = h_z(xi) + α_rM^T_rU_ia_{i,r} + β_rD^T_zx_i\tag{4}</script><p><strong>最后在提一下模型的loss function</strong></p>
+<p>这里用到loss function没啥特别的，只是加了个negative sample 的值部分。还是常规的推荐中常用的一个计算loss技巧，就是loss由positive跟negative两部分相加组成，pos就是与邻居点得到的一个target的值，neg就是与随机取的点计算得到的target值，简化一下就是<script type="math/tex">loss = max（loss_{pos}）+min(loss_{neg})</script></p>
+<p>原文中用的是log 的loss方法，就是这种形式<script type="math/tex">loss=log(pos)/(neg)</script>,最大化pos的值，最小化neg的值。其实把计算pos或neg的值的方式改成由cross entropy计算效果也差不多。</p>
+<h3 id="5-结果"><a href="#5-结果" class="headerlink" title="5. 结果"></a>5. 结果</h3><p>到了结果这一部分，也没啥好说的，就是强就完事了。但有几个地方值得一看。</p>
+<ol>
+<li>GATNE-T与GATNE-I在公开数据集上各有优劣，推特那个数据集也是带属性的，而GATNE-T 的表现更好，可见GATNE-I效果不一定就比GATNE-T要好，在阿里自己切出来的真实小数据集Alibaba-S上，指标也并不高，可见真实数据上，图模型还是不好应用的，这点给大家打个预防针（可能ali的人没有好好构图、调参，毕竟在它的真实大数据集上给出的指标挺好）。</li>
+</ol>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000957.png" alt="GATNE"></p>
+<ol>
+<li><p>工程应用上，公布的ali的数据集是4000万nodes、5亿edges，150个wokers，训练两小时左右（顺带提一下这个workers的详细意义，Every two workers share an NVIDIA Tesla P100 GPU with 16GB memory，大家慢慢体会…）</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000956.png" alt="GATN_scalability"></p>
+</li>
+</ol>
+<h3 id="6-总结一下"><a href="#6-总结一下" class="headerlink" title="6. 总结一下"></a>6. 总结一下</h3><p>GATNE这个模型厉害的地方不仅是在于它的指标高、效果好，而且这是一个在ali应用了的工程模型，<strong>而且它解决了异构图中multi-relationship且能兼容attribute-feature的，基本上是满足实际场景中任意情况了</strong>，值得借鉴。另外这篇文章不仅提到它的新模型，在文中也总结一些常见的图算法模型比如deepwalk、metapath、GraphSAGE等，也可以当作一个图算法的总结型文章，还是挺值得大家作为图学习方面的资料去看看学习一下的。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>Thank You！<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wechatpay.jpg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">loss function</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">heterogeneous graph</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
 
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/17/%E3%80%90Graph-Learning%E3%80%91%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2021/07/18/Bert%E3%80%81Transformer%E9%9D%A2%E8%AF%95100%E9%97%AE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Bert、Transformer面试100问
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">TextCNN实践-文本分类利器.md</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GATNE%E5%9C%BA%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">2. GATNE场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84"><span class="toc-number">3.</span> <span class="toc-text">3.模型结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-embedding%E8%9E%8D%E5%90%88%E6%96%B9%E5%BC%8F"><span class="toc-number">4.</span> <span class="toc-text">4. embedding融合方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%BB%93%E6%9E%9C"><span class="toc-number">5.</span> <span class="toc-text">5. 结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="toc-number">6.</span> <span class="toc-text">6. 总结一下</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
   
 
-    
+  
+
+  
+
+  
+
+  
 
 
           </div>
@@ -233,8 +489,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
