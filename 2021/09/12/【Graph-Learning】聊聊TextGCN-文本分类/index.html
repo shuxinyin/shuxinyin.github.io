@@ -15,22 +15,22 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="1. 引言文本分类是NLP的一个常规任务，在这个任务上，Bert这类的pre-trained的model已经取得了一个通用且效果较好的地位。在我看来，TextGCN的提出，主要贡献不是说在文本分类这个基础任务上，取得了多大的突破，它更多的是通过图网络对自然语言中文本表达的任务进行了一些探索，给大家提供了一个不错且可行的参考角度。">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/textGCN-mind.png">
-<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/textGCN-model.png">
-<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/edge-weights.png">
-<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/PMI.png">
-<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/model_equation.png">
-<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/loss-equation.png">
-<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/TextGCN_Res.png">
-<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/BertGCN_Bert.png">
-<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/BertGCN_Target.png">
-<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/BertGCN_res.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/textGCN-mind.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/textGCN-model.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/edge-weights.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/PMI.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/model_equation.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/loss-equation.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/TextGCN_Res.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/BertGCN_Bert.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/BertGCN_Target.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/BertGCN_res.png">
 <meta property="article:published_time" content="2021-09-12T02:20:14.000Z">
-<meta property="article:modified_time" content="2021-09-16T13:50:24.328Z">
+<meta property="article:modified_time" content="2021-09-16T14:23:51.413Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta property="article:tag" content="text graph">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/textGCN-mind.png">
+<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/textGCN-mind.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -229,23 +229,23 @@
         <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>文本分类是NLP的一个常规任务，在这个任务上，Bert这类的pre-trained的model已经取得了一个通用且效果较好的地位。在我看来，<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1809.05679.pdf">TextGCN</a>的提出，主要贡献不是说在文本分类这个基础任务上，取得了多大的突破，它更多的是通过图网络对自然语言中文本表达的任务进行了一些探索，给大家提供了一个不错且可行的参考角度。<a id="more"></a></p>
 <p>通用传统上，针对text classification，主要工作在于如何捕捉文本结构特征或语义特征，通过字嵌入或词嵌入进行编码、得到相应sentence特征，然后进行文本分类（如CNN、RNN等)。<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1809.05679.pdf">TextGCN</a>提出的将图卷积GCN应用于文本分类任务，文中提了一个有意思的角度，document通过word进行表达，那可不可以利用图网络这种结构，将document与word构造成图的模式，同时进行嵌入表达，然后再进行文本分类呢。</p>
 <h3 id="2-TextGCN"><a href="#2-TextGCN" class="headerlink" title="2. TextGCN"></a>2. TextGCN</h3><p>TextGCN的结构与思想很直观，结构如下图，基本可分为两部分：图构造与模型训练 </p>
-<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/textGCN-mind.png" alt="textGCN-mind"></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/textGCN-mind.png" alt=""></p>
 <h4 id="2-1-图构造（Build-Graph）"><a href="#2-1-图构造（Build-Graph）" class="headerlink" title="2.1 图构造（Build Graph）"></a>2.1 图构造（Build Graph）</h4><p>TextGCN构造的是一个异构图，图网络中有两种节点类型，文本document、单词word，word就是document中的不重复的单词，两种edge-type，document-word, word-word,如下图。</p>
-<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/textGCN-model.png" alt=""></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/textGCN-model.png" alt=""></p>
 <p>其中各边都带有edge weights， 边上的权重$A_{i,j}$是通过下列方式定义。</p>
-<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/edge-weights.png" alt=""></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/edge-weights.png" alt=""></p>
 <p>document-word的edge weights是通过TF-IDF定义，word-word的edge-weights是通过PMI（point-wise mutual information）定义，（文中提到了PMI的实验效果比用简单的单词共现频次作为边权重效果好的多），最后还加了个node自循环， edge weights=1，感觉原文构图方式的精华都在这里了。</p>
 <p>再展开说下PMI，在下面三个公式中，$W_i$是所有滑动窗口中包含单词i的窗口个数，$W(i,j)$是指包含单词i与单词j的窗口个数, $W$是总的滑动窗口个数。然后通过下面公式计算edge-weights。</p>
-<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/PMI.png" alt=""></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/PMI.png" alt=""></p>
 <h4 id="2-2-模型训练（GCN-Train）"><a href="#2-2-模型训练（GCN-Train）" class="headerlink" title="2.2 模型训练（GCN Train）"></a>2.2 模型训练（GCN Train）</h4><p>模型方面挺简单的，就是一个两层的GCN，前面有写过GCN，比较简单，不是很了解GCN的可以花几分钟看下这个文章 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/404826711">图卷积：从GCN到GAT、GraphSAGE</a>， 这里也分析了GCN的优劣势及可优化点。</p>
 <p>模型总体用一个公式表达总结起来就是下面这个，其中$X$为初始node feature,$W$为模型参数, $A=D^{-1/2}AD^{1/2}$这就是GCN的表达式，合计起来，下面这个公式就是一个两层的GCN表达式，第一层激活函数为Relu，最后一层直接接上softmax输出分类概率。</p>
-<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/model_equation.png" alt=""></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/model_equation.png" alt=""></p>
 <p>在两层的GCN Layer及softmax输出类别概率之后，就该轮到Loss function上场了。由于是分类任务，文中这里的loss function当然还是选用的交叉熵，Y是label,Z是上面输出的类别概率值。</p>
-<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/loss-equation.png" alt=""></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/loss-equation.png" alt=""></p>
 <p><strong>在这里想提一点题外的，由于GCN是full-batch更新的即全图更新，也就意味着当节点比较多、图比较大时，全图更新计算是很慢的而且内存占用大，在工程应用上是没法接受的，关于这方面的研究及改进方法可看看上面那篇介绍GCN的文章。</strong></p>
 <h4 id="2-3-实验结果"><a href="#2-3-实验结果" class="headerlink" title="2.3 实验结果"></a>2.3 实验结果</h4><p> 实验结果方面，当然是好了，想提的是TF-IDF与TextGCN的结果对比，因为TextGCN模型方面是比较简单的，用的就是两层GCN，主要亮点是在构造文本图网络那一块，其中document-word用的TF-IDF来构造边权重，TF-IDF构造是一个全局特征（通过统计所有文档词重要度得来），这在一定程度上与GCN的局部特征融合得到弥补，这也可能是只需一个两层的浅层GCN网络就达到最好效果的部分原因。在此基础上，又通过PMI增加了word-word之间权重，这相当是通过人工的构造了又一有助于文本表达的有效特征，因此模型方面其实不需要多复杂，只需要一个简单的GCN模型做特征融合就能达到足够好的效果。在结果中可看到，TFIDF+LR在几个数据集上表现也不错，但在个别的数据集上泛化性还是不够，效果不够好，而TextGCN对比下来，较TDIDF单一特征泛化能力好了不少，普遍出现了提升。</p>
 <p>不得不说，这种构造文本图网络的方式是很有借鉴意义的，提供了一个新的且有效的构图方法，值得参考。</p>
-<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/TextGCN_Res.png" alt="RES"></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/TextGCN_Res.png" alt="RES"></p>
 <p>———————-<strong>分割线：TextGCN 小结一下</strong>———————————————————————————-</p>
 <p>TextGCN构造简单、模型也不复杂、提出了一个有效且可执行的关于文本的建图方法。但是TextGCN只利用到了结构特征，丢掉了文本的语义特征，这是一个可优化的方向。</p>
 <h3 id="3-BertGCN"><a href="#3-BertGCN" class="headerlink" title="3.BertGCN"></a>3.BertGCN</h3><p>聊完TextGCN, 再来聊聊今年发出的<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2105.05727.pdf">BertGCN</a>，就简单的多了，BertGCN也是两部分Build Graph及Model Train。</p>
@@ -254,12 +254,12 @@
 <p>3.融合BERT模块与GCN模块得到的结果、模型训练</p>
 <p>在融合Bert与GCN训练这部分，文中指出，将Bert encoder部分得到embedding后丢进GCN里，直接联合训练，会有两个问题出现，<strong>1. 梯度回传时，Bert部分得不到有效的梯度优化。2. GCN是全图更新的，假设图是1w个document节点，则bert部分1w个document同时进行bert encoder得到document embedding,然后丢到GCN layer中更新训练，这显然是做不到的。</strong></p>
 <p>针对第1个问题，文中提出了插值更新的方法。最后的插值更新就是将GCN那部分得到document embedding的及Bert单独作用于文本的两个document embedding加起来得到融合分类概率Z，然后采用cross entropy损失函数做一个分类预测。</p>
-<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/BertGCN_Bert.png" alt=""></p>
-<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/BertGCN_Target.png" alt="BertGCN_Target"></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/BertGCN_Bert.png" alt=""></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/BertGCN_Target.png" alt="BertGCN_Target"></p>
 <p>当λ=1时，BERT模块没有更新；当λ=1时，GCN模块没有更新；当λ在（0，1）之间时，两个模块则分别更新。</p>
 <p>针对第2个问题，文中给的解决方案就是先用bert处理所有的document节点，得到embedding，存起来，然后训练时,去取对应batch里涉及到的embedding（有点GraphSAGE的思想，相当于每个document都是一个切出来的单独子图）。</p>
 <p>以上就说完了。再对比看一下实验结果。</p>
-<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/TextGCN/BertGCN_res.png" alt=""></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/BertGCN_res.png" alt=""></p>
 <p>BertGCN把Bert的训练结果补上了，对比下来，BertGCN达到了bert差不多的效果，但这个是GCN部分的作用还是bert部分的作用，很难说明白。原始TextGCN建图的方式确实有奇效，在前四个数据集上均有与bert不相上下的效果，但在最后一个数据集上差了不少，说明这种建图方式对文本数据有一定的适用性范围，不能说普遍适用。</p>
 <p>最后想说一下，GCN部分的embedding + Bert 部分embedding，这里处理的太简单，因为用bert本意应该是说给GCN模型补充文本语义特征，但这样采用两部分相加结合，模型最后变好了，究竟是GCN部分在原来document初始化时改成bert初始化，使得GCN聚合特征时学到了语义特征表达的更好了，从而发挥了作用。还是Bert这个模型部分本身出来的embedding直接做文本encoder后分类直接就够好了，刚好对GCN那部分没有做好的文本进行了效果补充，发挥了作用呢，这有点像在做多个不同模型的叠加ensemble，而不是一个整体的联合。</p>
 <p>这感觉不算是真的将bert融合进了GCN，虽然叠加也是一种融合，但跟想象中的把文本的语义特征很好的融合进GCN还是有一些差距。</p>
