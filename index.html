@@ -158,6 +158,305 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-【Graph-Learning】怎么搭一个GCN？只需这四步" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/10/17/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E4%B8%80%E4%B8%AAGCN%EF%BC%9F%E5%8F%AA%E9%9C%80%E8%BF%99%E5%9B%9B%E6%AD%A5/">【Graph-Learning】怎么搭一个GCN？只需这四步</a>
+    </h1>
+  
+
+        
+        <a href="/2021/10/17/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E4%B8%80%E4%B8%AAGCN%EF%BC%9F%E5%8F%AA%E9%9C%80%E8%BF%99%E5%9B%9B%E6%AD%A5/" class="archive-article-date">
+  	<time datetime="2021-10-17T02:25:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-17</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>程序员界一直讲究 Talk is cheap，show me the code。图网络最近很火，新的模型、原理解析一大堆，但光看懂原理肯定不够，踩坑实践一下理解才更透彻。</p>
+<p>那怎么正确搭建一个GCN呢？</p>
+<p>手把手的从建图、定义邻接矩阵到GCN model，教你怎么搭一个GCN的model，搞清楚这四步，即可速成。话不多说，直接来。
+        
+          <a class="article-more-a" href="/2021/10/17/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E4%B8%80%E4%B8%AAGCN%EF%BC%9F%E5%8F%AA%E9%9C%80%E8%BF%99%E5%9B%9B%E6%AD%A5/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">graph gcn model</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/10/17/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E4%B8%80%E4%B8%AAGCN%EF%BC%9F%E5%8F%AA%E9%9C%80%E8%BF%99%E5%9B%9B%E6%AD%A5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【TorchBug】LossFunction：CrossEntropyLoss与corss-entropy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/09/23/%E3%80%90TorchBug%E3%80%91LossFunction%EF%BC%9ACrossEntropyLoss%E4%B8%8Ecorss-entropy/">LossFunction：CrossEntropyLoss与corss_entropy</a>
+    </h1>
+  
+
+        
+        <a href="/2021/09/23/%E3%80%90TorchBug%E3%80%91LossFunction%EF%BC%9ACrossEntropyLoss%E4%B8%8Ecorss-entropy/" class="archive-article-date">
+  	<time datetime="2021-09-23T13:22:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-23</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近看torch接口文档中发现，有两个corss entropy的接口，CrossEntropyLoss与corss_entropy，平常也是随便拿来就用，没注意过，但总是用起来有点虚。</p>
+<p>今天就结合代码仔细看看这两个接口的实现以及使用，顺带分析经常跟cross entropy一并出场的log_softmax、nll_loss。保证看完就不再稀里糊涂了，踏踏实实的使用，看结论可以直接拉到文中末尾。</p>
+<h3 id="1-corss-entropy与CrossEntropyLoss"><a href="#1-corss-entropy与CrossEntropyLoss" class="headerlink" title="1. corss_entropy与CrossEntropyLoss"></a>1. corss_entropy与CrossEntropyLoss</h3><h4 id="1-1-cross-entropy-交叉熵"><a href="#1-1-cross-entropy-交叉熵" class="headerlink" title="1.1 cross_entropy 交叉熵"></a>1.1 cross_entropy 交叉熵</h4><p>cross_entropy 交叉熵的数学定义</p>
+<script type="math/tex; mode=display">H(p,q)=-\sum_{x=0}^n(p(x)log(q(x)+ (1-p(x))log(1-q(x)))</script><p>交叉熵评估的是两个序列的距离，因此可以拿来用作模型的loss function。举个例子，在模型学习中，假设序列p是label，q是模型输出的特征序列，那模型想达到的效果是让这两个序列尽可能的拟合，相近。</p>
+<p>pytorch实现上用的不是以上这种形式，用的另一种形式是：<script type="math/tex">H(p,q)=-\sum_{x=0}^n(p(x)logq(x))</script></p>
+<p>而且，torch中label序列p的shape与模型输出q的shape不一定是一致的，因为你的任务<strong>可能是一个多分类任务</strong>，比如，q.shape = [N, C], N为样本个数，C为类别数，而p.shape=[N], 值要求0&lt;p(x)&lt;=C-1，不能大于类别数。</p>
+<p><strong>torch中cross_entropy具体计算公式是这个<script type="math/tex">loss(x, class)=-log(e^{x[class]}/\sum_{j=0}^Ce^{x[j]})</script>, x为序列q中的每一个向量。</strong></p>
+<p>看看在模型中是这么用corss_entropy的。</p>
+<p>举个例子, 一个batch装3个样本，5个class:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line">logits = torch.randn(<span class="number">3</span>, <span class="number">5</span>, requires_grad=<span class="literal">True</span>) <span class="comment"># shape(3, 5)</span></span><br><span class="line">&gt;&gt;&gt;tensor([[ <span class="number">1.5410</span>, <span class="number">-0.2934</span>, <span class="number">-2.1788</span>,  <span class="number">0.5684</span>, <span class="number">-1.0845</span>],</span><br><span class="line">        [<span class="number">-1.3986</span>,  <span class="number">0.4033</span>,  <span class="number">0.8380</span>, <span class="number">-0.7193</span>, <span class="number">-0.4033</span>],</span><br><span class="line">        [<span class="number">-0.5966</span>,  <span class="number">0.1820</span>, <span class="number">-0.8567</span>,  <span class="number">1.1006</span>, <span class="number">-1.0712</span>]], requires_grad=<span class="literal">True</span>)</span><br><span class="line">labels = torch.tensor([<span class="number">1</span>, <span class="number">0</span>, <span class="number">4</span>])</span><br><span class="line">loss = F.cross_entropy(logits, labels, reduction=<span class="string">&#x27;none&#x27;</span>)</span><br><span class="line">&gt;&gt;&gt;tensor([<span class="number">2.3257</span>, <span class="number">3.0493</span>, <span class="number">2.7802</span>], grad_fn=&lt;NllLossBackward&gt;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># logsoftmax + nll_loss = cross_entropy</span></span><br><span class="line">loss_nll = F.nll_loss(F.log_softmax(logits), labels, reduction=<span class="string">&#x27;none&#x27;</span>)</span><br><span class="line">&gt;&gt;&gt;tensor([<span class="number">2.3257</span>, <span class="number">3.0493</span>, <span class="number">2.7802</span>], grad_fn=&lt;NllLossBackward&gt;)</span><br></pre></td></tr></table></figure>
+<p>算一下第一个样本的loss（torch中reduction默认是mean，这里用none算每一个样本的loss结果），<script type="math/tex">loss = -log(e^{-0.2934}/(e^{1.5410}+e^{-0.2934}+e^{-2.1788}+e^{0.5684}+e^{-1.0845}))=2.3257</script>。</p>
+<p><strong>其实，corss_entropy在实现上就是log_softmax 与 nll_loss的综合。</strong></p>
+<p>看一下log_softmax 与 nll_loss的计算公式：</p>
+<script type="math/tex; mode=display">log-softmax = log(softmax(x_i))=log(e^{x_i}/\sum_{j=0}e^{x[j]})</script><p>NLL-Loss (negative log likelihood loss), 数学上应该是<script type="math/tex">\sum_{x}log(x)</script> ，然而在torch中只是<strong>按label中对应的index取出logits对应的值，并取负号输出</strong>，也就是这个式子：</p>
+<script type="math/tex; mode=display">nll-loss(x, class) = -x[class]</script><p>所以总结一下，cross_entropy = nll_loss + log_softmax</p>
+<h4 id="1-2-CrossEntropyLoss-交叉熵损失函数"><a href="#1-2-CrossEntropyLoss-交叉熵损失函数" class="headerlink" title="1.2 CrossEntropyLoss 交叉熵损失函数"></a>1.2 CrossEntropyLoss 交叉熵损失函数</h4><p>Torch中CrossEntropyLoss计算方式与corss_entropy是一样的，也是这式子</p>
+<script type="math/tex; mode=display">loss(x, class)=-log(e^{x[class]}/\sum_{j=0}^Ce^{x[j]})</script><p>测试代码在这里：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line">loss = torch.nn.CrossEntropyLoss(reduction=<span class="string">&#x27;none&#x27;</span>)</span><br><span class="line">logits = torch.randn(<span class="number">3</span>, <span class="number">5</span>, requires_grad=<span class="literal">True</span>) <span class="comment"># shape(3, 5)</span></span><br><span class="line">&gt;&gt;&gt;tensor([[ <span class="number">1.5410</span>, <span class="number">-0.2934</span>, <span class="number">-2.1788</span>,  <span class="number">0.5684</span>, <span class="number">-1.0845</span>],</span><br><span class="line">        [<span class="number">-1.3986</span>,  <span class="number">0.4033</span>,  <span class="number">0.8380</span>, <span class="number">-0.7193</span>, <span class="number">-0.4033</span>],</span><br><span class="line">        [<span class="number">-0.5966</span>,  <span class="number">0.1820</span>, <span class="number">-0.8567</span>,  <span class="number">1.1006</span>, <span class="number">-1.0712</span>]], requires_grad=<span class="literal">True</span>)</span><br><span class="line">labels = torch.tensor([<span class="number">1</span>, <span class="number">0</span>, <span class="number">4</span>])</span><br><span class="line">loss = loss(logits, labels)</span><br><span class="line">&gt;&gt;&gt;tensor([<span class="number">2.3257</span>, <span class="number">3.0493</span>, <span class="number">2.7802</span>], grad_fn=&lt;NllLossBackward&gt;)</span><br></pre></td></tr></table></figure>
+<p><strong>所以，算出来的结果与cross_entropy是一样的。这corss_entropy与CrossEntropyLoss两个接口在结果上没有什么区别，都可以用。</strong></p>
+<p><strong>corss_entropy与CrossEntropyLoss两个接口在结果上没有什么区别，都可以用。但是在函数定义上，有一些区别，Torch中CrossEntropyLoss这个接口是在nn module下面的一个类，所以在使用时，得先定义一个实例，而corss_entropy是nn.functional下的一个功能函数，直接用就可以了。</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">loss func</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Pytorch-Learning//" class="article-tag-list-link color2">Pytorch Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/09/23/%E3%80%90TorchBug%E3%80%91LossFunction%EF%BC%9ACrossEntropyLoss%E4%B8%8Ecorss-entropy/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【Graph-Learning】图学习入门路线" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/09/18/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E8%B7%AF%E7%BA%BF/">【Graph-Learning】图学习入门路线</a>
+    </h1>
+  
+
+        
+        <a href="/2021/09/18/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E8%B7%AF%E7%BA%BF/" class="archive-article-date">
+  	<time datetime="2021-09-18T12:36:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-18</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这就跟当时刚开始深度学习流行的那时候一样，CNN在大家眼中都是个很新奇的东西，当时觉得既难又神秘，那你看现在，谁还会觉得觉得CNN很难了，框架一堆都是现成的轮子，三两行代码搭一个cnn，教程遍地都是。</p>
+<p>觉得难不好入门，是因为你还不了解它，你认真的去读它几篇文章，不用最新的，就从最基础的开始，认真读个三四篇，并着手把一些基础的模型，例如最初的GCN，GAT动手写一写。刚开始不会写不要紧啊，现在资料都已经很多了，照着别人的代码结合文章理解，仿照写一写，三两个模型之后。估计那时你就会觉得，这图神经网络也不过是各个节点向量间在乱七八糟的一顿加权求和罢了，一点也不神秘。
+        
+          <a class="article-more-a" href="/2021/09/18/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E8%B7%AF%E7%BA%BF/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">graph learning method</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/09/18/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E8%B7%AF%E7%BA%BF/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-【Graph-Learning】聊聊TextGCN-文本分类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -818,299 +1117,6 @@
 
 
   
-    <article id="post-TextCNN-文本分类利器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/">TextCNN实践-文本分类利器.md</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2021-07-04T03:32:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-04</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>说到文本分类，目前最通用最有效的方法就是通过bert预训练模型，后接一个简单的下游分类任务。但bert模型，模型参数大，训练时间长，推理时间长，应用上不方便。而textCNN相对于bert，参数少，训练快，模型结构简单，在文本分类上表现也不差，值得一看。
-        
-          <a class="article-more-a" href="/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CNN</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/NLP//" class="article-tag-list-link color4">NLP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-CNN模型快速上手指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/23/CNN%E6%A8%A1%E5%9E%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">CNN模型快速上手指南.md</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/23/CNN%E6%A8%A1%E5%9E%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/" class="archive-article-date">
-  	<time datetime="2021-06-23T14:35:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-23</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>CNN（卷积神经网络），这个词应该听了很多遍，也有很多文章从原理到结构都讲过了，talk is cheap, show code 才是正途。这篇文章就从实践开始，搭一个CNN以及搭CNN的过程中要注意的问题，总结分享一下体会。
-        
-          <a class="article-more-a" href="/2021/06/23/CNN%E6%A8%A1%E5%9E%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CNN</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Deep-Learning//" class="article-tag-list-link color4">Deep Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/23/CNN%E6%A8%A1%E5%9E%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-站在transformer的肩膀上调bert-md" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/14/%E7%AB%99%E5%9C%A8transformer%E7%9A%84%E8%82%A9%E8%86%80%E4%B8%8A%E8%B0%83bert-md/">站在transformer的肩膀上调bert.md</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/14/%E7%AB%99%E5%9C%A8transformer%E7%9A%84%E8%82%A9%E8%86%80%E4%B8%8A%E8%B0%83bert-md/" class="archive-article-date">
-  	<time datetime="2021-06-14T13:22:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-14</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>做文本处理任务，总是会用到经典预训练模型bert，而torch调用bert，得将原预训练文件先转换成torch适应的版本，总是有些麻烦。</p>
-<p>发现一个好用的开源工具，Hugging face开源的transformer库，以前叫pytorch-pretrained-bert，将调用bert这一事情，简化了不少。前人种树，后人乘凉。看看这事变得有多简单。</p>
-<p>torch、tensorflow在transformer库的基础上都适用。</p>
-<p><a target="_blank" rel="noopener" href="https://huggingface.co/transformers/">附一个官网链接</a>。</p>
-<h3 id="通过transformer调用bert"><a href="#通过transformer调用bert" class="headerlink" title="通过transformer调用bert"></a>通过transformer调用bert</h3><h4 id="1-安装transformer环境"><a href="#1-安装transformer环境" class="headerlink" title="1. 安装transformer环境"></a>1. 安装transformer环境</h4><p>​    在安装好torch基础上，直接安装transformer</p>
-<blockquote>
-<p>pip install transformer</p>
-</blockquote>
-<p>其实，这个transformer包把一些预训练文件的转换及调用代码做了一些封装，使得调用更方便。</p>
-<p>下面就开始正式调bert了。</p>
-<h4 id="2-下载bert预训练文件"><a href="#2-下载bert预训练文件" class="headerlink" title="2. 下载bert预训练文件"></a>2. 下载bert预训练文件</h4><p>上官网找到<a target="_blank" rel="noopener" href="https://huggingface.co/models">模型页面</a>, 找一下需要的bert版本，例如，需要chinese-bert-base，搜一下就能找到了。下载对应的预训练文件pytorch_model.bin、vocab.txt、coonfig.json，放到文件夹../bert_chinese_pretrained就好了</p>
-<h4 id="3-tokenizer、encode—分词及编码"><a href="#3-tokenizer、encode—分词及编码" class="headerlink" title="3. tokenizer、encode—分词及编码"></a>3. tokenizer、encode—分词及编码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> BertModel, BertConfig, BertTokenizer</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bert_define</span>(<span class="params">path = <span class="string">&quot;../bert_chinese_pretrained&quot;</span></span>):</span></span><br><span class="line">    <span class="comment"># 加载bert的tokenizer分词</span></span><br><span class="line">    tokenizer = BertTokenizer.from_pretrained(path)</span><br><span class="line">    <span class="comment"># 加载预训练模型</span></span><br><span class="line">    model_config = BertConfig.from_pretrained(path)</span><br><span class="line">    model = BertModel.from_pretrained(path, config=model_config)</span><br><span class="line">    <span class="keyword">return</span> tokenizer, model</span><br></pre></td></tr></table></figure>
-<p>几行代码就定义好了，bert需要的tokenizer及encode模型。</p>
-<p>下面测试一下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">text = [<span class="string">&quot;清晨去学校，小鸟对我笑。&quot;</span>, <span class="string">&quot;小鸟说，早早早， 是谁一早背上大书包。&quot;</span>]</span><br><span class="line">max_len = <span class="number">32</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构成一个小batch</span></span><br><span class="line">batch_token, batch_segment, batch_mask = list(), list(), list()</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> text:</span><br><span class="line">    <span class="comment"># text 作 tokenizer 分词</span></span><br><span class="line">    token = tokenizer.tokenize(t)</span><br><span class="line">    token = [<span class="string">&#x27;[CLS]&#x27;</span>] + token + [<span class="string">&#x27;[SEP]&#x27;</span>]</span><br><span class="line">    token_id = tokenizer.convert_tokens_to_ids(token)  <span class="comment"># 字转换vocab中的index</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 加padding补齐及segment、mask</span></span><br><span class="line">    padding = [<span class="number">0</span>] * (max_len - len(token_id))</span><br><span class="line">    mask = [<span class="number">1</span>] * len(token_id) + padding</span><br><span class="line">    segment = [<span class="number">0</span>] * len(token_id) + padding</span><br><span class="line">    token_id = token_id + padding</span><br><span class="line"></span><br><span class="line">    batch_token.append(token_id)</span><br><span class="line">    batch_segment.append(segment)</span><br><span class="line">    batch_mask.append(mask)</span><br><span class="line"></span><br><span class="line">batch_tensor_token = torch.tensor(batch_token)</span><br><span class="line">batch_tensor_segment = torch.tensor(batch_segment)</span><br><span class="line">batch_tensor_mask = torch.tensor(batch_mask)</span><br><span class="line"><span class="comment"># text encode</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    outputs = model(batch_tensor_token, token_type_ids=batch_tensor_segment, attention_mask=batch_tensor_mask)</span><br><span class="line">    outputs = outputs[<span class="number">0</span>][:, <span class="number">0</span>, :]  <span class="comment"># 取cls向量</span></span><br><span class="line">    print(outputs.shape)  <span class="comment"># torch.Size([2, 768])</span></span><br></pre></td></tr></table></figure>
-<p>也可以在encode后，即拿cls向量，接其他的下游任务，如文本分类等等，这就是预训练bert的一般用法了。</p>
-<p>在此基础上的，<a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Chinese-Text-Classification-Bert-Torch">写了个完整的调bert预训练作文本多分类的任务</a>, 其中还实现了调albert作文本分类的工作（把BertModel换成AlbertModel就可，tokenizer可以共用bert-base的），供参考。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">bert</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/NLP//" class="article-tag-list-link color4">NLP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/14/%E7%AB%99%E5%9C%A8transformer%E7%9A%84%E8%82%A9%E8%86%80%E4%B8%8A%E8%B0%83bert-md/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
       <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
@@ -1253,15 +1259,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">机器学习算法</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">Recommendation</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">SVD</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">机器学习算法</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1273,7 +1279,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">graph learning method</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">graph random-walk model</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">graph gcn model</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1282,6 +1296,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">text graph</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">loss func</a>
               </li>
              
               <li class="article-tag-list-item">
