@@ -8,14 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>【DataFrame】DataFrame的骚操作 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
+  <meta name="description" content="DataFrame 的apply多进程方法dataframe的apply方法很好用，但是是单进程，在处理大数据量时可太慢了，下面就看看apply 的多进程方法 123456789101112131415161718192021222324252627282930313233343536import numpy as npimport pandas as pdfrom functools impor">
+<meta property="og:type" content="article">
 <meta property="og:title" content="【DataFrame】DataFrame的骚操作">
 <meta property="og:url" content="http://example.com/2021/12/12/%E3%80%90DataFrame%E3%80%91DataFrame%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="DataFrame 的apply多进程方法dataframe的apply方法很好用，但是是单进程，在处理大数据量时可太慢了，下面就看看apply 的多进程方法 123456789101112131415161718192021222324252627282930313233343536import numpy as npimport pandas as pdfrom functools impor">
 <meta property="og:locale" content="zh_CH">
 <meta property="article:published_time" content="2021-12-12T13:51:04.000Z">
-<meta property="article:modified_time" content="2021-12-12T13:51:04.710Z">
+<meta property="article:modified_time" content="2021-12-12T14:00:49.837Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
+<meta property="article:tag" content="function">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -189,10 +192,36 @@
     
     <!-- 目录内容 -->
     
+        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+        <span class="btn-bg"></span>
+        <span class="btn-text">文章导航</span>
+        </p>
+        <div id="toc-article" class="toc-article">
+            <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+            <strong class="toc-title">文章目录</strong>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#DataFrame-%E7%9A%84apply%E5%A4%9A%E8%BF%9B%E7%A8%8B%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">DataFrame 的apply多进程方法</span></a></li></ol>
+       </div>
+       <script type="text/javascript">
+        function showToc(){
+            var toc_article = document.getElementById("toc-article");
+            var show_toc_btn = document.getElementById("show-toc-btn");
+            toc_article.setAttribute("style","display:block");
+            show_toc_btn.setAttribute("style","display:none");
+            };
+        function showBtn(){
+            var toc_article = document.getElementById("toc-article");
+            var show_toc_btn = document.getElementById("show-toc-btn");
+            toc_article.setAttribute("style","display:none");
+            show_toc_btn.setAttribute("style","display:block");
+            };
+       </script>
+    
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h3 id="DataFrame-的apply多进程方法"><a href="#DataFrame-的apply多进程方法" class="headerlink" title="DataFrame 的apply多进程方法"></a>DataFrame 的apply多进程方法</h3><p>dataframe的apply方法很好用，但是是单进程，在处理大数据量时可太慢了，下面就看看apply 的多进程方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> partial</span><br><span class="line"><span class="keyword">import</span> multiprocessing <span class="keyword">as</span> mp</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parallelize_df</span>(<span class="params">df, func, num_processes=<span class="number">6</span></span>):</span></span><br><span class="line">    df_split = np.array_split(df, num_processes)</span><br><span class="line">    <span class="keyword">with</span> mp.Pool(num_processes) <span class="keyword">as</span> p:</span><br><span class="line">        df = pd.concat(p.map(func, df_split))</span><br><span class="line">    <span class="keyword">return</span> df</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parallelize_apply_func</span>(<span class="params">df, dic1, dic2</span>):</span></span><br><span class="line">    df[<span class="string">&quot;column_output&quot;</span>] = df.apply(<span class="keyword">lambda</span> row: example_function(</span><br><span class="line">        row[<span class="string">&quot;col1&quot;</span>], row[<span class="string">&quot;col2&quot;</span>], dic1, dic2), axis=<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">return</span> df</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">example_function</span>(<span class="params">v1, v2, dic1, dic2</span>):</span></span><br><span class="line">    <span class="keyword">return</span> dic1[v1] + dic2[v2]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    cpu_cnt = <span class="number">3</span></span><br><span class="line">    n1, n2 = <span class="number">10000000</span>, <span class="number">20000000</span></span><br><span class="line">    df = pd.DataFrame(&#123;<span class="string">&#x27;col1&#x27;</span>: list(range(n1)), <span class="string">&#x27;col2&#x27;</span>: list(range(n1, n2))&#125;)</span><br><span class="line">    print(df.head())</span><br><span class="line"></span><br><span class="line">    dic1 = dict(zip(list(range(n1)), [<span class="number">1</span>] * n1))</span><br><span class="line">    dic2 = dict(zip(list(range(n1, n2)), [<span class="number">2</span>] * n1))</span><br><span class="line"></span><br><span class="line">    <span class="comment">#  add extra args for apply-function</span></span><br><span class="line">    prod = partial(parallelize_apply_func, dic1=dic1, dic2=dic2)</span><br><span class="line">    df_output = parallelize_df(df, prod, cpu_cnt)</span><br><span class="line">    print(df_output.head())</span><br></pre></td></tr></table></figure>
+
       
 
       
@@ -231,7 +260,29 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">function</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/DataFrame//" class="article-tag-list-link color5">DataFrame</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
 
       
 
@@ -324,7 +375,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    目录，不存在的…
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#DataFrame-%E7%9A%84apply%E5%A4%9A%E8%BF%9B%E7%A8%8B%E6%96%B9%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">DataFrame 的apply多进程方法</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -546,6 +597,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">pretrained model</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">function</a>
               </li>
             
             <div class="clearfix"></div>

@@ -17,16 +17,16 @@
 <meta property="og:locale" content="zh_CH">
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000955.png">
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211209214358441.png">
-<meta property="og:image" content="http://example.com/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211207223957775.png">
-<meta property="og:image" content="http://example.com/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211207224649341.png">
-<meta property="og:image" content="http://example.com/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211211101526776.png">
-<meta property="og:image" content="http://example.com/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211211101601542.png">
-<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/RGCN/RGCN-pyg.png">
-<meta property="og:image" content="http://example.com/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211211111927978.png">
-<meta property="og:image" content="http://example.com/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211211112346582.png">
-<meta property="og:image" content="http://example.com/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211211112502361.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211207223957775.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211207224649341.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211211101526776.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211211101601542.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/RGCN-pyg.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211211111927978.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211211112346582.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211211112502361.png">
 <meta property="article:published_time" content="2021-12-07T14:11:48.000Z">
-<meta property="article:modified_time" content="2021-12-11T03:52:05.529Z">
+<meta property="article:modified_time" content="2021-12-12T13:54:39.566Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210718000955.png">
@@ -219,30 +219,30 @@
 <p>GCN计算方式上很好理解，本质上跟CNN卷积过程一样，是一个加权求和的过程，就是将邻居点通过度矩阵及其邻接矩阵，计算出各边的权重，然后加权求和。</p>
 <h3 id="多关系异构图RGCN"><a href="#多关系异构图RGCN" class="headerlink" title="多关系异构图RGCN"></a>多关系异构图RGCN</h3><p>RGCN应该说是GCN在多关系图场景上的一个简单尝试。<strong><em>\</em>从同构图到异构图，RGCN要解决的核心问题就一个，就是多关系间怎么交互。**</strong></p>
 <p>RGCN的结构图很简单，画的也很清楚，每一种关系下（可理解为就是同构图），指向内与指向外的都作为它的邻居点，同时加自循环特征，进行特征融合，参与更新中心节点。</p>
-<p><img src="/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211207223957775.png" alt="image-20211207223957775"></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211207223957775.png" alt="image-20211207223957775"></p>
 <p><strong>公式也很简洁，R为关系结合，N为邻居点集合，c为一个常量（正则化系数）。</strong></p>
-<p><img src="/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211207224649341.png" alt="image-20211207224649341"></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211207224649341.png" alt="image-20211207224649341"></p>
 <p><strong>双层循环遍历，遍历每一种关系下，叠加每一个点的邻居点的特征进行融合，最后加上一层的中心节点特征，经过一个激活函数输出作为中心节点的输出特征，其中W为维度转换矩阵，也就是模型参数。</strong></p>
 <p>对比一下GCN，<script type="math/tex">H^{l+1}=\sigma(D^{-1/2}AD^{-1/2}H^{l}W^{l})</script>，看得到，W在两边皆为模型待学参数，而GCN是采用度矩阵D及邻接矩阵A作为一个加权求和的特征融合，而RGCN的参数都在模型参数$W_r$中，它没有用度矩阵D及邻接矩阵A作为边的权重的，而是在模型中参数自学。</p>
 <h4 id="接着看RGCN中W矩阵的定义"><a href="#接着看RGCN中W矩阵的定义" class="headerlink" title="接着看RGCN中W矩阵的定义"></a><strong>接着看RGCN中W矩阵的定义</strong></h4><p>文章中表示多关系会导致参数剧增，从而给出了两个W矩阵规则化定义：1.Bias-decomposition(共享转换矩阵参数)，2.Block-diagonal-decomposition(权重矩阵W由基础小矩阵拼接得到，保证W的稀疏性)</p>
 <ol>
 <li>Basis-decomposition（基数分解）：</li>
 </ol>
-<p><img src="/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211211101526776.png" alt="image-20211211101526776"></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211211101526776.png" alt="image-20211211101526776"></p>
 <ol>
 <li>Block-diagonal-decomposition（块对角分解）：</li>
 </ol>
-<p><img src="/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211211101601542.png" alt="image-20211211101601542"></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211211101601542.png" alt="image-20211211101601542"></p>
 <p>公式3中B表示分解block个数（常量），$V_b$为分解的参数关系矩阵，与因子$a_{rb}$组成一对相关系数，都与关系类型r相关，<strong>这里不同关系是共享$V_b$参数的</strong>。</p>
 <p>公式4中不同关系的$W_r$为一系列低维矩阵$Q_{br}$求和。</p>
 <p>同时结合PyG里的<a target="_blank" rel="noopener" href="https://github.com/pyg-team/pytorch_geometric/blob/master/torch_geometric/nn/conv/rgcn_conv.py">RGCN接口</a>实现，看下这两公式，$V_b、Q_{br}$皆为模型定义参数。</p>
-<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/RGCN/RGCN-pyg.png" alt="image-20211211103918160"></p>
-<h4 id="RGCN的任务"><a href="#RGCN的任务" class="headerlink" title="RGCN的任务"></a><strong>RGCN的任务</strong></h4><p><img src="/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211211111927978.png" alt="image-20211211111927978"></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/RGCN-pyg.png" alt="image-20211211103918160"></p>
+<h4 id="RGCN的任务"><a href="#RGCN的任务" class="headerlink" title="RGCN的任务"></a><strong>RGCN的任务</strong></h4><p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211211111927978.png" alt="image-20211211111927978"></p>
 <p>在通过RGCN作为encode，聚合得到node embedding后，节点分类任务比较好理解，就是拿着encode得到的node embedding后接一个逻辑回归或linear层，结合Cross-Entropy做一个分类任务。</p>
 <p>而关系预测任务，在encode得到node embedding后，则是类似于TransE,计算三元组（s,r,o），得到一个score。（文中采用的是DistMult，原理差不多）</p>
-<p><img src="/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211211112346582.png" alt="image-20211211112346582"></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211211112346582.png" alt="image-20211211112346582"></p>
 <p>而边的label是为0或1（存在 or 不存在），score为一个概率分布，label为一个概率分布，结合Cross-Entropy即可得到loss function，判断这个pair是不是匹配的。</p>
-<p><img src="/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211211112502361.png" alt="image-20211211112502361"></p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211211112502361.png" alt="image-20211211112502361"></p>
 <h3 id="小结一下"><a href="#小结一下" class="headerlink" title="小结一下"></a>小结一下</h3><p>RGCN主要创新点：</p>
 <ol>
 <li>提出了一个异构图中多关系融合的一个方式（就是不同关系分别做融合，然后叠加处理，得到node表示）</li>
@@ -613,6 +613,10 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">pretrained model</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">function</a>
               </li>
             
             <div class="clearfix"></div>
