@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>【NLP】文本表达进击:从Bert-flow到Bert-white、SimCSE | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Bert预训练模型问世以来，改变了很多NLP任务的习惯。很多NLP任务都会直接在Bert的基础上做一个fine-tune，构建一个baseline模型，既快捷也使用，但Bert在做文本表达任务时也有一些明显的缺点。 既然有缺点，那这么卷的深度学习领域肯定会有解决方法。于是Bert-flow、Bert-White及SimCSE就来了。 最近刚好也在做文本表达类的任务，就把这个任务相关的文章学习总结了">
+  <meta name="description" content="Bert预训练模型问世以来，改变了很多NLP任务的习惯。很多NLP任务都会直接在Bert的基础上做一个fine-tune，构建一个baseline模型，既快捷也使用，但Bert在做文本表达任务时也有一些明显的缺点。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【NLP】文本表达进击:从Bert-flow到Bert-white、SimCSE">
 <meta property="og:url" content="http://example.com/2021/11/04/%E3%80%90NLP%E3%80%91%E6%96%87%E6%9C%AC%E8%A1%A8%E8%BE%BE%E8%BF%9B%E5%87%BB-%E4%BB%8EBert-flow%E5%88%B0Bert-white%E3%80%81SimCSE/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Bert预训练模型问世以来，改变了很多NLP任务的习惯。很多NLP任务都会直接在Bert的基础上做一个fine-tune，构建一个baseline模型，既快捷也使用，但Bert在做文本表达任务时也有一些明显的缺点。 既然有缺点，那这么卷的深度学习领域肯定会有解决方法。于是Bert-flow、Bert-White及SimCSE就来了。 最近刚好也在做文本表达类的任务，就把这个任务相关的文章学习总结了">
+<meta property="og:description" content="Bert预训练模型问世以来，改变了很多NLP任务的习惯。很多NLP任务都会直接在Bert的基础上做一个fine-tune，构建一个baseline模型，既快捷也使用，但Bert在做文本表达任务时也有一些明显的缺点。">
 <meta property="og:locale" content="zh_CH">
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211106164754072.png">
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/Bert-flow-pic.png">
@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211107224624953.png">
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211107224635201.png">
 <meta property="article:published_time" content="2021-11-04T13:47:43.000Z">
-<meta property="article:modified_time" content="2021-11-08T13:13:41.634Z">
+<meta property="article:modified_time" content="2021-12-12T14:27:34.146Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta property="article:tag" content="text representation">
 <meta name="twitter:card" content="summary">
@@ -234,7 +234,7 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Bert预训练模型问世以来，改变了很多NLP任务的习惯。很多NLP任务都会直接在Bert的基础上做一个fine-tune，构建一个baseline模型，既快捷也使用，但Bert在做文本表达任务时也有一些明显的缺点。</p>
+        <p>Bert预训练模型问世以来，改变了很多NLP任务的习惯。很多NLP任务都会直接在Bert的基础上做一个fine-tune，构建一个baseline模型，既快捷也使用，但Bert在做文本表达任务时也有一些明显的缺点。<a id="more"></a></p>
 <p>既然有缺点，那这么卷的深度学习领域肯定会有解决方法。于是Bert-flow、Bert-White及SimCSE就来了。</p>
 <p>最近刚好也在做文本表达类的任务，就把这个任务相关的文章学习总结了一下，欢迎交流学习。</p>
 <h3 id="1-Bert存在的两个问题"><a href="#1-Bert存在的两个问题" class="headerlink" title="1.Bert存在的两个问题"></a>1.Bert存在的两个问题</h3><h4 id="一、Bert-encode出来的向量表达具有各向异性。"><a href="#一、Bert-encode出来的向量表达具有各向异性。" class="headerlink" title="一、Bert encode出来的向量表达具有各向异性。"></a>一、Bert encode出来的向量表达具有各向异性。</h4><p>什么叫各向异性？举个例子，一些电阻原件，正接是良导体，反接是绝缘体或者电阻很大，沿不同方向差异很大。在bert出来的向量中表现为，用不同的方式去衡量它，他表现出不同的语义，差别很大，也就是不能完整的衡量出bert向量中全部语义信息。</p>

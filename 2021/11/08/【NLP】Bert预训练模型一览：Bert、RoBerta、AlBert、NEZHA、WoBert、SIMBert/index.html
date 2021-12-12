@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>【NLP】预训练模型一览：BERT、RoBERTa、ALBERT、NEZHA、WoBERT、SIMBert | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="自从预训练模型Bert问世以来，这几年就演化出各种各样的Bert，各种Bert模型之间，从训练语料到模型结构上既有继承又有改变，各有所针对也有所长。在算力有限情况下，每次用Bert的时候会纠结一下，我该优先用哪一种或几种预训练模型进行实验呢，哪一种在我的任务上能达到最好效果呢？ 这篇文章就针对预训练模型，对比一下“预训练家族”，总结一下各自的优缺点、对应的场景以及适合的任务,从此告别纠结。（这里">
+  <meta name="description" content="自从预训练模型Bert问世以来，这几年就演化出各种各样的Bert，各种Bert模型之间，从训练语料到模型结构上既有继承又有改变，各有所针对也有所长。在算力有限情况下，每次用Bert的时候会纠结一下，我该优先用哪一种或几种预训练模型进行实验呢，哪一种在我的任务上能达到最好效果呢？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【NLP】预训练模型一览：BERT、RoBERTa、ALBERT、NEZHA、WoBERT、SIMBert">
 <meta property="og:url" content="http://example.com/2021/11/08/%E3%80%90NLP%E3%80%91Bert%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E4%B8%80%E8%A7%88%EF%BC%9ABert%E3%80%81RoBerta%E3%80%81AlBert%E3%80%81NEZHA%E3%80%81WoBert%E3%80%81SIMBert/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="自从预训练模型Bert问世以来，这几年就演化出各种各样的Bert，各种Bert模型之间，从训练语料到模型结构上既有继承又有改变，各有所针对也有所长。在算力有限情况下，每次用Bert的时候会纠结一下，我该优先用哪一种或几种预训练模型进行实验呢，哪一种在我的任务上能达到最好效果呢？ 这篇文章就针对预训练模型，对比一下“预训练家族”，总结一下各自的优缺点、对应的场景以及适合的任务,从此告别纠结。（这里">
+<meta property="og:description" content="自从预训练模型Bert问世以来，这几年就演化出各种各样的Bert，各种Bert模型之间，从训练语料到模型结构上既有继承又有改变，各有所针对也有所长。在算力有限情况下，每次用Bert的时候会纠结一下，我该优先用哪一种或几种预训练模型进行实验呢，哪一种在我的任务上能达到最好效果呢？">
 <meta property="og:locale" content="zh_CH">
 <meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/BertSet/Bert_develop_my.png">
 <meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/BertSet/Bert_Task.png">
@@ -29,7 +29,7 @@
 <meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/tmp_typora_pictures/ALBERT_res1.png">
 <meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/BertSet/ALBERT_res2.png">
 <meta property="article:published_time" content="2021-11-08T13:14:36.000Z">
-<meta property="article:modified_time" content="2021-12-05T04:28:54.530Z">
+<meta property="article:modified_time" content="2021-12-12T14:26:03.924Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta property="article:tag" content="pretrained model">
 <meta name="twitter:card" content="summary">
@@ -234,7 +234,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/home/xyshu/Desktop/BLOG/PicBlog/BertSet/Bert_develop_my.png" alt="image-20211121181900718" style="zoom:80%;" /></p>
-<p>自从预训练模型Bert问世以来，这几年就演化出各种各样的Bert，各种Bert模型之间，从训练语料到模型结构上既有继承又有改变，各有所针对也有所长。在算力有限情况下，每次用Bert的时候会纠结一下，我该优先用哪一种或几种预训练模型进行实验呢，哪一种在我的任务上能达到最好效果呢？</p>
+<p>自从预训练模型Bert问世以来，这几年就演化出各种各样的Bert，各种Bert模型之间，从训练语料到模型结构上既有继承又有改变，各有所针对也有所长。在算力有限情况下，每次用Bert的时候会纠结一下，我该优先用哪一种或几种预训练模型进行实验呢，哪一种在我的任务上能达到最好效果呢？<a id="more"></a></p>
 <p>这篇文章就针对预训练模型，对比一下“预训练家族”，总结一下各自的优缺点、对应的场景以及适合的任务,从此告别纠结。（这里不涉及到具体的模型细节，默认大家都大概明白基本模型结构，细节方面建议大家还是去读原文最原汁原味）。</p>
 <h3 id="1-BERT"><a href="#1-BERT" class="headerlink" title="1. BERT"></a>1. BERT</h3><p>BERT提出前，正是word2vec,Glove等大火的时候，开启了word embedding的潮流，其实此时已经开启了预训练的先河。此时我们在做NLP任务一般也习惯先载入word2vec的embedding向量，作为一个模型的word embedding初始化代替原来的one-hot初始化（原来的one-hot初始化，一是稀疏内存消耗大，二是不易train，效果不好。）另外，word2vec有一个不能忽视的问题，就是它出来的embedding是静态的，也就是一个word对应一个embedding，那一词多义的问题在它这就懵了（如苹果，它到底是Apple的苹果还是咱吃的苹果）。这时候BERT提出来了，它是基于上下文的，意味着，它的embedding是要根据上下文表达决定的（一词多义处语境肯定不同，这就能区别出来了）。</p>
 <p>而BERT首先采用了Transformer的self-attention的结构encoder部分，能看到全文的内容，这种attention结构又能并行，还能提取同时上下文特征。而且不需要标注的自然语料有一大把，硬件方面当时也能跟得上，于是一顿训，这可太好用了，直接就横扫各大NLP任务了。</p>

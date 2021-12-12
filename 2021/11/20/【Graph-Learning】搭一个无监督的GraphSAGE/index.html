@@ -8,17 +8,17 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>【Graph-Learning】Link-Prediction：搭一个无监督的GraphSAGE | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="上回分四步搭了一个做节点分类的有监督GraphSAGE，怎么搭好一个GraphSAGE？按这三步走。 这回再来实现一下无监督的GraphSAGE，看看在Graph Embedding任务在有监督及无监督上有什么不同。 无监督任务只是训练数据中没有标注，不含平常的label，但模型总得有个目标得让它学习。在图学习中，由于图由边与点组成，即数据是关系型数据，那这些边就是天然的监督信息，这也就是图中的L">
+  <meta name="description" content="上回分四步搭了一个做节点分类的有监督GraphSAGE，怎么搭好一个GraphSAGE？按这三步走。 这回再来实现一下无监督的GraphSAGE，看看在Graph Embedding任务在有监督及无监督上有什么不同。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Graph-Learning】Link-Prediction：搭一个无监督的GraphSAGE">
 <meta property="og:url" content="http://example.com/2021/11/20/%E3%80%90Graph-Learning%E3%80%91%E6%90%AD%E4%B8%80%E4%B8%AA%E6%97%A0%E7%9B%91%E7%9D%A3%E7%9A%84GraphSAGE/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="上回分四步搭了一个做节点分类的有监督GraphSAGE，怎么搭好一个GraphSAGE？按这三步走。 这回再来实现一下无监督的GraphSAGE，看看在Graph Embedding任务在有监督及无监督上有什么不同。 无监督任务只是训练数据中没有标注，不含平常的label，但模型总得有个目标得让它学习。在图学习中，由于图由边与点组成，即数据是关系型数据，那这些边就是天然的监督信息，这也就是图中的L">
+<meta property="og:description" content="上回分四步搭了一个做节点分类的有监督GraphSAGE，怎么搭好一个GraphSAGE？按这三步走。 这回再来实现一下无监督的GraphSAGE，看看在Graph Embedding任务在有监督及无监督上有什么不同。">
 <meta property="og:locale" content="zh_CH">
 <meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/GraphSAGE/node_classification.png">
 <meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/GraphSAGE/graphSAGE_link_pre.png">
 <meta property="article:published_time" content="2021-11-20T07:42:55.000Z">
-<meta property="article:modified_time" content="2021-11-21T02:08:30.996Z">
+<meta property="article:modified_time" content="2021-12-12T14:25:45.908Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta property="article:tag" content="graphsage model">
 <meta name="twitter:card" content="summary">
@@ -223,7 +223,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>上回分四步搭了一个做节点分类的有监督GraphSAGE，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/429147607">怎么搭好一个GraphSAGE？按这三步走</a>。</p>
-<p>这回再来实现一下无监督的GraphSAGE，看看在Graph Embedding任务在有监督及无监督上有什么不同。</p>
+<p>这回再来实现一下无监督的GraphSAGE，看看在Graph Embedding任务在有监督及无监督上有什么不同。<a id="more"></a></p>
 <p>无监督任务只是训练数据中没有标注，不含平常的label，但模型总得有个目标得让它学习。在图学习中，由于图由边与点组成，即数据是关系型数据，那这些边就是天然的监督信息，这也就是图中的Link-Prediction任务，这里就以这个任务做一个无监督的GraphSAGE。</p>
 <h3 id="对比一下Node-Classification与Link-Prediction基本原理"><a href="#对比一下Node-Classification与Link-Prediction基本原理" class="headerlink" title="对比一下Node-Classification与Link-Prediction基本原理"></a>对比一下Node-Classification与Link-Prediction基本原理</h3><p><strong>Node-Classification：</strong>看过上一篇GraphSAGE做node classification中,应该看过这个图。在Node Classification任务，每个node只需要切出一个这样的子图，然后从下往上aggregate，得到head的embedding，最后由此结合node label做一个有监督的分类任务。</p>
 <p><img src="/home/xyshu/Desktop/BLOG/PicBlog/GraphSAGE/node_classification.png" alt="image-20211102223201541"></p>

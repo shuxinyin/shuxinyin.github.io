@@ -8,16 +8,16 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>【NLP】huggingface-transformer怎么调BERT？ | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="你既然已经知道huggingface的BERT了，那想调BERT做个任务这个事就简单了。 首先，说说huggingface调BERT模型调BERT，那首先得先有BERT预训练模型。先上huggingface官网把预训练模型下下来，也就是下面这三个文件（一般是TensorFlow版本的跟Pytorch版本的都放在一起，下pytorch版本的）。  下好了，那预训练模型就有了，下面就看看怎么用起来了。">
+  <meta name="description" content="你既然已经知道huggingface的BERT了，那想调BERT做个任务这个事就简单了。 首先，说说huggingface调BERT模型调BERT，那首先得先有BERT预训练模型。先上huggingface官网把预训练模型下下来，也就是下面这三个文件（一般是TensorFlow版本的跟Pytorch版本的都放在一起，下pytorch版本的）。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【NLP】huggingface-transformer怎么调BERT？">
 <meta property="og:url" content="http://example.com/2021/11/24/%E3%80%90NLP%E3%80%91huggingface-transformer%E6%80%8E%E4%B9%88%E8%B0%83BERT%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="你既然已经知道huggingface的BERT了，那想调BERT做个任务这个事就简单了。 首先，说说huggingface调BERT模型调BERT，那首先得先有BERT预训练模型。先上huggingface官网把预训练模型下下来，也就是下面这三个文件（一般是TensorFlow版本的跟Pytorch版本的都放在一起，下pytorch版本的）。  下好了，那预训练模型就有了，下面就看看怎么用起来了。">
+<meta property="og:description" content="你既然已经知道huggingface的BERT了，那想调BERT做个任务这个事就简单了。 首先，说说huggingface调BERT模型调BERT，那首先得先有BERT预训练模型。先上huggingface官网把预训练模型下下来，也就是下面这三个文件（一般是TensorFlow版本的跟Pytorch版本的都放在一起，下pytorch版本的）。">
 <meta property="og:locale" content="zh_CH">
 <meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/Bert_Transformer/direct_bert.png">
 <meta property="article:published_time" content="2021-11-24T14:24:15.000Z">
-<meta property="article:modified_time" content="2021-11-24T15:49:27.239Z">
+<meta property="article:modified_time" content="2021-12-12T14:27:26.519Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/Bert_Transformer/direct_bert.png">
@@ -197,7 +197,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>你既然已经知道huggingface的BERT了，那想调BERT做个任务这个事就简单了。</p>
-<h3 id="首先，说说huggingface调BERT模型"><a href="#首先，说说huggingface调BERT模型" class="headerlink" title="首先，说说huggingface调BERT模型"></a>首先，说说huggingface调BERT模型</h3><p>调BERT，那首先得先有BERT预训练模型。先上<a target="_blank" rel="noopener" href="https://huggingface.co/bert-base-chinese/tree/main">huggingface官网</a>把预训练模型下下来，也就是下面这三个文件（一般是TensorFlow版本的跟Pytorch版本的都放在一起，下pytorch版本的）。</p>
+<h3 id="首先，说说huggingface调BERT模型"><a href="#首先，说说huggingface调BERT模型" class="headerlink" title="首先，说说huggingface调BERT模型"></a>首先，说说huggingface调BERT模型</h3><p>调BERT，那首先得先有BERT预训练模型。先上<a target="_blank" rel="noopener" href="https://huggingface.co/bert-base-chinese/tree/main">huggingface官网</a>把预训练模型下下来，也就是下面这三个文件（一般是TensorFlow版本的跟Pytorch版本的都放在一起，下pytorch版本的）。<a id="more"></a></p>
 <p><img src="/home/xyshu/Desktop/BLOG/PicBlog/Bert_Transformer/direct_bert.png" alt="image-20211124223138959"></p>
 <p>下好了，那预训练模型就有了，下面就看看怎么用起来了。</p>
 <p>这里huggingface提供了一个transformers的package，封装的挺好了，几行代码就把BERT给调了。（没装就先把这个包给pip install transformers一下）</p>
