@@ -158,20 +158,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-TextCNN-文本分类利器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【TorchDoc】Adam还需加learning-rate-decay吗？" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/">TextCNN实践-文本分类利器.md</a>
+      <a class="article-title" href="/2021/10/17/%E3%80%90TorchDoc%E3%80%91Adam%E8%BF%98%E9%9C%80%E5%8A%A0learning-rate-decay%E5%90%97%EF%BC%9F/">【TorchDoc】Adam还需加learning-rate decay吗？</a>
     </h1>
   
 
         
-        <a href="/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/" class="archive-article-date">
-  	<time datetime="2021-07-04T03:32:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-04</time>
+        <a href="/2021/10/17/%E3%80%90TorchDoc%E3%80%91Adam%E8%BF%98%E9%9C%80%E5%8A%A0learning-rate-decay%E5%90%97%EF%BC%9F/" class="archive-article-date">
+  	<time datetime="2021-10-17T14:12:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-17</time>
 </a>
         
 
@@ -184,9 +184,10 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>说到文本分类，目前最通用最有效的方法就是通过bert预训练模型，后接一个简单的下游分类任务。但bert模型，模型参数大，训练时间长，推理时间长，应用上不方便。而textCNN相对于bert，参数少，训练快，模型结构简单，在文本分类上表现也不差，值得一看。
+        <p>今天写模型代码出现一个模型结果极不稳定的问题，loss会抖动的特别厉害。有时模型loss能收敛到极低，有时却怎么也降不下来。网上有答案说，这里有可能是lr太大，到模型快收敛时，lr依然大，则会跳过最优点，导致模型无法收敛到极小值点。</p>
+<p>但是我用的optimizer是Adam啊，Adam不是自适应的吗？Adam还有必要加lr decay吗？
         
-          <a class="article-more-a" href="/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/#more">more >></a>
+          <a class="article-more-a" href="/2021/10/17/%E3%80%90TorchDoc%E3%80%91Adam%E8%BF%98%E9%9C%80%E5%8A%A0learning-rate-decay%E5%90%97%EF%BC%9F/#more">more >></a>
         
       
 
@@ -200,7 +201,760 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CNN</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">optimizer</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Pytorch-Learning//" class="article-tag-list-link color2">Pytorch Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/10/17/%E3%80%90TorchDoc%E3%80%91Adam%E8%BF%98%E9%9C%80%E5%8A%A0learning-rate-decay%E5%90%97%EF%BC%9F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【Graph-Learning】怎么搭一个GCN？只需这四步" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/10/17/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E4%B8%80%E4%B8%AAGCN%EF%BC%9F%E5%8F%AA%E9%9C%80%E8%BF%99%E5%9B%9B%E6%AD%A5/">【Graph-Learning】怎么搭一个GCN？只需这四步</a>
+    </h1>
+  
+
+        
+        <a href="/2021/10/17/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E4%B8%80%E4%B8%AAGCN%EF%BC%9F%E5%8F%AA%E9%9C%80%E8%BF%99%E5%9B%9B%E6%AD%A5/" class="archive-article-date">
+  	<time datetime="2021-10-17T02:25:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-17</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>程序员界一直讲究 Talk is cheap，show me the code。图网络最近很火，新的模型、原理解析一大堆，但光看懂原理肯定不够，踩坑实践一下理解才更透彻。</p>
+<p>那怎么正确搭建一个GCN呢？</p>
+<p>手把手的从建图、定义邻接矩阵到GCN model，教你怎么搭一个GCN的model，搞清楚这四步，即可速成。话不多说，直接来。
+        
+          <a class="article-more-a" href="/2021/10/17/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E4%B8%80%E4%B8%AAGCN%EF%BC%9F%E5%8F%AA%E9%9C%80%E8%BF%99%E5%9B%9B%E6%AD%A5/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">graph gcn model</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/10/17/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E4%B8%80%E4%B8%AAGCN%EF%BC%9F%E5%8F%AA%E9%9C%80%E8%BF%99%E5%9B%9B%E6%AD%A5/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【TorchDoc】LossFunction：CrossEntropyLoss与corss-entropy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/09/23/%E3%80%90TorchDoc%E3%80%91LossFunction%EF%BC%9ACrossEntropyLoss%E4%B8%8Ecorss-entropy/">LossFunction：CrossEntropyLoss与corss_entropy</a>
+    </h1>
+  
+
+        
+        <a href="/2021/09/23/%E3%80%90TorchDoc%E3%80%91LossFunction%EF%BC%9ACrossEntropyLoss%E4%B8%8Ecorss-entropy/" class="archive-article-date">
+  	<time datetime="2021-09-23T13:22:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-23</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近看torch接口文档中发现，有两个corss entropy的接口，CrossEntropyLoss与corss_entropy，平常也是随便拿来就用，没注意过，但总是用起来有点虚。</p>
+<p>今天就结合代码仔细看看这两个接口的实现以及使用，顺带分析经常跟cross entropy一并出场的log_softmax、nll_loss。保证看完就不再稀里糊涂了，踏踏实实的使用，看结论可以直接拉到文中末尾。
+        
+          <a class="article-more-a" href="/2021/09/23/%E3%80%90TorchDoc%E3%80%91LossFunction%EF%BC%9ACrossEntropyLoss%E4%B8%8Ecorss-entropy/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">loss func</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Pytorch-Learning//" class="article-tag-list-link color2">Pytorch Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/09/23/%E3%80%90TorchDoc%E3%80%91LossFunction%EF%BC%9ACrossEntropyLoss%E4%B8%8Ecorss-entropy/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【Graph-Learning】图学习入门路线" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/09/18/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E8%B7%AF%E7%BA%BF/">【Graph-Learning】图学习入门路线</a>
+    </h1>
+  
+
+        
+        <a href="/2021/09/18/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E8%B7%AF%E7%BA%BF/" class="archive-article-date">
+  	<time datetime="2021-09-18T12:36:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-18</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这就跟当时刚开始深度学习流行的那时候一样，CNN在大家眼中都是个很新奇的东西，当时觉得既难又神秘，那你看现在，谁还会觉得觉得CNN很难了，框架一堆都是现成的轮子，三两行代码搭一个cnn，教程遍地都是。</p>
+<p>觉得难不好入门，是因为你还不了解它，你认真的去读它几篇文章，不用最新的，就从最基础的开始，认真读个三四篇，并着手把一些基础的模型，例如最初的GCN，GAT动手写一写。刚开始不会写不要紧啊，现在资料都已经很多了，照着别人的代码结合文章理解，仿照写一写，三两个模型之后。估计那时你就会觉得，这图神经网络也不过是各个节点向量间在乱七八糟的一顿加权求和罢了，一点也不神秘。
+        
+          <a class="article-more-a" href="/2021/09/18/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E8%B7%AF%E7%BA%BF/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">graph learning method</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/09/18/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E8%B7%AF%E7%BA%BF/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【Graph-Learning】聊聊TextGCN-文本分类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/09/12/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ATextGCN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/">图网络：聊聊文本图模型TextGCN、BertGCN</a>
+    </h1>
+  
+
+        
+        <a href="/2021/09/12/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ATextGCN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/" class="archive-article-date">
+  	<time datetime="2021-09-12T02:20:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>文本分类是NLP的一个常规任务，在这个任务上，Bert这类的pre-trained的model已经取得了一个通用且效果较好的地位。在我看来，<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1809.05679.pdf">TextGCN</a>的提出，主要贡献不是说在文本分类这个基础任务上，取得了多大的突破，它更多的是通过图网络对自然语言中文本表达的任务进行了一些探索，给大家提供了一个不错且可行的参考角度。
+        
+          <a class="article-more-a" href="/2021/09/12/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ATextGCN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">text graph</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/09/12/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ATextGCN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【Graph-Learning】图卷积：从GCN到GAT、GraphSAGE" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/08/22/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/">图卷积：从GCN到GAT、GraphSAGE</a>
+    </h1>
+  
+
+        
+        <a href="/2021/08/22/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/" class="archive-article-date">
+  	<time datetime="2021-08-22T09:49:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-22</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>图模型总体上可以分为两大类：一是random-walk游走类模型，另一类就是GCN、GAT等卷积模型了。</p>
+<p>下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。
+        
+          <a class="article-more-a" href="/2021/08/22/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">graph random-walk model</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/08/22/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【Graph-Learning】聊聊Node2Vec（论文解析、实践）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/">进阶版游走图模型Node2Vec</a>
+    </h1>
+  
+
+        
+        <a href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2021-08-09T14:23:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-09</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>前面有介绍过deepwalk，它是一种基于DFS游走的Graph embedding模型。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/397710211">游走图模型—同构图DeepWalk</a></p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1607.00653">node2vec</a>算是deepwalk的进阶版。模型训练原理与deepwalk差不多，但它通过调节边参数，融合DFS、BFS两种方式进行图游走，增加了游走的灵活性，进一步丰富了图表达。
+        
+          <a class="article-more-a" href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">graph random-walk model</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【Graph-Learning】三言两语说清DeepWalk" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/07/27/%E3%80%90Graph-Learning%E3%80%91%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/">Graph-Learning：三言两语说清DeepWalk（论文解析、实战）</a>
+    </h1>
+  
+
+        
+        <a href="/2021/07/27/%E3%80%90Graph-Learning%E3%80%91%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/" class="archive-article-date">
+  	<time datetime="2021-07-27T14:21:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-27</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013607.png" style="zoom:100%;" /></p>
+<p>图学习模型主要有两类:1. 图游走类算法模型 2.图神经网络算法模型</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1403.6652.pdf">DeepWalk</a>在图算法里是一个比较经典的图学习模型，算是图模型里图游走模型的开山鼻祖了，虽然效果上跟现在的新模型是没法比了，但它的random walk+skip-gram训练思想绝对是具有重要的参考意义。另外DeepWalk模型简单、思路清晰，作为一个图学习入门学习的模型绝对是不二之选，以上也是现在各个文章都会提及这个模型的重要原因了。
+        
+          <a class="article-more-a" href="/2021/07/27/%E3%80%90Graph-Learning%E3%80%91%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">graph random-walk model</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/07/27/%E3%80%90Graph-Learning%E3%80%91%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【NLP】Transformer大白话详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/07/20/%E3%80%90NLP%E3%80%91Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/">Transformer大白话详解</a>
+    </h1>
+  
+
+        
+        <a href="/2021/07/20/%E3%80%90NLP%E3%80%91Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2021-07-20T13:29:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-20</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>Transformer在CV界刮起了一股旋风，说明这个attention的方法确实是经典。这篇文章就用大白话聊下Transformer，并结合代码详解下transformer。
+        
+          <a class="article-more-a" href="/2021/07/20/%E3%80%90NLP%E3%80%91Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Transformer</a>
         		</li>
       		
 		</ul>
@@ -221,7 +975,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/04/TextCNN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB%E5%88%A9%E5%99%A8/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/07/20/%E3%80%90NLP%E3%80%91Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/">展开全文 >></a>
         </p>
       
 
@@ -251,20 +1005,20 @@
 
 
   
-    <article id="post-CNN模型快速上手指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-Bert、Transformer面试100问" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/23/CNN%E6%A8%A1%E5%9E%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">CNN模型快速上手指南.md</a>
+      <a class="article-title" href="/2021/07/18/Bert%E3%80%81Transformer%E9%9D%A2%E8%AF%95100%E9%97%AE/">Bert、Transformer面试100问</a>
     </h1>
   
 
         
-        <a href="/2021/06/23/CNN%E6%A8%A1%E5%9E%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/" class="archive-article-date">
-  	<time datetime="2021-06-23T14:35:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-23</time>
+        <a href="/2021/07/18/Bert%E3%80%81Transformer%E9%9D%A2%E8%AF%95100%E9%97%AE/" class="archive-article-date">
+  	<time datetime="2021-07-18T07:30:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-18</time>
 </a>
         
 
@@ -277,9 +1031,9 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>CNN（卷积神经网络），这个词应该听了很多遍，也有很多文章从原理到结构都讲过了，talk is cheap, show code 才是正途。这篇文章就从实践开始，搭一个CNN以及搭CNN的过程中要注意的问题，总结分享一下体会。
+        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>现在算法岗，基本上Bert、transformer面试是必问了，这两个模型也是划时代的存在，Bert开启了NLP领域的pre-train时代，万物皆可上Bert。Transformer这个特征抽取结构也是史上最强特征抽取器，这两个不熟悉，都不敢大声说话了。
         
-          <a class="article-more-a" href="/2021/06/23/CNN%E6%A8%A1%E5%9E%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/#more">more >></a>
+          <a class="article-more-a" href="/2021/07/18/Bert%E3%80%81Transformer%E9%9D%A2%E8%AF%95100%E9%97%AE/#more">more >></a>
         
       
 
@@ -293,310 +1047,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">CNN</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Deep-Learning//" class="article-tag-list-link color4">Deep Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/23/CNN%E6%A8%A1%E5%9E%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-站在transformer的肩膀上调bert-md" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/14/%E7%AB%99%E5%9C%A8transformer%E7%9A%84%E8%82%A9%E8%86%80%E4%B8%8A%E8%B0%83bert-md/">站在transformer的肩膀上调bert.md</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/14/%E7%AB%99%E5%9C%A8transformer%E7%9A%84%E8%82%A9%E8%86%80%E4%B8%8A%E8%B0%83bert-md/" class="archive-article-date">
-  	<time datetime="2021-06-14T13:22:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-14</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>做文本处理任务，总是会用到经典预训练模型bert，而torch调用bert，得将原预训练文件先转换成torch适应的版本，总是有些麻烦。</p>
-<p>发现一个好用的开源工具，Hugging face开源的transformer库，以前叫pytorch-pretrained-bert，将调用bert这一事情，简化了不少。前人种树，后人乘凉。看看这事变得有多简单。</p>
-<p>torch、tensorflow在transformer库的基础上都适用。</p>
-<p><a target="_blank" rel="noopener" href="https://huggingface.co/transformers/">附一个官网链接</a>。</p>
-<h3 id="通过transformer调用bert"><a href="#通过transformer调用bert" class="headerlink" title="通过transformer调用bert"></a>通过transformer调用bert</h3><h4 id="1-安装transformer环境"><a href="#1-安装transformer环境" class="headerlink" title="1. 安装transformer环境"></a>1. 安装transformer环境</h4><p>​    在安装好torch基础上，直接安装transformer</p>
-<blockquote>
-<p>pip install transformer</p>
-</blockquote>
-<p>其实，这个transformer包把一些预训练文件的转换及调用代码做了一些封装，使得调用更方便。</p>
-<p>下面就开始正式调bert了。</p>
-<h4 id="2-下载bert预训练文件"><a href="#2-下载bert预训练文件" class="headerlink" title="2. 下载bert预训练文件"></a>2. 下载bert预训练文件</h4><p>上官网找到<a target="_blank" rel="noopener" href="https://huggingface.co/models">模型页面</a>, 找一下需要的bert版本，例如，需要chinese-bert-base，搜一下就能找到了。下载对应的预训练文件pytorch_model.bin、vocab.txt、coonfig.json，放到文件夹../bert_chinese_pretrained就好了</p>
-<h4 id="3-tokenizer、encode—分词及编码"><a href="#3-tokenizer、encode—分词及编码" class="headerlink" title="3. tokenizer、encode—分词及编码"></a>3. tokenizer、encode—分词及编码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> BertModel, BertConfig, BertTokenizer</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bert_define</span>(<span class="params">path = <span class="string">&quot;../bert_chinese_pretrained&quot;</span></span>):</span></span><br><span class="line">    <span class="comment"># 加载bert的tokenizer分词</span></span><br><span class="line">    tokenizer = BertTokenizer.from_pretrained(path)</span><br><span class="line">    <span class="comment"># 加载预训练模型</span></span><br><span class="line">    model_config = BertConfig.from_pretrained(path)</span><br><span class="line">    model = BertModel.from_pretrained(path, config=model_config)</span><br><span class="line">    <span class="keyword">return</span> tokenizer, model</span><br></pre></td></tr></table></figure>
-<p>几行代码就定义好了，bert需要的tokenizer及encode模型。</p>
-<p>下面测试一下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">text = [<span class="string">&quot;清晨去学校，小鸟对我笑。&quot;</span>, <span class="string">&quot;小鸟说，早早早， 是谁一早背上大书包。&quot;</span>]</span><br><span class="line">max_len = <span class="number">32</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构成一个小batch</span></span><br><span class="line">batch_token, batch_segment, batch_mask = list(), list(), list()</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> text:</span><br><span class="line">    <span class="comment"># text 作 tokenizer 分词</span></span><br><span class="line">    token = tokenizer.tokenize(t)</span><br><span class="line">    token = [<span class="string">&#x27;[CLS]&#x27;</span>] + token + [<span class="string">&#x27;[SEP]&#x27;</span>]</span><br><span class="line">    token_id = tokenizer.convert_tokens_to_ids(token)  <span class="comment"># 字转换vocab中的index</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 加padding补齐及segment、mask</span></span><br><span class="line">    padding = [<span class="number">0</span>] * (max_len - len(token_id))</span><br><span class="line">    mask = [<span class="number">1</span>] * len(token_id) + padding</span><br><span class="line">    segment = [<span class="number">0</span>] * len(token_id) + padding</span><br><span class="line">    token_id = token_id + padding</span><br><span class="line"></span><br><span class="line">    batch_token.append(token_id)</span><br><span class="line">    batch_segment.append(segment)</span><br><span class="line">    batch_mask.append(mask)</span><br><span class="line"></span><br><span class="line">batch_tensor_token = torch.tensor(batch_token)</span><br><span class="line">batch_tensor_segment = torch.tensor(batch_segment)</span><br><span class="line">batch_tensor_mask = torch.tensor(batch_mask)</span><br><span class="line"><span class="comment"># text encode</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    outputs = model(batch_tensor_token, token_type_ids=batch_tensor_segment, attention_mask=batch_tensor_mask)</span><br><span class="line">    outputs = outputs[<span class="number">0</span>][:, <span class="number">0</span>, :]  <span class="comment"># 取cls向量</span></span><br><span class="line">    print(outputs.shape)  <span class="comment"># torch.Size([2, 768])</span></span><br></pre></td></tr></table></figure>
-<p>也可以在encode后，即拿cls向量，接其他的下游任务，如文本分类等等，这就是预训练bert的一般用法了。</p>
-<p>在此基础上的，<a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Chinese-Text-Classification-Bert-Torch">写了个完整的调bert预训练作文本多分类的任务</a>, 其中还实现了调albert作文本分类的工作（把BertModel换成AlbertModel就可，tokenizer可以共用bert-base的），供参考。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">bert</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/NLP//" class="article-tag-list-link color4">NLP</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/14/%E7%AB%99%E5%9C%A8transformer%E7%9A%84%E8%82%A9%E8%86%80%E4%B8%8A%E8%B0%83bert-md/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-git-版本管理，实操" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/08/git-%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%EF%BC%8C%E5%AE%9E%E6%93%8D/">git 版本管理，实操</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/08/git-%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%EF%BC%8C%E5%AE%9E%E6%93%8D/" class="archive-article-date">
-  	<time datetime="2021-06-08T13:09:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-08</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Git-版本控制"><a href="#Git-版本控制" class="headerlink" title="Git 版本控制"></a>Git 版本控制</h1><h5 id="初始化Git"><a href="#初始化Git" class="headerlink" title="初始化Git"></a>初始化Git</h5><p>项目版本控制：cd 到 需进行控制版本代码目录，初始化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
-<p>执行完后，会在目录下生成.git的隐藏子目录，其中包含一些git存储库框架信息</p>
-<h6 id="添加文件并提交"><a href="#添加文件并提交" class="headerlink" title="添加文件并提交"></a>添加文件并提交</h6><ol>
-<li><p>git add: 添加要添加的文件至缓存区中
-        
-          <a class="article-more-a" href="/2021/06/08/git-%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%EF%BC%8C%E5%AE%9E%E6%93%8D/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/code-tool//" class="article-tag-list-link color5">code tool</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/08/git-%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%EF%BC%8C%E5%AE%9E%E6%93%8D/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SVD-推荐场景实践" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/06/06/SVD-%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/">SVD、LFM-推荐场景实践</a>
-    </h1>
-  
-
-        
-        <a href="/2021/06/06/SVD-%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/" class="archive-article-date">
-  	<time datetime="2021-06-06T10:23:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-06</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="SVD与LFM在推荐中都是属于协同过滤算法。"><a href="#SVD与LFM在推荐中都是属于协同过滤算法。" class="headerlink" title="SVD与LFM在推荐中都是属于协同过滤算法。"></a>SVD与LFM在推荐中都是属于协同过滤算法。</h3><p>SVD 叫做奇异值矩阵分解。看现在的文章上经常把它跟LFM认为是一个东西，它其实跟LFM是两回事。</p>
-<p>LFM（latent factor model）隐因子模型 也叫做ALS（alternating least squares，交替最小二乘法）</p>
-<p>下面就看看这两个区别在哪，优劣又在哪。</p>
-        
-          <a class="article-more-a" href="/2021/06/06/SVD-%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Recommendation</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Bert</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">SVD</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Transformer</a>
         		</li>
       		
 		</ul>
@@ -608,7 +1063,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/Recommendation//" class="article-tag-list-link color5">Recommendation</a>
+        			<a href="/categories/NLP//" class="article-tag-list-link color4">NLP</a>
         		</li>
       		
 		</ul>
@@ -617,403 +1072,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/06/06/SVD-%E6%8E%A8%E8%8D%90%E5%9C%BA%E6%99%AF%E5%AE%9E%E8%B7%B5/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-cross-entropy、hingeloss解析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/03/21/cross-entropy%E3%80%81hingeloss%E8%A7%A3%E6%9E%90/">cross entropy、hingeloss解析</a>
-    </h1>
-  
-
-        
-        <a href="/2021/03/21/cross-entropy%E3%80%81hingeloss%E8%A7%A3%E6%9E%90/" class="archive-article-date">
-  	<time datetime="2021-03-21T13:09:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-21</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Loss-Function"><a href="#Loss-Function" class="headerlink" title="Loss Function"></a>Loss Function</h1><p>目录：</p>
-<ul>
-<li>corss_entropy</li>
-<li>cross_entropy 与 KL散度的关系</li>
-<li>Hinge Loss<h2 id="1-corss-entropy"><a href="#1-corss-entropy" class="headerlink" title="1.corss_entropy"></a>1.corss_entropy</h2></li>
-</ul>
-<ol>
-<li><p>function:衡量两个分布的相似性</p>
-        
-          <a class="article-more-a" href="/2021/03/21/cross-entropy%E3%80%81hingeloss%E8%A7%A3%E6%9E%90/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">loss function</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/03/21/cross-entropy%E3%80%81hingeloss%E8%A7%A3%E6%9E%90/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-PageRank注解-整的明明白白的" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/12/12/PageRank%E6%B3%A8%E8%A7%A3-%E6%95%B4%E7%9A%84%E6%98%8E%E6%98%8E%E7%99%BD%E7%99%BD%E7%9A%84/">PageRank图算法祥解--整的明明白白的.</a>
-    </h1>
-  
-
-        
-        <a href="/2020/12/12/PageRank%E6%B3%A8%E8%A7%A3-%E6%95%B4%E7%9A%84%E6%98%8E%E6%98%8E%E7%99%BD%E7%99%BD%E7%9A%84/" class="archive-article-date">
-  	<time datetime="2020-12-11T16:15:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-12-12</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>PageRank本质是一个长时间随机游走算法，反复迭代，达到一个稳态<br>
-        
-          <a class="article-more-a" href="/2020/12/12/PageRank%E6%B3%A8%E8%A7%A3-%E6%95%B4%E7%9A%84%E6%98%8E%E6%98%8E%E7%99%BD%E7%99%BD%E7%9A%84/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">机器学习算法</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/12/12/PageRank%E6%B3%A8%E8%A7%A3-%E6%95%B4%E7%9A%84%E6%98%8E%E6%98%8E%E7%99%BD%E7%99%BD%E7%9A%84/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Java-一文弄懂装饰词public、private、static、final" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/11/07/Java-%E4%B8%80%E6%96%87%E5%BC%84%E6%87%82%E8%A3%85%E9%A5%B0%E8%AF%8Dpublic%E3%80%81private%E3%80%81static%E3%80%81final/">Java 一文弄懂装饰词public、private、static、final等声明词</a>
-    </h1>
-  
-
-        
-        <a href="/2020/11/07/Java-%E4%B8%80%E6%96%87%E5%BC%84%E6%87%82%E8%A3%85%E9%A5%B0%E8%AF%8Dpublic%E3%80%81private%E3%80%81static%E3%80%81final/" class="archive-article-date">
-  	<time datetime="2020-11-07T12:58:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-11-07</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>初看JAVA时，各种声明，public、private、protect、default、static、final，public static class等简直是懵比了。</p>
-<h2 id="一、-为什么要有public、private这些权限修饰符"><a href="#一、-为什么要有public、private这些权限修饰符" class="headerlink" title="一、 为什么要有public、private这些权限修饰符"></a>一、 为什么要有public、private这些权限修饰符</h2>
-        
-          <a class="article-more-a" href="/2020/11/07/Java-%E4%B8%80%E6%96%87%E5%BC%84%E6%87%82%E8%A3%85%E9%A5%B0%E8%AF%8Dpublic%E3%80%81private%E3%80%81static%E3%80%81final/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Java</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/11/07/Java-%E4%B8%80%E6%96%87%E5%BC%84%E6%87%82%E8%A3%85%E9%A5%B0%E8%AF%8Dpublic%E3%80%81private%E3%80%81static%E3%80%81final/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-三分钟弄懂多进程与多线程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/15/%E4%B8%89%E5%88%86%E9%92%9F%E5%BC%84%E6%87%82%E5%A4%9A%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/">三分钟弄懂多进程与多线程</a>
-    </h1>
-  
-
-        
-        <a href="/2020/10/15/%E4%B8%89%E5%88%86%E9%92%9F%E5%BC%84%E6%87%82%E5%A4%9A%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="archive-article-date">
-  	<time datetime="2020-10-15T14:48:33.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-15</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="一-什么是进程与线程"><a href="#一-什么是进程与线程" class="headerlink" title="一.什么是进程与线程"></a>一.什么是进程与线程</h2><p><strong>首先理解一下什么是进程与线程（概念很重要）</strong><br>
-        
-          <a class="article-more-a" href="/2020/10/15/%E4%B8%89%E5%88%86%E9%92%9F%E5%BC%84%E6%87%82%E5%A4%9A%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/15/%E4%B8%89%E5%88%86%E9%92%9F%E5%BC%84%E6%87%82%E5%A4%9A%E8%BF%9B%E7%A8%8B%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Hexo搭建博客奶奶级教程，趟过无数坑，一秒上手" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/14/Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A5%B6%E5%A5%B6%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%8C%E8%B6%9F%E8%BF%87%E6%97%A0%E6%95%B0%E5%9D%91%EF%BC%8C%E4%B8%80%E7%A7%92%E4%B8%8A%E6%89%8B/">Windows下Hexo搭建个人博客保姆级教程，趟过无数坑，一秒上手</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/14/Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A5%B6%E5%A5%B6%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%8C%E8%B6%9F%E8%BF%87%E6%97%A0%E6%95%B0%E5%9D%91%EF%BC%8C%E4%B8%80%E7%A7%92%E4%B8%8A%E6%89%8B/" class="archive-article-date">
-  	<time datetime="2020-09-14T14:46:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-14</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="1-Windows下HEXO搭建个人博客，软件准备："><a href="#1-Windows下HEXO搭建个人博客，软件准备：" class="headerlink" title="1.Windows下HEXO搭建个人博客，软件准备："></a>1.Windows下HEXO搭建个人博客，软件准备：</h1>
-        
-          <a class="article-more-a" href="/2020/09/14/Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A5%B6%E5%A5%B6%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%8C%E8%B6%9F%E8%BF%87%E6%97%A0%E6%95%B0%E5%9D%91%EF%BC%8C%E4%B8%80%E7%A7%92%E4%B8%8A%E6%89%8B/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/14/Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2%E5%A5%B6%E5%A5%B6%E7%BA%A7%E6%95%99%E7%A8%8B%EF%BC%8C%E8%B6%9F%E8%BF%87%E6%97%A0%E6%95%B0%E5%9D%91%EF%BC%8C%E4%B8%80%E7%A7%92%E4%B8%8A%E6%89%8B/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/07/18/Bert%E3%80%81Transformer%E9%9D%A2%E8%AF%95100%E9%97%AE/">展开全文 >></a>
         </p>
       
 
@@ -1045,7 +1104,7 @@
   
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -1230,6 +1289,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">bert</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">daily</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">graphsage model</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">text representation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">optimizer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">pretrained model</a>
               </li>
             
             <div class="clearfix"></div>

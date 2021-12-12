@@ -6,30 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>图卷积：从GCN到GAT、GraphSAGE | Hexo</title>
+  <title>Tag: graphsage model | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="图模型总体上可以分为两大类：一是random-walk游走类模型，另一类就是GCN、GAT等卷积模型了。 下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="图卷积：从GCN到GAT、GraphSAGE">
-<meta property="og:url" content="http://example.com/2021/08/22/%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/tags/graphsage-model/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="图模型总体上可以分为两大类：一是random-walk游走类模型，另一类就是GCN、GAT等卷积模型了。 下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215530.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215555.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232122.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232153.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215651.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215648.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215656.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215704.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215707.png">
-<meta property="article:published_time" content="2021-08-22T09:49:11.000Z">
-<meta property="article:modified_time" content="2021-08-29T15:33:15.000Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
-<meta property="article:tag" content="graph random-walk model">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215530.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -171,177 +156,48 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-图卷积：从GCN到GAT、GraphSAGE" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      图卷积：从GCN到GAT、GraphSAGE
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2021" class="archive-year">2021</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/11/20/%E3%80%90Graph-Learning%E3%80%91%E6%90%AD%E4%B8%80%E4%B8%AA%E6%97%A0%E7%9B%91%E7%9D%A3%E7%9A%84GraphSAGE/" class="archive-article-date">
+  	<time datetime="2021-11-20T07:42:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-20</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/11/20/%E3%80%90Graph-Learning%E3%80%91%E6%90%AD%E4%B8%80%E4%B8%AA%E6%97%A0%E7%9B%91%E7%9D%A3%E7%9A%84GraphSAGE/">【Graph-Learning】Link-Prediction：搭一个无监督的GraphSAGE</a>
     </h1>
   
 
-        
-        <a href="/2021/08/22/%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/" class="archive-article-date">
-  	<time datetime="2021-08-22T09:49:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-22</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      <br/>
-      <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
-      <span class="icon-sort"></span>
-      <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
-                阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
-      </span>
-      </a>
-      
-      </header>
-    
-    <!-- 目录内容 -->
-    
-        <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
-        <span class="btn-bg"></span>
-        <span class="btn-text">文章导航</span>
-        </p>
-        <div id="toc-article" class="toc-article">
-            <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
-            <strong class="toc-title">文章目录</strong>
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%87%BA%E7%8E%B0GCN%E6%9D%A5%E5%A4%84%E7%90%86%E5%9B%BE%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">1. 为什么出现GCN来处理图结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GCN%E7%9A%84%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">2. GCN的计算原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B8%A6attention%E7%9A%84%E5%9B%BE%E6%B3%A8%E6%84%8F%E7%BD%91%E7%BB%9CGAT"><span class="toc-number">3.</span> <span class="toc-text">3. 带attention的图注意网络GAT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%8F%AF%E6%89%A9%E5%B1%95%E7%9A%84%E5%9B%BE%E7%BD%91%E7%BB%9CGraphSAGE"><span class="toc-number">4.</span> <span class="toc-text">4.可扩展的图网络GraphSAGE</span></a></li></ol>
-       </div>
-       <script type="text/javascript">
-        function showToc(){
-            var toc_article = document.getElementById("toc-article");
-            var show_toc_btn = document.getElementById("show-toc-btn");
-            toc_article.setAttribute("style","display:block");
-            show_toc_btn.setAttribute("style","display:none");
-            };
-        function showBtn(){
-            var toc_article = document.getElementById("toc-article");
-            var show_toc_btn = document.getElementById("show-toc-btn");
-            toc_article.setAttribute("style","display:none");
-            show_toc_btn.setAttribute("style","display:block");
-            };
-       </script>
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>图模型总体上可以分为两大类：一是random-walk游走类模型，另一类就是GCN、GAT等卷积模型了。</p>
-<p>下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。<a id="more"></a></p>
-<h3 id="1-为什么出现GCN来处理图结构"><a href="#1-为什么出现GCN来处理图结构" class="headerlink" title="1. 为什么出现GCN来处理图结构"></a>1. 为什么出现GCN来处理图结构</h3><p>在图像领域，CNN被拿来自动提取图像特征的结构，但是CNN处理的图像或者视频数据中像素点（pixel）是排列成成很整齐的矩阵，虽然图结构不整齐（不同点具有不同数目neighbors），但是不是可以用同样的方法去抽取图的的特征呢？</p>
-<p>于是就出现了两种方式来提取图的特征。一是空间域卷积（spatial domain)，二是频域卷积（spectral domain）。第一种方式由于每个顶点提取出来的neighbors不同，处理上比较麻烦，同时它的效果没有频域卷积效果好，没有做深究。因此，现在比较流行、工程上应用较多的为频域卷积。</p>
-<h3 id="2-GCN的计算原理"><a href="#2-GCN的计算原理" class="headerlink" title="2. GCN的计算原理"></a>2. GCN的计算原理</h3><p>GCN的卷积核心公式：<script type="math/tex">H^{l+1}=\sigma(D^{-1/2}AD^{-1/2}H^{l}W^{l})</script></p>
-<p>同时<script type="math/tex">H^{l}、H^{l+1}</script>分别是第l层、第l+1的节点，D为度矩阵，A为邻接矩阵,如下图。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215530.png" alt="1"></p>
-<p>GCN计算方式上很好理解，本质上跟CNN卷积过程一样，是一个加权求和的过程，就是将邻居点通过度矩阵及其邻接矩阵，计算出各边的权重，然后加权求和。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215555.png" alt="2"></p>
-<p><strong>D负责提供权值的矩阵，邻接A矩阵控制应该融合哪些点, H表示上一层的embedding参数</strong></p>
-<p>结合上面两张图，动手算一算<script type="math/tex">D^{-1/2}AD^{-1/2}</script>，能很清楚的看到，这个加权求和的卷积过程是怎么做的。</p>
-<p>———————-<strong>分割线：GCN 小结一下</strong>————————————————————————————————————————————————</p>
-<p>GCN首次提出了卷积的方式融合图结构特征，提供一个全新的视角。</p>
-<p>主要缺点：1.融合时边权值是固定的，不够灵活。2.可扩展性差，因为它是全图卷积融合，全图做梯度更新，当图比较大时，这样的方式就太慢了，不合适。3.层数加深时，结果会极容易平滑，每个点的特征结果都十分相似。</p>
-<p>GAT就来解决问题1的，GraphSAGE就来解决这个问题2的，DeepGCN等一系列文章就来讨论问题3的。基本上，GCN提出之后，后续就是各路神仙打架了，都是针对GCN的各个不同点进行讨论改进了。</p>
-<h3 id="3-带attention的图注意网络GAT"><a href="#3-带attention的图注意网络GAT" class="headerlink" title="3. 带attention的图注意网络GAT"></a>3. 带attention的图注意网络GAT</h3><p>attention这么流行，看完GCN就容易想到，GCN每次做卷积时，边上的权重每次融合都是固定的，那能不能灵活一点，加个attention，让模型自己去学，那GAT就来干这个事了。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232122.png" alt="3"></p>
-<p>结合下面这两各公式，看看这个attention是怎么定义的。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829232153.png" alt="4"></p>
-<p>attention系数$\alpha_{i,j}$表示第i个点与第j个点之间的attention系数，<script type="math/tex">h_i、h_j、h_k</script>是node feature，其他a、W的为模型参数。</p>
-<p>attention系数<script type="math/tex">\alpha_{i,j}</script>就是通过计算$LeakycReLU(concat[Wh_i,Wh_j])$,在经过Normalize处理一下得到。</p>
-<p>得到各条边的<script type="math/tex">\alpha_{i,j}</script>之后，第i个点的融合attention过后的node feature可以表示下面这个公式，实质上还是一个加权的feature求和过程，只是每次融合中的权重系数是随模型训练学习的，最后在经过一个非线性的激活函数去做对应的任务。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215651.png" alt="5"></p>
-<p>在这个基础上，文中还提到了，为了使attention机制更具扩展性，定义multi-head attention机制（K代表K个attention head），去做attention权重的计算，然后concat起来，得到node feature。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215648.png" alt="6"></p>
-<p>当在网络最后一层时，concat输出的维度就node feature太大，不太合理，就改用累加再平均，然后输出，做具体任务。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215656.png" alt="7"></p>
-<p>以上就是第一个图中右边示意的结构了。</p>
-<p>———————-<strong>分割线：GAT 小结一下</strong>—————————————————————————————————————————————-</p>
-<p>GAT中的attention机制还是很直观的，通过给每条边加了一个模型可学习的系数<script type="math/tex">\alpha_{i,j}</script>，进行带attention系数的node feature融合，使得在做卷积融合feature的过程，能够根据任务调整模型参数，变得自适应使得效果更好。</p>
-<p>今年还出了一篇专门讨论GAT的工作的，讨论attention到底学到了的是什么，感兴趣的可以去看看<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2105.14491">How Attentive are Graph Attention Networks?</a></p>
-<h3 id="4-可扩展的图网络GraphSAGE"><a href="#4-可扩展的图网络GraphSAGE" class="headerlink" title="4.可扩展的图网络GraphSAGE"></a>4.可扩展的图网络GraphSAGE</h3><p>前面说到，GCN中做卷积融合是全图的，梯度是基于全图更新，若是图比较大，每个点邻居节点也较多，这样的融合效率必然是很低的。于是GraphSAGE出现了。</p>
-<p>在提GraphSAGE前，先解释下transductive learning、inductive learning的概念，这也是GraphSAGE与其他图模型的区别。</p>
-<ol>
-<li><strong>transductive是说要预测的数据在训练时模型也能看到。进一步解释一下，就是说训练前，构建的图结构已经是固定的，你要预测的点或边关系结构都应该已经在这个图里了，训练跟预测时的图结构都是一样的。</strong></li>
-<li><strong>inductive是说要预测的数据在训练时模型不用看到，也就是我们平常做算法模型的样子，训练预测时的数据是分开的，也就是上面说的可以图结构不是固定的，加入新的节点。</strong></li>
-</ol>
-<p><strong>GraphSAGE</strong>就是inductive的模式，GraphSAGE提出随机采子图的方式去采样，通过子图更新node embedding， 这样采出的子图结构本身就是变化，从而让模型学到的是一种采样及聚合的参数的方式，有效解决了unseen nodes问题，同时避免了训练中需要把整个图的node embedding一起更新的窘境，有效的增加了扩展性。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215704.png" alt="8"></p>
-<p>具体的思想就是分三步：</p>
-<ol>
-<li>采子图：训练过程中，对于每一个节点采用切子图的方法，随机sample出部分的邻居点，作为聚合的feature点。如上图最左边，对于中心点，采两度，同时sample出部分邻居节点组成训练中的子图。</li>
-<li>聚合：采出子图后，做feature聚合。这里与GCN的方式是一致的，从最外层往里聚合，从而聚合得到中心点的node embedding。聚合这里可操作的地方很多，比如你可以修改聚合函数（一般是用的mean、sum，pooling等），或增加边权值都是可以的。</li>
-<li>任务预测：得到node embedding后，就可以接下游任务了，比如做node classification，node embedding后接一个linear层+softmax做分类即可。</li>
-</ol>
-<p>具体到代码实现思路上，也是与上述思路高度一致。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210829215707.png" alt="9"></p>
-<p>也是针对每一个node采出子图，然后进行聚合，最后得到node embedding。</p>
-<p>举例：假设中心点为v，采点v的K度子图</p>
-<p>1.采出中心点v的K层子图中邻居点u，然后一层层聚合，聚合得到邻居节点node feature <script type="math/tex">h_{N(V)}^k=AGGREGATEk({h^{k−1}_u, ∀u∈N(v)})</script></p>
-<p>2.中心点与它的邻居点通过concat方式聚合，<script type="math/tex">h_v^k=CONCAT(h^{k−1}_v, h^k_{N(v)})</script>,在经过一个非线性函数处理。</p>
-<p>3.最后再Normalize归一化处理一下，得到最后的node embedding</p>
-<p>4.以上述这种方式，从最外层往里聚合,一直聚合到最初的中心点v，点v的node embedding 就更新完成了。</p>
-<p>———————<strong>分割线：GraphSAGE小结一下</strong>—————————————————————————————————————————————————-</p>
-<p>GraphSAGE主要解决了两个问题：1.解决了预测中unseen nodes的问题，原来的GCN训练时，需要看到所有nodes的图数据。2.解决了图规模较大，全图进行梯度更新，内存消耗大，计算慢的问题</p>
-<p>以上两点都是通过一个方式解决的，也就是采子图的方式，由于采取的子图是局部图且是随机的，从而大大增加模型的可扩展性，但这也有一个问题可以思考一下，这个随机采子图的方式是合理的吗？这种方式会不会损失掉部分这个图的node信息。</p>
-<p>对以上感兴趣的还可以看看Cluster-GCN，它通过图聚类的方式去划分子图分区，从而，进一步提高了计算效率。</p>
-<p>———————<strong>分割线：其他的文章系列</strong>————————————————————————————————————————————————————————</p>
-<p>1.<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/390705175">异构图多关系图模型GATNE</a></p>
-<p>2.<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/397710211">游走图模型—同构图DeepWalk</a></p>
-<p>3.<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/400849086">游走图模型-聊聊Node2Vec</a></p>
-<p>4.<a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Graph-Learning">图网络对应代码Github</a></p>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>Thank You！<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/alipay.jpg">
-                      <span class="reward-type">支付宝</span>
-                    </div>
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/wechatpay.jpg">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">graph random-walk model</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">graphsage model</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
@@ -354,126 +210,66 @@
 	</div>
 
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/08/22/%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
   
-<nav id="article-nav">
-  
-    <a href="/2021/09/12/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ATextGCN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          图网络：聊聊文本图模型TextGCN、BertGCN
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">进阶版游走图模型Node2Vec</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2021/11/01/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E5%A5%BDGraphSAGE%EF%BC%9F%E6%8C%89%E8%BF%99%E4%B8%89%E6%AD%A5%E8%B5%B0/" class="archive-article-date">
+  	<time datetime="2021-11-01T15:04:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-01</time>
+</a>
         </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%87%BA%E7%8E%B0GCN%E6%9D%A5%E5%A4%84%E7%90%86%E5%9B%BE%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">1. 为什么出现GCN来处理图结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GCN%E7%9A%84%E8%AE%A1%E7%AE%97%E5%8E%9F%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">2. GCN的计算原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B8%A6attention%E7%9A%84%E5%9B%BE%E6%B3%A8%E6%84%8F%E7%BD%91%E7%BB%9CGAT"><span class="toc-number">3.</span> <span class="toc-text">3. 带attention的图注意网络GAT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%8F%AF%E6%89%A9%E5%B1%95%E7%9A%84%E5%9B%BE%E7%BD%91%E7%BB%9CGraphSAGE"><span class="toc-number">4.</span> <span class="toc-text">4.可扩展的图网络GraphSAGE</span></a></li></ol>
-                    </div>
-                </span>
-            </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2021/11/01/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E5%A5%BDGraphSAGE%EF%BC%9F%E6%8C%89%E8%BF%99%E4%B8%89%E6%AD%A5%E8%B5%B0/">【Graph-Learning】怎么搭好一个GraphSAGE？按这三步走</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">graphsage model</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
         </div>
-        
-    </div>
-</aside>
-
-
-
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+  
+    </div></section>
   
 
-  
-
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -501,9 +297,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
@@ -656,6 +452,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">bert</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">daily</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">graphsage model</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">text representation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">optimizer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">pretrained model</a>
               </li>
             
             <div class="clearfix"></div>

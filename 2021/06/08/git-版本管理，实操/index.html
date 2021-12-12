@@ -6,18 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>git 版本管理，实操 | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Git 版本控制初始化Git项目版本控制：cd 到 需进行控制版本代码目录，初始化 1git init 执行完后，会在目录下生成.git的隐藏子目录，其中包含一些git存储库框架信息 添加文件并提交 git add: 添加要添加的文件至缓存区中">
+  <meta name="description" content="一、Git 基本流程 如上图，工作区是在本地，远程仓库就是远端GitHub或gitee仓库。 从工作区提交到远端，就是上面从右到左，依次进行每一步。从远端到本地则是反过来。 先说说从本地到远端的基操。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git 版本管理，实操">
+<meta property="og:title" content="Hexo">
 <meta property="og:url" content="http://example.com/2021/06/08/git-%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%EF%BC%8C%E5%AE%9E%E6%93%8D/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Git 版本控制初始化Git项目版本控制：cd 到 需进行控制版本代码目录，初始化 1git init 执行完后，会在目录下生成.git的隐藏子目录，其中包含一些git存储库框架信息 添加文件并提交 git add: 添加要添加的文件至缓存区中">
+<meta property="og:description" content="一、Git 基本流程 如上图，工作区是在本地，远程仓库就是远端GitHub或gitee仓库。 从工作区提交到远端，就是上面从右到左，依次进行每一步。从远端到本地则是反过来。 先说说从本地到远端的基操。">
 <meta property="og:locale" content="zh_CH">
 <meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210530171116.jpeg">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/no_password.png">
+<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/roll_back.png">
 <meta property="article:published_time" content="2021-06-08T13:09:19.000Z">
-<meta property="article:modified_time" content="2021-06-13T09:36:37.000Z">
+<meta property="article:modified_time" content="2021-11-20T16:11:41.648Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
@@ -166,32 +168,6 @@
             <article id="post-git-版本管理，实操" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      git 版本管理，实操
-    </h1>
-  
-
-        
-        <a href="/2021/06/08/git-%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%EF%BC%8C%E5%AE%9E%E6%93%8D/" class="archive-article-date">
-  	<time datetime="2021-06-08T13:09:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-08</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      <br/>
-      <a class="cloud-tie-join-count" href="javascript:void(0);" style="color:gray;font-size:14px;">
-      <span class="icon-sort"></span>
-      <span id="busuanzi_container_page_pv" style="color:#ef7522;font-size:14px;">
-                阅读数: <span id="busuanzi_value_page_pv"></span>次 &nbsp;&nbsp;
-      </span>
-      </a>
-      
-      </header>
-    
     <!-- 目录内容 -->
     
         <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
@@ -201,7 +177,7 @@
         <div id="toc-article" class="toc-article">
             <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
             <strong class="toc-title">文章目录</strong>
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git-%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text">Git 版本控制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96Git"><span class="toc-number">1.0.0.0.1.</span> <span class="toc-text">初始化Git</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%96%87%E4%BB%B6%E5%B9%B6%E6%8F%90%E4%BA%A4"><span class="toc-number">1.0.0.0.1.1.</span> <span class="toc-text">添加文件并提交</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E5%A4%87%E4%BB%BD%EF%BC%88%E4%B8%8A%E4%BC%A0%E4%BB%A3%E7%A0%81%EF%BC%89"><span class="toc-number">1.0.0.0.1.2.</span> <span class="toc-text">远程备份（上传代码）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%8E%A5%E4%B8%8B%E6%9D%A5%EF%BC%8C%E5%B0%B1%E5%8F%AF%E4%BB%A5Push-%E4%BB%A3%E7%A0%81%E4%BA%86"><span class="toc-number">1.0.0.0.1.3.</span> <span class="toc-text">接下来，就可以Push 代码了</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%8B%E9%9D%A2%E9%92%88%E5%AF%B9%E5%90%8E%E7%BB%AD%E5%8F%AF%E8%83%BD%E5%87%BA%E7%8E%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E4%B8%BE%E4%BA%9B%E4%BE%8B%E5%AD%90%E3%80%82"><span class="toc-number">1.0.0.0.1.4.</span> <span class="toc-text">下面针对后续可能出现的一些问题举些例子。</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81Git-%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">一、Git 基本流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-git-clone-%E6%88%96-git-init-%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BB%93%E5%BA%93"><span class="toc-number">1.1.</span> <span class="toc-text">1. git clone 或 git init 初始化仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B7%BB%E5%8A%A0%E6%96%87%E4%BB%B6%E5%B9%B6%E6%8F%90%E4%BA%A4"><span class="toc-number">1.2.</span> <span class="toc-text">2. 添加文件并提交</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%BF%9C%E7%A8%8B%E5%A4%87%E4%BB%BD%EF%BC%88%E4%B8%8A%E4%BC%A0%E4%BB%A3%E7%A0%81%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">3. 远程备份（上传代码）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%8E%A5%E4%B8%8B%E6%9D%A5%EF%BC%8C%E5%B0%B1%E5%8F%AF%E4%BB%A5Push-%E4%BB%A3%E7%A0%81%E4%BA%86"><span class="toc-number">1.4.</span> <span class="toc-text">4. 接下来，就可以Push 代码了</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E8%AE%BE%E7%BD%AE%E5%85%8D%E8%BE%93%E5%85%A5%E7%94%A8%E6%88%B7%E5%90%8D%E3%80%81%E5%AF%86%E7%A0%81push%EF%BC%9A"><span class="toc-number">1.5.</span> <span class="toc-text">5. 设置免输入用户名、密码push：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%86%E6%94%AF%E6%93%8D%E4%BD%9C-Git-Branch"><span class="toc-number">2.</span> <span class="toc-text">二、分支操作  Git Branch</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BA%E5%88%86%E6%94%AF%E5%8F%8A%E5%90%88%E5%B9%B6"><span class="toc-number">2.1.</span> <span class="toc-text">1. 创建分支及合并</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%86%E6%96%B0%E5%88%9B%E5%BB%BA%E7%9A%84%E5%88%86%E6%94%AF%E6%8E%A8%E9%80%81%E8%BF%9C%E7%AB%AF%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text">2. 第一次将新创建的分支推送远端：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="toc-number">2.3.</span> <span class="toc-text">3. 删除分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%9B%9E%E6%BB%9A"><span class="toc-number">2.4.</span> <span class="toc-text">三、回滚</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E6%97%A5%E5%BF%97"><span class="toc-number">2.5.</span> <span class="toc-text">1. 查看提交日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%9B%9E%E6%BB%9A"><span class="toc-number">2.6.</span> <span class="toc-text">2. 回滚</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%8B%E9%9D%A2%E6%98%AF%E5%8F%AF%E8%83%BD%E5%AE%9E%E6%93%8D%E4%B8%AD%EF%BC%8C%E5%90%8E%E7%BB%AD%E5%8F%AF%E8%83%BD%E5%87%BA%E7%8E%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E3%80%81%E4%B8%BE%E4%BA%9B%E4%BE%8B%E5%AD%90%E3%80%82"><span class="toc-number">3.</span> <span class="toc-text">四、下面是可能实操中，后续可能出现的一些问题、举些例子。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#eg1%EF%BC%9A%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%B8%8A%E4%BC%A0%E5%90%8E%EF%BC%8C%E8%8B%A5%E6%98%AF%E4%BD%A0%E6%9F%90%E5%A4%A9%E7%9B%B4%E6%8E%A5%E5%9C%A8GitHub%E4%B8%8A%EF%BC%88%E4%B9%9F%E5%B0%B1%E6%98%AF%E8%BF%9C%E7%AB%AF%EF%BC%89%E4%BF%AE%E6%94%B9%E4%BA%86%E8%BF%99%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E6%88%96%E4%B8%9C%E8%A5%BF%E3%80%82"><span class="toc-number">3.1.</span> <span class="toc-text">eg1：第一次上传后，若是你某天直接在GitHub上（也就是远端）修改了这个项目的部分代码或东西。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eg2%EF%BC%9A%E6%9C%89%E6%97%B6%E5%80%99%E4%BC%9A%E5%87%BA%E7%8E%B0%E6%8F%90%E4%BA%A4%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98%EF%BC%9Ahint-Updates-were-rejected-because-the-tip-of-your-current-branch-is-behind%EF%BC%8C-%E4%BD%BF%E7%94%A8%E4%B8%8B%E5%91%BD%E4%BB%A4%E5%85%81%E8%AE%B8%E5%90%88%E5%B9%B6%E3%80%82"><span class="toc-number">3.2.</span> <span class="toc-text">eg2：有时候会出现提交冲突问题：hint: Updates were rejected because the tip of your current branch is behind， 使用下命令允许合并。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eg3%EF%BC%9Agit-push-%E6%8A%A5%E9%94%99-error-RPC-failed-curl-56-OpenSSL-SSL-read-SSL-ERROR-SYSCALL-errno-10054"><span class="toc-number">3.3.</span> <span class="toc-text">eg3：git push 报错;error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eg4-hint-Updates-were-rejected-because-the-tip-of-your-current-branch-is-behind"><span class="toc-number">3.4.</span> <span class="toc-text">eg4: hint: Updates were rejected because the tip of your current branch is behind</span></a></li></ol></li></ol>
        </div>
        <script type="text/javascript">
         function showToc(){
@@ -221,11 +197,17 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Git-版本控制"><a href="#Git-版本控制" class="headerlink" title="Git 版本控制"></a>Git 版本控制</h1><h5 id="初始化Git"><a href="#初始化Git" class="headerlink" title="初始化Git"></a>初始化Git</h5><p>项目版本控制：cd 到 需进行控制版本代码目录，初始化</p>
+        <h3 id="一、Git-基本流程"><a href="#一、Git-基本流程" class="headerlink" title="一、Git 基本流程"></a>一、Git 基本流程</h3><p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210530171116.jpeg" alt="git"></p>
+<p>如上图，工作区是在本地，远程仓库就是远端GitHub或gitee仓库。</p>
+<p>从工作区提交到远端，就是上面从右到左，依次进行每一步。从远端到本地则是反过来。</p>
+<p>先说说从本地到远端的基操。<a id="more"></a></p>
+<h4 id="1-git-clone-或-git-init-初始化仓库"><a href="#1-git-clone-或-git-init-初始化仓库" class="headerlink" title="1. git clone 或 git init 初始化仓库"></a>1. git clone 或 git init 初始化仓库</h4><p>可以从远端clone一下或直接在代码目录进行init 初始化，生成.git文件夹，这里面就是会记录与git提交记录以及相关配置信息等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https:&#x2F;&#x2F;github.com&#x2F;shuxinyin&#x2F;Graph-Learning.git</span><br></pre></td></tr></table></figure>
+<p>或cd 到 需进行控制版本代码目录，初始化</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
 <p>执行完后，会在目录下生成.git的隐藏子目录，其中包含一些git存储库框架信息</p>
-<h6 id="添加文件并提交"><a href="#添加文件并提交" class="headerlink" title="添加文件并提交"></a>添加文件并提交</h6><ol>
-<li><p>git add: 添加要添加的文件至缓存区中<a id="more"></a></p>
+<h4 id="2-添加文件并提交"><a href="#2-添加文件并提交" class="headerlink" title="2. 添加文件并提交"></a>2. 添加文件并提交</h4><ol>
+<li><p>git add: 添加要添加的文件至缓存区中</p>
 <p>git add 的其他格式小命令</p>
 <p>1.1 <code>git add .</code> 表示添加新文件和编辑过的文件不包括删除的文件</p>
 <p>1.2 <code>git add -A .</code>来一次添加所有改变的文件</p>
@@ -235,27 +217,41 @@
 </li>
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 添加文件并提交上传 3步</span><br><span class="line">git add &lt;filename&gt;</span><br><span class="line">git commit -m &#39;first commit&#39;</span><br></pre></td></tr></table></figure>
-<h6 id="远程备份（上传代码）"><a href="#远程备份（上传代码）" class="headerlink" title="远程备份（上传代码）"></a>远程备份（上传代码）</h6><p>commit后只是提交，还没上传到远端的git仓库</p>
+<h4 id="3-远程备份（上传代码）"><a href="#3-远程备份（上传代码）" class="headerlink" title="3. 远程备份（上传代码）"></a>3. 远程备份（上传代码）</h4><p>commit后只是提交，还没上传到远端的git仓库</p>
 <p>在这里，需要转到你的github创建一个repository，创建后，上传的代码位置就在这个repository</p>
 <p>（repository地址在你的项目主页code按钮）</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin https:&#x2F;&#x2F;github.com&#x2F;shuxinyin&#x2F;cifar100.git</span><br></pre></td></tr></table></figure>
-<h6 id="接下来，就可以Push-代码了"><a href="#接下来，就可以Push-代码了" class="headerlink" title="接下来，就可以Push 代码了"></a>接下来，就可以Push 代码了</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push origin  分支名称</span><br><span class="line">一般使用：git push origin master</span><br></pre></td></tr></table></figure>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210530171116.jpeg" alt="git"></p>
-<p>以上是第一次项目初始化及代码上传。</p>
-<h6 id="下面针对后续可能出现的一些问题举些例子。"><a href="#下面针对后续可能出现的一些问题举些例子。" class="headerlink" title="下面针对后续可能出现的一些问题举些例子。"></a>下面针对后续可能出现的一些问题举些例子。</h6><p>eg1：第一次上传后，若是你某天直接在GitHub上（也就是远端）修改了这个项目的部分代码或东西。</p>
+<h4 id="4-接下来，就可以Push-代码了"><a href="#4-接下来，就可以Push-代码了" class="headerlink" title="4. 接下来，就可以Push 代码了"></a>4. 接下来，就可以Push 代码了</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git push origin  分支名称</span><br><span class="line">一般使用：git push origin master</span><br></pre></td></tr></table></figure>
+<p>以上是第一次项目初始化及代码上传相关步骤。</p>
+<h4 id="5-设置免输入用户名、密码push："><a href="#5-设置免输入用户名、密码push：" class="headerlink" title="5. 设置免输入用户名、密码push："></a>5. 设置免输入用户名、密码push：</h4><p>每次要输入用户名密码，着实烦，那就设置一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config  credential.helper store </span><br></pre></td></tr></table></figure>
+<p><strong>不加参数： —global  </strong> 表面只对这个仓库生效，并非全局设置 。</p>
+<p>设置后，你能在项目的隐藏文件.git/config里看到多了一行credential，表示在你设置后，只需你第一次输入，它会帮你记住，后续就不需要输入了。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/no_password.png" alt="image-20211031110715124"></p>
+<h3 id="二、分支操作-Git-Branch"><a href="#二、分支操作-Git-Branch" class="headerlink" title="二、分支操作  Git Branch"></a>二、分支操作  Git Branch</h3><p>上述建立的是master分支，但正常master一般只做正式版代码发布，日常开发、及修改代码放在branch分支上，不把master分支代码搞乱了。</p>
+<h4 id="1-创建分支及合并"><a href="#1-创建分支及合并" class="headerlink" title="1. 创建分支及合并"></a>1. 创建分支及合并</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.查看本地分支:git branch</span><br><span class="line">2.查看本地分支（显示最后一次提交):git branch -v</span><br><span class="line">3.查看远程分支:git branch -r</span><br><span class="line">4.查看所有分支:git branch -a</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.创建分支: git branch 分支名  </span><br><span class="line">2.transform to brach: git checkout 分支名</span><br><span class="line">3.分支合并: git merge 分支名 (把分支合并到当前分支)</span><br></pre></td></tr></table></figure>
+<h4 id="2-第一次将新创建的分支推送远端："><a href="#2-第一次将新创建的分支推送远端：" class="headerlink" title="2. 第一次将新创建的分支推送远端："></a>2. 第一次将新创建的分支推送远端：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin HEAD -u</span><br></pre></td></tr></table></figure>
+<p>后续第二次提交，就切换到branch分支上，做完代码修改，按照上述的add、commit、push就OK了</p>
+<h4 id="3-删除分支"><a href="#3-删除分支" class="headerlink" title="3. 删除分支"></a>3. 删除分支</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.删除本地分支:git branch -d 分支名称 （大写的D为强制删除）</span><br><span class="line">2.切换本地分支:git checkout </span><br><span class="line">3.分支名称创建远程分支:git push origin 本地分支名称:分支名称 （要用本地的一个分支名称与远程分支名称提交绑定）</span><br><span class="line">5.推送远程分支：git push origin :分支名称</span><br></pre></td></tr></table></figure>
+<h4 id="三、回滚"><a href="#三、回滚" class="headerlink" title="三、回滚"></a>三、回滚</h4><p>当想回滚到以前的某个提交的版本时，这时候就体现commit时添加的message作用了（时间久了不定还记得每个版本的区别）。</p>
+<h4 id="1-查看提交日志"><a href="#1-查看提交日志" class="headerlink" title="1. 查看提交日志"></a>1. 查看提交日志</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/roll_back.png" alt="roll_back"></p>
+<h4 id="2-回滚"><a href="#2-回滚" class="headerlink" title="2. 回滚"></a>2. 回滚</h4><p>可以看到上面图中，每次commit 后，会产生一个commit编号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard commit—id</span><br><span class="line">例子：git reset --hard 3db7cd5ec2f2460513dcd550b4d931d1d7a770c9</span><br><span class="line"></span><br><span class="line">git reset --hard HEAD^ 回退到上个版本</span><br><span class="line">git reset --hard HEAD~3 回退到前3次提交之前，以此类推，回退到n次提交之前</span><br></pre></td></tr></table></figure>
+<p>此时，你本地的代码就都变成这个版本的了。</p>
+<h3 id="四、下面是可能实操中，后续可能出现的一些问题、举些例子。"><a href="#四、下面是可能实操中，后续可能出现的一些问题、举些例子。" class="headerlink" title="四、下面是可能实操中，后续可能出现的一些问题、举些例子。"></a>四、下面是可能实操中，后续可能出现的一些问题、举些例子。</h3><h4 id="eg1：第一次上传后，若是你某天直接在GitHub上（也就是远端）修改了这个项目的部分代码或东西。"><a href="#eg1：第一次上传后，若是你某天直接在GitHub上（也就是远端）修改了这个项目的部分代码或东西。" class="headerlink" title="eg1：第一次上传后，若是你某天直接在GitHub上（也就是远端）修改了这个项目的部分代码或东西。"></a>eg1：第一次上传后，若是你某天直接在GitHub上（也就是远端）修改了这个项目的部分代码或东西。</h4><p>Error:hint: Updates were rejected because the tip of your current branch is behind</p>
+<p>解决1:</p>
 <p>此时，你下次在通过git上传本地此项目代码时，<strong>一定得先执行pull，来同步本地与远端的代码，不然会报错。</strong></p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master</span><br></pre></td></tr></table></figure>
-<p>eg2：有时候会出现提交冲突问题：hint: Updates were rejected because the tip of your current branch is behind， 使用下命令允许合并。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master --allow-unrelated-histories</span><br></pre></td></tr></table></figure>
-<p>eg3：git push 报错;error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config http.postBuffer 524288000 </span><br><span class="line"> </span><br><span class="line">git config --global http.sslVerify &quot;false&quot; </span><br></pre></td></tr></table></figure>
+<p>解决2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin master -f</span><br></pre></td></tr></table></figure>
+<p>这句执行就是在远程仓库中进行的相关修改会被删除，使远程仓库回到你本地仓库未修改之前的那个版本，然后上传你基于本地仓库的修改。</p>
+<h4 id="eg2：有时候会出现提交冲突问题：hint-Updates-were-rejected-because-the-tip-of-your-current-branch-is-behind，-使用下命令允许合并。"><a href="#eg2：有时候会出现提交冲突问题：hint-Updates-were-rejected-because-the-tip-of-your-current-branch-is-behind，-使用下命令允许合并。" class="headerlink" title="eg2：有时候会出现提交冲突问题：hint: Updates were rejected because the tip of your current branch is behind， 使用下命令允许合并。"></a>eg2：有时候会出现提交冲突问题：hint: Updates were rejected because the tip of your current branch is behind， 使用下命令允许合并。</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master --allow-unrelated-histories</span><br></pre></td></tr></table></figure>
+<h4 id="eg3：git-push-报错-error-RPC-failed-curl-56-OpenSSL-SSL-read-SSL-ERROR-SYSCALL-errno-10054"><a href="#eg3：git-push-报错-error-RPC-failed-curl-56-OpenSSL-SSL-read-SSL-ERROR-SYSCALL-errno-10054" class="headerlink" title="eg3：git push 报错;error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054"></a>eg3：git push 报错;error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config http.postBuffer 524288000 </span><br><span class="line"> </span><br><span class="line">git config --global http.sslVerify &quot;false&quot; </span><br></pre></td></tr></table></figure>
 <p>下面就是跟上面的三步一样了，就可以正常push了。</p>
 <p>所以，尽量不要在远端直接修改，因为不知道哪天你就忘了，尽量在本地修改，然后通过git push上去，保持同步。</p>
-<p>eg4: 每次git push/pull 都要验证用户名及密码问题</p>
-<p>执行下面的命令，这会在你本地生成一个文本，上边记录你的账号和密码。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global credential.helper store</span><br></pre></td></tr></table></figure>
-<p>使用上述的命令配置好之后，再操作一次git pull，然后它会提示你输入账号密码，这一次之后就不需要再次输入密码了</p>
-
+<h4 id="eg4-hint-Updates-were-rejected-because-the-tip-of-your-current-branch-is-behind"><a href="#eg4-hint-Updates-were-rejected-because-the-tip-of-your-current-branch-is-behind" class="headerlink" title="eg4: hint: Updates were rejected because the tip of your current branch is behind"></a>eg4: hint: Updates were rejected because the tip of your current branch is behind</h4>
       
 
       
@@ -380,7 +376,7 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/06/14/%E7%AB%99%E5%9C%A8transformer%E7%9A%84%E8%82%A9%E8%86%80%E4%B8%8A%E8%B0%83bert-md/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/06/14/%E3%80%90NLP%E3%80%91%E7%AB%99%E5%9C%A8transformer%E7%9A%84%E8%82%A9%E8%86%80%E4%B8%8A%E8%B0%83bert-md/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
@@ -418,7 +414,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Git-%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="toc-number">1.</span> <span class="toc-text">Git 版本控制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96Git"><span class="toc-number">1.0.0.0.1.</span> <span class="toc-text">初始化Git</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E6%96%87%E4%BB%B6%E5%B9%B6%E6%8F%90%E4%BA%A4"><span class="toc-number">1.0.0.0.1.1.</span> <span class="toc-text">添加文件并提交</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E5%A4%87%E4%BB%BD%EF%BC%88%E4%B8%8A%E4%BC%A0%E4%BB%A3%E7%A0%81%EF%BC%89"><span class="toc-number">1.0.0.0.1.2.</span> <span class="toc-text">远程备份（上传代码）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%8E%A5%E4%B8%8B%E6%9D%A5%EF%BC%8C%E5%B0%B1%E5%8F%AF%E4%BB%A5Push-%E4%BB%A3%E7%A0%81%E4%BA%86"><span class="toc-number">1.0.0.0.1.3.</span> <span class="toc-text">接下来，就可以Push 代码了</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%8B%E9%9D%A2%E9%92%88%E5%AF%B9%E5%90%8E%E7%BB%AD%E5%8F%AF%E8%83%BD%E5%87%BA%E7%8E%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E4%B8%BE%E4%BA%9B%E4%BE%8B%E5%AD%90%E3%80%82"><span class="toc-number">1.0.0.0.1.4.</span> <span class="toc-text">下面针对后续可能出现的一些问题举些例子。</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81Git-%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">一、Git 基本流程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-git-clone-%E6%88%96-git-init-%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BB%93%E5%BA%93"><span class="toc-number">1.1.</span> <span class="toc-text">1. git clone 或 git init 初始化仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%B7%BB%E5%8A%A0%E6%96%87%E4%BB%B6%E5%B9%B6%E6%8F%90%E4%BA%A4"><span class="toc-number">1.2.</span> <span class="toc-text">2. 添加文件并提交</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%BF%9C%E7%A8%8B%E5%A4%87%E4%BB%BD%EF%BC%88%E4%B8%8A%E4%BC%A0%E4%BB%A3%E7%A0%81%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">3. 远程备份（上传代码）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E6%8E%A5%E4%B8%8B%E6%9D%A5%EF%BC%8C%E5%B0%B1%E5%8F%AF%E4%BB%A5Push-%E4%BB%A3%E7%A0%81%E4%BA%86"><span class="toc-number">1.4.</span> <span class="toc-text">4. 接下来，就可以Push 代码了</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E8%AE%BE%E7%BD%AE%E5%85%8D%E8%BE%93%E5%85%A5%E7%94%A8%E6%88%B7%E5%90%8D%E3%80%81%E5%AF%86%E7%A0%81push%EF%BC%9A"><span class="toc-number">1.5.</span> <span class="toc-text">5. 设置免输入用户名、密码push：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%86%E6%94%AF%E6%93%8D%E4%BD%9C-Git-Branch"><span class="toc-number">2.</span> <span class="toc-text">二、分支操作  Git Branch</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BA%E5%88%86%E6%94%AF%E5%8F%8A%E5%90%88%E5%B9%B6"><span class="toc-number">2.1.</span> <span class="toc-text">1. 创建分支及合并</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B0%86%E6%96%B0%E5%88%9B%E5%BB%BA%E7%9A%84%E5%88%86%E6%94%AF%E6%8E%A8%E9%80%81%E8%BF%9C%E7%AB%AF%EF%BC%9A"><span class="toc-number">2.2.</span> <span class="toc-text">2. 第一次将新创建的分支推送远端：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%88%A0%E9%99%A4%E5%88%86%E6%94%AF"><span class="toc-number">2.3.</span> <span class="toc-text">3. 删除分支</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%9B%9E%E6%BB%9A"><span class="toc-number">2.4.</span> <span class="toc-text">三、回滚</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%9F%A5%E7%9C%8B%E6%8F%90%E4%BA%A4%E6%97%A5%E5%BF%97"><span class="toc-number">2.5.</span> <span class="toc-text">1. 查看提交日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%9B%9E%E6%BB%9A"><span class="toc-number">2.6.</span> <span class="toc-text">2. 回滚</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%8B%E9%9D%A2%E6%98%AF%E5%8F%AF%E8%83%BD%E5%AE%9E%E6%93%8D%E4%B8%AD%EF%BC%8C%E5%90%8E%E7%BB%AD%E5%8F%AF%E8%83%BD%E5%87%BA%E7%8E%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E3%80%81%E4%B8%BE%E4%BA%9B%E4%BE%8B%E5%AD%90%E3%80%82"><span class="toc-number">3.</span> <span class="toc-text">四、下面是可能实操中，后续可能出现的一些问题、举些例子。</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#eg1%EF%BC%9A%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%B8%8A%E4%BC%A0%E5%90%8E%EF%BC%8C%E8%8B%A5%E6%98%AF%E4%BD%A0%E6%9F%90%E5%A4%A9%E7%9B%B4%E6%8E%A5%E5%9C%A8GitHub%E4%B8%8A%EF%BC%88%E4%B9%9F%E5%B0%B1%E6%98%AF%E8%BF%9C%E7%AB%AF%EF%BC%89%E4%BF%AE%E6%94%B9%E4%BA%86%E8%BF%99%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81%E6%88%96%E4%B8%9C%E8%A5%BF%E3%80%82"><span class="toc-number">3.1.</span> <span class="toc-text">eg1：第一次上传后，若是你某天直接在GitHub上（也就是远端）修改了这个项目的部分代码或东西。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eg2%EF%BC%9A%E6%9C%89%E6%97%B6%E5%80%99%E4%BC%9A%E5%87%BA%E7%8E%B0%E6%8F%90%E4%BA%A4%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98%EF%BC%9Ahint-Updates-were-rejected-because-the-tip-of-your-current-branch-is-behind%EF%BC%8C-%E4%BD%BF%E7%94%A8%E4%B8%8B%E5%91%BD%E4%BB%A4%E5%85%81%E8%AE%B8%E5%90%88%E5%B9%B6%E3%80%82"><span class="toc-number">3.2.</span> <span class="toc-text">eg2：有时候会出现提交冲突问题：hint: Updates were rejected because the tip of your current branch is behind， 使用下命令允许合并。</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eg3%EF%BC%9Agit-push-%E6%8A%A5%E9%94%99-error-RPC-failed-curl-56-OpenSSL-SSL-read-SSL-ERROR-SYSCALL-errno-10054"><span class="toc-number">3.3.</span> <span class="toc-text">eg3：git push 报错;error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#eg4-hint-Updates-were-rejected-because-the-tip-of-your-current-branch-is-behind"><span class="toc-number">3.4.</span> <span class="toc-text">eg4: hint: Updates were rejected because the tip of your current branch is behind</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -620,6 +616,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">bert</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">daily</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">graphsage model</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">text representation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">optimizer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">pretrained model</a>
               </li>
             
             <div class="clearfix"></div>

@@ -158,20 +158,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-【Graph-Learning】怎么搭一个GCN？只需这四步" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【DataFrame】DataFrame的骚操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/10/17/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E4%B8%80%E4%B8%AAGCN%EF%BC%9F%E5%8F%AA%E9%9C%80%E8%BF%99%E5%9B%9B%E6%AD%A5/">【Graph-Learning】怎么搭一个GCN？只需这四步</a>
+      <a class="article-title" href="/2021/12/12/%E3%80%90DataFrame%E3%80%91DataFrame%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C/">【DataFrame】DataFrame的骚操作</a>
     </h1>
   
 
         
-        <a href="/2021/10/17/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E4%B8%80%E4%B8%AAGCN%EF%BC%9F%E5%8F%AA%E9%9C%80%E8%BF%99%E5%9B%9B%E6%AD%A5/" class="archive-article-date">
-  	<time datetime="2021-10-17T02:25:38.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-17</time>
+        <a href="/2021/12/12/%E3%80%90DataFrame%E3%80%91DataFrame%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C/" class="archive-article-date">
+  	<time datetime="2021-12-12T13:51:04.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-12-12</time>
 </a>
         
 
@@ -184,12 +184,161 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p>程序员界一直讲究 Talk is cheap，show me the code。图网络最近很火，新的模型、原理解析一大堆，但光看懂原理肯定不够，踩坑实践一下理解才更透彻。</p>
-<p>那怎么正确搭建一个GCN呢？</p>
-<p>手把手的从建图、定义邻接矩阵到GCN model，教你怎么搭一个GCN的model，搞清楚这四步，即可速成。话不多说，直接来。
         
-          <a class="article-more-a" href="/2021/10/17/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E4%B8%80%E4%B8%AAGCN%EF%BC%9F%E5%8F%AA%E9%9C%80%E8%BF%99%E5%9B%9B%E6%AD%A5/#more">more >></a>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/12/12/%E3%80%90DataFrame%E3%80%91DataFrame%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
         
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【Graph-Learning】从GCN到RGCN，从同质图到异质图" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/12/07/%E3%80%90Graph-Learning%E3%80%91%E4%BB%8EGCN%E5%88%B0RGCN%EF%BC%8C%E4%BB%8E%E5%90%8C%E8%B4%A8%E5%9B%BE%E5%88%B0%E5%BC%82%E8%B4%A8%E5%9B%BE/">【Graph-Learning】从GCN到RGCN，从同构图到异构图</a>
+    </h1>
+  
+
+        
+        <a href="/2021/12/07/%E3%80%90Graph-Learning%E3%80%91%E4%BB%8EGCN%E5%88%B0RGCN%EF%BC%8C%E4%BB%8E%E5%90%8C%E8%B4%A8%E5%9B%BE%E5%88%B0%E5%BC%82%E8%B4%A8%E5%9B%BE/" class="archive-article-date">
+  	<time datetime="2021-12-07T14:11:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-12-07</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>图算法模型种类繁多，以图结构分类可以分为同构与异构图两大类。其中</p>
+<p>1.同构图: 点类型 + 边类型=2(也就是不区分点与边类型)</p>
+<p>2.异构图：点类型 + 边类型&gt;2
+        
+          <a class="article-more-a" href="/2021/12/07/%E3%80%90Graph-Learning%E3%80%91%E4%BB%8EGCN%E5%88%B0RGCN%EF%BC%8C%E4%BB%8E%E5%90%8C%E8%B4%A8%E5%9B%BE%E5%88%B0%E5%BC%82%E8%B4%A8%E5%9B%BE/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/12/07/%E3%80%90Graph-Learning%E3%80%91%E4%BB%8EGCN%E5%88%B0RGCN%EF%BC%8C%E4%BB%8E%E5%90%8C%E8%B4%A8%E5%9B%BE%E5%88%B0%E5%BC%82%E8%B4%A8%E5%9B%BE/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【Daily】硕士，末流211，要不要搞深度学习" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/28/%E3%80%90Daily%E3%80%91%E7%A1%95%E5%A3%AB%EF%BC%8C%E6%9C%AB%E6%B5%81211%EF%BC%8C%E8%A6%81%E4%B8%8D%E8%A6%81%E6%90%9E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">【Daily】硕士，末流211，要不要搞深度学习?</a>
+    </h1>
+  
+
+        
+        <a href="/2021/11/28/%E3%80%90Daily%E3%80%91%E7%A1%95%E5%A3%AB%EF%BC%8C%E6%9C%AB%E6%B5%81211%EF%BC%8C%E8%A6%81%E4%B8%8D%E8%A6%81%E6%90%9E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="archive-article-date">
+  	<time datetime="2021-11-28T14:16:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-28</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="硕士，末流211，无人带，要不要搞深度学习"><a href="#硕士，末流211，无人带，要不要搞深度学习" class="headerlink" title="硕士，末流211，无人带，要不要搞深度学习?"></a>硕士，末流211，无人带，要不要搞深度学习?</h3><p>最近一直在纠结于继续干java还是搞深度学习，深度学习把吴恩达的课看了一半，</p>
+<p>借自己亲身经历，回答一波，看看对题主有没有帮助。</p>
+<p>我应该就算是题中末流211的研究生了。就读研究生时，当时老师下面的课题还多都是通信领域的研究内容，组内还没有师兄姐搞深度学习相关的内容，机器相关的算法倒是涉及一些，但不多（比如路由算法优化研究、天线功率研究以及编码类的内容），也就是基本无人带了。但当时正好老师有一个深度学习相关的课题需要有人研究，我当时刚好入学暂无明确目标，就确定到了我的名下。</p>
+<p>我当时就是题主说的这种情况，深度学习要不要搞？是只是在这方面混个毕业，工作干JAVA，还是说就沉下心来把这个弄好，一心搞深度学习。</p>
+<p>这个问题，在当时的我来看，那当然是看不透的，无数次的犹豫彷徨，但现在以马后炮的视角的来回顾，倒是可以给出一些回答。</p>
+<p>当时困扰我自己的主要是这三点。1.深度学习高大上啊，而且出来的工资还高。 2.研究生不搞人工智能，那不是浪费了。3.现在的课题就是这个，我要不搞这个，还得在学一门开发，这两在学习过程中几乎没有交叉，这太耗费精力了。会不会两个都搞不好？</p>
+<h3 id="1-深度学习高大上啊，而且出来的工资还高。"><a href="#1-深度学习高大上啊，而且出来的工资还高。" class="headerlink" title="1.深度学习高大上啊，而且出来的工资还高。"></a>1.深度学习高大上啊，而且出来的工资还高。</h3><p>如果这个事放在几年前，人工智能处在风口猪都能飞的时候，确实是的。算法出来那确实就是比开发高一截。但现在，资本都慢慢认清了目前的AI并没有那么智能，而且在实际落地这一方面场景并没有那么多，所以近两年，业界明显AI热有些退烧了，资本也不傻并不是看一张PPT一个概念就给你疯投了。</p>
+<p>因此，近两年明显能在招聘上感觉到，开发与算法的待遇方面并没有多大。有不少企业都是一并看待，工资待遇上也相差无几。另外，在招聘需求上，开发依然是需求大口，开发：算法招聘比例估计一下10：1，真实情况据这个比例绝对大差不差，大家可以关注校招时各厂的名额应该有体会。别看每年知乎上，各种帖子说说，大批的人涌入计算机行业，计算机行业卷。单说实话，那都是表面现象上，依据我工作看到的情况来看，开发的缺口依然还在，只能说没有以前那么的缺。但很多企业招人还是难，难找的是是能干活的人，也就是有实力的人，而不是那种学了几个月的那种，也就是中间那层有些断档，毕竟对开发这一块的需求在那，哪行哪业也得有涉及互联网啊。</p>
+<h3 id="2-研究生不搞人工智能，那不是浪费了"><a href="#2-研究生不搞人工智能，那不是浪费了" class="headerlink" title="2.研究生不搞人工智能，那不是浪费了"></a>2.研究生不搞人工智能，那不是浪费了</h3><p>学历这个东西，是要讲究相对论的。你竞争的岗位要是都是本科生，那你研究生学历当然吃香了。要是你竞争的岗位的都是研究生，那你的研究生也就是基础资格。如果跟你一起竞争的都是985的，那你这个学历基本毫无作用，你得拿出更多的东西来，才能让企业多看你两眼，不然直接多半被pass了。</p>
+<p>而且上面也说了AI的需求确实没有开发那么大，找工作方面，面临的竞争应该来说是比开发要更大更卷的。从以前的顶会一篇进大厂，到现在的顶会2、3篇，还得看你的顶会是什么顶会，也能感受到，这个领域竞争越来越大了，灌水的越来越多了。岗位有限，涌进来的人越来越多，当然是对一些硬性要求，如学历、期刊之类的要求，也就越来越高了，因此算法进大厂也比开发难的多了。但是如果你足够的有热情、有学习兴趣，有丰富的项目经历或做出了一些东西，实力过硬，那你不应该放弃，211研究生学历也基本满足了企业的学历要求，握有这个进场的资格，进场后就是看自己本领吃饭了。因为算法岗位这方面也分研究型的与工程型的，工程上大规模的应用，落地实践方面依然还有一碗饭吃。</p>
+<h3 id="3-两个都搞，会不会两个都搞不好？"><a href="#3-两个都搞，会不会两个都搞不好？" class="headerlink" title="3.两个都搞，会不会两个都搞不好？"></a>3.两个都搞，会不会两个都搞不好？</h3><p>首先要明确一个事，如果你是确定读完要出来工作了，那你现在研究的跟你出来工作要干的事并不是强相关的（特别是在计算机行业），就是说，你现在研究的什么并不是决定了你出来就得干什么，招聘多半还是看你简历，是看你会什么，比如你研究深度学习，但是你学习了很多开发知识，也实践了一些开发项目，也有开发实习经历，那你去面试开发，面试官必不可能追问你的深度学习内容，企业当然是看你会什么，程度到哪。当然了，如果你研究的深度学习这一块，也作出了相应的成果，也肯定会在找深度学习相关的工作上有一个锦上添花的作用。但是依你所说，组内无人带领，这也肯定会给你带来一些学习上的困难。比如，有问题无人相商，无人指点迷津，遇到导师也不太懂，师兄也不太的困境。需要有对这一行的热情以及兴趣，还有一颗坚定的心。</p>
+<p>所以这个耗费精力的问题是肯定的，当然是肯定耗费精力了，但这就是生活，你在做的不一定是你喜欢的，你想干的却不一定是你能干的。这就是一个看个人的事情了，对于自己想喜欢且想干的事，就算有万险千难，自己有足够坚定的信念，也不觉得有多大问题。当天累的的精疲力尽，第二天起床还是会元气满满，满心欢喜的继续朝着目标前进。因为追梦本身是一件幸福且满足的事。所以这是一个取决于你个人的事情，你愿意为你选择的目标付出什么样的努力，你就做出对应的选择跟对应的努力，认清自己也是一种智慧，量力而行就好。</p>
+<p>（另外，小声bb一句，我就是属于又菜又喜欢一条道走到黑的人，就不下任何结论了，怕耽误题主。只是结合当时的心境希望给题主做一下心里上的分享。以上这个回答是对当时的遭遇的情形以及现在掌握了更多信息去回顾的一个总结。）</p>
+
       
 
       
@@ -202,7 +351,655 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">graph gcn model</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">daily</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/11/28/%E3%80%90Daily%E3%80%91%E7%A1%95%E5%A3%AB%EF%BC%8C%E6%9C%AB%E6%B5%81211%EF%BC%8C%E8%A6%81%E4%B8%8D%E8%A6%81%E6%90%9E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【NLP】huggingface-transformer怎么调BERT？" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/24/%E3%80%90NLP%E3%80%91huggingface-transformer%E6%80%8E%E4%B9%88%E8%B0%83BERT%EF%BC%9F/">【NLP】huggingface-transformer怎么调BERT？</a>
+    </h1>
+  
+
+        
+        <a href="/2021/11/24/%E3%80%90NLP%E3%80%91huggingface-transformer%E6%80%8E%E4%B9%88%E8%B0%83BERT%EF%BC%9F/" class="archive-article-date">
+  	<time datetime="2021-11-24T14:24:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-24</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>你既然已经知道huggingface的BERT了，那想调BERT做个任务这个事就简单了。</p>
+<h3 id="首先，说说huggingface调BERT模型"><a href="#首先，说说huggingface调BERT模型" class="headerlink" title="首先，说说huggingface调BERT模型"></a>首先，说说huggingface调BERT模型</h3><p>调BERT，那首先得先有BERT预训练模型。先上<a target="_blank" rel="noopener" href="https://huggingface.co/bert-base-chinese/tree/main">huggingface官网</a>把预训练模型下下来，也就是下面这三个文件（一般是TensorFlow版本的跟Pytorch版本的都放在一起，下pytorch版本的）。</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/Bert_Transformer/direct_bert.png" alt="image-20211124223138959"></p>
+<p>下好了，那预训练模型就有了，下面就看看怎么用起来了。</p>
+<p>这里huggingface提供了一个transformers的package，封装的挺好了，几行代码就把BERT给调了。（没装就先把这个包给pip install transformers一下）</p>
+<p>熟悉BERT模型的知道，BERT它是有一个字典（vocabulary），在进入BERT模型做encode之前，先需要将sentence进行word piece的切割（也就是把一句话分成一个个的字，然后查字典将中文变成输入模型前的一个个模型认得的数字id token）,然后就可以输入进BERT model。另外那些什么position embedding+ segment embedding + token embedding以及attention encoder结构，你都不用管，transformers库将这些都封装进BertModel这个类了。 </p>
+<p>也就是说，你要做的工作就一个，也就是句子切割成token，加载BERT配置文件（一些BERT模型结构参数）加载BERT预训练模型，然后跟搭玩具一样，组装起来就完成了，你就等着在模型输出那等着接收sentence的embedding（一般取最后一层的cls向量，也就是第一个word的embedding），最后拿着这个embedding做下游任务就完了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> BertModel, BertConfig, BertTokenizer</span><br><span class="line"></span><br><span class="line">path = <span class="string">&quot;./bert_pretrained&quot;</span></span><br><span class="line"></span><br><span class="line">tokenizer = BertTokenizer.from_pretrained(path)  <span class="comment"># 用来split句子成token的类方法</span></span><br><span class="line">model_config = BertConfig.from_pretrained(path)  <span class="comment"># 加载BERT配置文件</span></span><br><span class="line">model = BertModel.from_pretrained(path, config=model_config)  <span class="comment"># 加载模型</span></span><br></pre></td></tr></table></figure>
+<h3 id="下游任务定义"><a href="#下游任务定义" class="headerlink" title="下游任务定义"></a>下游任务定义</h3><p>以上用transformers调BERT模型的模型定义就做完了，下面就是顺接到你的数据上，准备取sentence的embedding（一般取最后一层的cls向量，也就是第一个word的embedding），然后再定义一下下游任务就好了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">text = [<span class="string">&quot;清晨去学校，小鸟对我笑。&quot;</span>, <span class="string">&quot;小鸟说，早早早， 是谁一早背上大书包。&quot;</span>]*<span class="number">32</span></span><br><span class="line"></span><br><span class="line">num_classes = <span class="number">7</span></span><br><span class="line">hidden_size = <span class="number">768</span></span><br><span class="line">max_len = <span class="number">256</span></span><br><span class="line"></span><br><span class="line">token = tokenizer.tokenize(text)</span><br><span class="line">token = [<span class="string">&#x27;[CLS]&#x27;</span>] + token + [<span class="string">&#x27;[SEP]&#x27;</span>]</span><br><span class="line">token_id = tokenizer.convert_tokens_to_ids(token)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 补齐长度一致</span></span><br><span class="line">padding = [<span class="number">0</span>] * (max_len - len(token_id))</span><br><span class="line">mask = [<span class="number">1</span>] * len(token_id) + padding</span><br><span class="line">segment = [<span class="number">0</span>] * len(token_id) + padding</span><br><span class="line">token_id = token_id + padding</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入： 三个东西：token_id，segment，mask，这三个输入不清楚可以看看bert原文</span></span><br><span class="line">out = model(token_id, segment, mask)</span><br><span class="line">emb = outputs[<span class="number">0</span>][:, <span class="number">0</span>, :]  <span class="comment"># [batch, 768]</span></span><br><span class="line"></span><br><span class="line">fc = nn.Linear(hidden_size, num_classes) <span class="comment"># 将bert出来的向量维度转成类别数</span></span><br><span class="line">cls_emb  = fc(outputs)</span><br></pre></td></tr></table></figure>
+<p>定义下游任务，这里以文本分类任务为例</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line">optimizer=torch.optim.AdamW(model.parameters(),lr=<span class="number">0.1</span>)</span><br><span class="line">loss_func = F.cross_entropy</span><br><span class="line">loss = loss_func(cls_emb, label)</span><br><span class="line">loss.backward()</span><br><span class="line">optimizer.step()</span><br></pre></td></tr></table></figure>
+<p>以上代码只做一个逻辑的分析展示，完整的代码就不在这贴了，移步github仓库。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Chinese-Text-Classification">https://github.com/shuxinyin/Chinese-Text-Classification</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/11/24/%E3%80%90NLP%E3%80%91huggingface-transformer%E6%80%8E%E4%B9%88%E8%B0%83BERT%EF%BC%9F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【TorchDoc】softmax后面为什么都接CrossEntropy？" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/22/%E3%80%90TorchDoc%E3%80%91softmax%E5%90%8E%E9%9D%A2%E4%B8%BA%E4%BB%80%E4%B9%88%E9%83%BD%E6%8E%A5CrossEntropy%EF%BC%9F/">【TorchDoc】softmax后面为什么都接CrossEntropy？</a>
+    </h1>
+  
+
+        
+        <a href="/2021/11/22/%E3%80%90TorchDoc%E3%80%91softmax%E5%90%8E%E9%9D%A2%E4%B8%BA%E4%BB%80%E4%B9%88%E9%83%BD%E6%8E%A5CrossEntropy%EF%BC%9F/" class="archive-article-date">
+  	<time datetime="2021-11-22T12:56:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-22</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-什么是-Softmax？"><a href="#1-什么是-Softmax？" class="headerlink" title="1. 什么是 Softmax？"></a>1. 什么是 Softmax？</h3><p><img src="https://www.zhihu.com/equation?tex=%5Cdisplaystyle+p_j+%3D+softmax+%28+z_j+%29+%3D+%5Cfrac+%7Be%5E%7Bz_j%7D%7D%7B%5Csum+_%7Bk%3D1%7D%5EKe%5E%7Bz_k%7D%7D+" alt="[公式]"></p>
+<p>有两个特点：</p>
+<ul>
+<li>所有的值处于 [0, 1] 之间</li>
+<li>所有的值加起来等于1</li>
+</ul>
+<p>在深度学习模型中，经常是全连接层（Feed-Forward层）后接softmax，这是为什么呢？</p>
+<blockquote>
+<p>因为全连接层出来的结果，它的值是有正负的（也就是上式中的z），是个无界的，那必须经过一个softmax将值归一到一个区域，便于后续的梯度优化。</p>
+</blockquote>
+<h3 id="2-实际实现中的Softmax"><a href="#2-实际实现中的Softmax" class="headerlink" title="2.实际实现中的Softmax"></a>2.实际实现中的Softmax</h3><p>上面是softmax的基本公式，但是按这样去实现，在实际中会有很多问题。当z的值比较大时，e的指数幂，就很大，那计算就会溢出。因此，需要做一些平滑处理。</p>
+<p>也就是变成下面这样，减去输入序列值的最大值，来做一个平滑，防止计算值太大。</p>
+<p><img src="https://pica.zhimg.com/80/v2-1d5bf301b001e9b5946abe24c59efefa_720w.jpg?source=1940ef5c" alt="img"></p>
+<p><img src="https://pic2.zhimg.com/80/v2-7cf62366d484731378e3d2677e83ca1c_720w.jpg?source=1940ef5c" alt="img"></p>
+<p>但是往往在数学上，指数型计算会被转化成加法，这样简单又快捷。于是，就会采用log代替指数e,就变成了下面这样，简化了运算。</p>
+<p><img src="https://www.zhihu.com/equation?tex=log%28S_j%29+%3D+log%28%5Cfrac%7Be%5E%7Ba_j%7D%7D%7B%5Csum_%7Bk%3D1%7D%5ENe%5E%7Ba_k%7D%7D%29%5C%5C+++++++++++%3D+log%28e%5E%7Ba_j%7D%29+-+log%28%5Csum_%7Bk%3D1%7D%5ENe%5E%7Ba_k%7D%29%5C%5C+%3Da_j+-+log%28%5Csum_%7Bk%3D1%7D%5ENe%5E%7Ba_k%7D%29" alt="[公式]"></p>
+<p>实际实现中，用的也是这个模式，稳定又性能好。</p>
+<h3 id="2-什么是-CrossEntropy？"><a href="#2-什么是-CrossEntropy？" class="headerlink" title="2.什么是 CrossEntropy？"></a>2.什么是 CrossEntropy？</h3><p>我们知道，cross entropy 是用来衡量两个概率分布之间的距离的，而softmax刚好能把一个序列转化成概率。</p>
+<p><img src="https://www.zhihu.com/equation?tex=%5Cdisplaystyle+H%28+p_%7B+%5Chat+y%7D%2Cp+%29+%3D+-+%5Csum+_%7Bj%3D1%7D%5E%7BK%7D+p_%7B%5Chat+y_j%7D+log%28p_j%29+" alt="[公式]"></p>
+<p>给大家推一下，看下softmax+crosstropy 为什么叫“往东走五米，再往西走十米”，</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/11/22/%E3%80%90TorchDoc%E3%80%91softmax%E5%90%8E%E9%9D%A2%E4%B8%BA%E4%BB%80%E4%B9%88%E9%83%BD%E6%8E%A5CrossEntropy%EF%BC%9F/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【NLP】BERT-SUMMARY" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/21/%E3%80%90NLP%E3%80%91BERT-SUMMARY/">【NLP】BERT_SUMMARY</a>
+    </h1>
+  
+
+        
+        <a href="/2021/11/21/%E3%80%90NLP%E3%80%91BERT-SUMMARY/" class="archive-article-date">
+  	<time datetime="2021-11-21T09:16:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-21</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="中文NLP预训练模型资源及笔记总结"><a href="#中文NLP预训练模型资源及笔记总结" class="headerlink" title="中文NLP预训练模型资源及笔记总结"></a>中文NLP预训练模型资源及笔记总结</h1><p>在NLP领域中，随着BERT的出世，后续又出现了相当多的预训练模型，各有所长。本仓库主要做了当前预训练模型资源的整理以及一些相关笔记整理，主要针对中文的预训练领域。持续更新…</p>
+<p>附: 基于hugshuggingface的预训练模型下载地址: 1. <a target="_blank" rel="noopener" href="https://huggingface.co/models">huggingface官方地址</a></p>
+<p><img src="/home/xyshu/snap/typora/42/.config/Typora/typora-user-images/image-20211121171848170.png" alt="image-20211121171848170"></p>
+<h2 id="BERT"><a href="#BERT" class="headerlink" title="BERT"></a>BERT</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1810.04805">2018 | BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding | Jacob Devlin, et al.</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1906.08101">2019 | Pre-Training with Whole Word Masking for Chinese BERT | Yiming Cui, et al. | arXiv</a></li>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2106.16038.pdf">2021 | ChineseBERT: Chinese Pretraining Enhanced by Glyph and Pinyin Information | Zijun Sun, et al.</a></li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>预训练模型</th>
+<th>版本</th>
+<th>语料</th>
+<th>Pytorch</th>
+<th>模型解析笔记</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BERT</td>
+<td>base、large</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1AQitrjbvCWc51SYiLN-cJq4e0WiNN4KY/view">drive.google</a></td>
+<td></td>
+</tr>
+<tr>
+<td>BERT-wwm</td>
+<td>base、large</td>
+<td>单元格</td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1RoTQsXp2hkQ1gSRVylRIJfQxJUgkfJMW/view">drive.google</a></td>
+<td></td>
+</tr>
+<tr>
+<td>BERT-wwm-ext</td>
+<td>base</td>
+<td>单元格</td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1buMLEjdtrXE2c4G1rpsNGWEx7lUQ0RHi/view">drive.google</a></td>
+<td></td>
+</tr>
+<tr>
+<td>FinBERT</td>
+<td>base</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>ChineseBERT</td>
+<td>base、large</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://huggingface.co/ShannonAI/ChineseBERT-base">huggingface</a></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>wwm(Whole Word Masking)</strong>:由于中文与英语不同，中文是基于字的，BERT-wwm将一个完整的中文词mask，而不是单个字。</p>
+<p><strong>ext</strong>则表示在更多数据集下训练（中文维基+通用数据），中文任务还是用BERT-wwm或BERT-wwm-ext会好用很多。</p>
+<h2 id="XLNET"><a href="#XLNET" class="headerlink" title="XLNET"></a>XLNET</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1906.08237">2019 | XLNet: Generalized Autoregressive Pretraining for Language Understanding | Zhilin Yang, et al.</a></li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>预训练模型</th>
+<th>版本</th>
+<th>语料</th>
+<th>Pytorch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XLNet</td>
+<td>base、middle</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1m9t-a4gKimbkP5rqGXXsEAEPhJSZ8tvx/view">drive.google</a></td>
+</tr>
+<tr>
+<td>XLNet_zh_Large</td>
+<td>large</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1buMLEjdtrXE2c4G1rpsNGWEx7lUQ0RHi/view">drive.google</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="RoBERTa"><a href="#RoBERTa" class="headerlink" title="RoBERTa"></a>RoBERTa</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1906.08237">2019 | XLNet: Generalized Autoregressive Pretraining for Language Understanding | Zhilin Yang, et al.</a></li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>预训练模型</th>
+<th>版本</th>
+<th>语料</th>
+<th>Pytorch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XLNet</td>
+<td>base、middle</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1m9t-a4gKimbkP5rqGXXsEAEPhJSZ8tvx/view">drive.google</a></td>
+</tr>
+<tr>
+<td>XLNet_zh_Large</td>
+<td>large</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1buMLEjdtrXE2c4G1rpsNGWEx7lUQ0RHi/view">drive.google</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="ALBERT"><a href="#ALBERT" class="headerlink" title="ALBERT"></a>ALBERT</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1906.08237">2019 | XLNet: Generalized Autoregressive Pretraining for Language Understanding | Zhilin Yang, et al.</a></li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>预训练模型</th>
+<th>版本</th>
+<th>语料</th>
+<th>Pytorch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XLNet</td>
+<td>base、middle</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1m9t-a4gKimbkP5rqGXXsEAEPhJSZ8tvx/view">drive.google</a></td>
+</tr>
+<tr>
+<td>XLNet_zh_Large</td>
+<td>large</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1buMLEjdtrXE2c4G1rpsNGWEx7lUQ0RHi/view">drive.google</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="NEZHA"><a href="#NEZHA" class="headerlink" title="NEZHA"></a>NEZHA</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1909.00204">2019 | NEZHA: Neural Contextualized Representation for Chinese Language Understanding | Junqiu Wei, et al.</a></li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>预训练模型</th>
+<th>版本</th>
+<th>语料</th>
+<th>Pytorch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XLNet</td>
+<td>base、middle</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1m9t-a4gKimbkP5rqGXXsEAEPhJSZ8tvx/view">drive.google</a></td>
+</tr>
+<tr>
+<td>XLNet_zh_Large</td>
+<td>large</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1buMLEjdtrXE2c4G1rpsNGWEx7lUQ0RHi/view">drive.google</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="ELECTRA"><a href="#ELECTRA" class="headerlink" title="ELECTRA"></a>ELECTRA</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2003.10555">2020 | ELECTRA: Pre-training Text Encoders as Discriminators Rather Than Generators | Kevin Clark, et al.</a></li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>预训练模型</th>
+<th>版本</th>
+<th>语料</th>
+<th>Pytorch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XLNet</td>
+<td>base、middle</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1m9t-a4gKimbkP5rqGXXsEAEPhJSZ8tvx/view">drive.google</a></td>
+</tr>
+<tr>
+<td>XLNet_zh_Large</td>
+<td>large</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1buMLEjdtrXE2c4G1rpsNGWEx7lUQ0RHi/view">drive.google</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="T5"><a href="#T5" class="headerlink" title="T5"></a>T5</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1910.10683">2019 | Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer | Colin Raffel, et al.</a></li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>预训练模型</th>
+<th>版本</th>
+<th>语料</th>
+<th>Pytorch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XLNet</td>
+<td>base、middle</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1m9t-a4gKimbkP5rqGXXsEAEPhJSZ8tvx/view">drive.google</a></td>
+</tr>
+<tr>
+<td>XLNet_zh_Large</td>
+<td>large</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1buMLEjdtrXE2c4G1rpsNGWEx7lUQ0RHi/view">drive.google</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="MacBERT"><a href="#MacBERT" class="headerlink" title="MacBERT"></a>MacBERT</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.13922.pdf">2020 | Revisiting Pre-Trained Models for Chinese Natural Language Processing | Yiming Cui, et al.</a></li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>预训练模型</th>
+<th>版本</th>
+<th>语料</th>
+<th>Pytorch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>XLNet</td>
+<td>base、middle</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1m9t-a4gKimbkP5rqGXXsEAEPhJSZ8tvx/view">drive.google</a></td>
+</tr>
+<tr>
+<td>XLNet_zh_Large</td>
+<td>large</td>
+<td></td>
+<td><a target="_blank" rel="noopener" href="https://drive.google.com/file/d/1buMLEjdtrXE2c4G1rpsNGWEx7lUQ0RHi/view">drive.google</a></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id=""><a href="#" class="headerlink" title=" "></a> </h2>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/11/21/%E3%80%90NLP%E3%80%91BERT-SUMMARY/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【Graph-Learning】搭一个无监督的GraphSAGE" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/20/%E3%80%90Graph-Learning%E3%80%91%E6%90%AD%E4%B8%80%E4%B8%AA%E6%97%A0%E7%9B%91%E7%9D%A3%E7%9A%84GraphSAGE/">【Graph-Learning】Link-Prediction：搭一个无监督的GraphSAGE</a>
+    </h1>
+  
+
+        
+        <a href="/2021/11/20/%E3%80%90Graph-Learning%E3%80%91%E6%90%AD%E4%B8%80%E4%B8%AA%E6%97%A0%E7%9B%91%E7%9D%A3%E7%9A%84GraphSAGE/" class="archive-article-date">
+  	<time datetime="2021-11-20T07:42:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-20</time>
+</a>
+        
+
+    <!--显示阅读次数-->
+    
+      </header>
+    
+    <!-- 目录内容 -->
+    
+<!-- 目录内容结束 -->
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上回分四步搭了一个做节点分类的有监督GraphSAGE，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/429147607">怎么搭好一个GraphSAGE？按这三步走</a>。</p>
+<p>这回再来实现一下无监督的GraphSAGE，看看在Graph Embedding任务在有监督及无监督上有什么不同。</p>
+<p>无监督任务只是训练数据中没有标注，不含平常的label，但模型总得有个目标得让它学习。在图学习中，由于图由边与点组成，即数据是关系型数据，那这些边就是天然的监督信息，这也就是图中的Link-Prediction任务，这里就以这个任务做一个无监督的GraphSAGE。</p>
+<h3 id="对比一下Node-Classification与Link-Prediction基本原理"><a href="#对比一下Node-Classification与Link-Prediction基本原理" class="headerlink" title="对比一下Node-Classification与Link-Prediction基本原理"></a>对比一下Node-Classification与Link-Prediction基本原理</h3><p><strong>Node-Classification：</strong>看过上一篇GraphSAGE做node classification中,应该看过这个图。在Node Classification任务，每个node只需要切出一个这样的子图，然后从下往上aggregate，得到head的embedding，最后由此结合node label做一个有监督的分类任务。</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/GraphSAGE/node_classification.png" alt="image-20211102223201541"></p>
+<p><strong>Link-Prediction：</strong>而在link-prediction中，由于无label监督信息，需要将边作为一个监督，也就是判断是否存在这条边做一个自监督任务。这个任务怎么构造？也就是采取edge的初始点与末节点，拉近这两个点的距离，增大与其他非邻居点的距离。看看下面这个图，head就是某条edge的初始点，tail是edge的末节点，neg_tails就是非邻居点，由此在训练中，遍历每个点，同时需要同步采出它的graph, 它的tails-graph(也就是positive graph), 以及它的negative tail及相应子图（negative graph）。这里这个采负样本的操作很重要，有些对比学习的思想，没有这个操作，graph embedding效果会差相当多。</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/GraphSAGE/graphSAGE_link_pre.png" alt="image-20211120162026088" style="zoom: 80%;" /></p>
+<p>对比下来，只是原来每个node只需对应切出一个子图，现在需对应切出三个子图（head、tail、negative_tail），其他是一致的(注意数据流动即可)。</p>
+<h3 id="Link-Prediction-目标函数"><a href="#Link-Prediction-目标函数" class="headerlink" title="Link-Prediction 目标函数"></a>Link-Prediction 目标函数</h3><p>看完上面的对比，基本上Link-Prediction的目标函数Loss就出来了，就是使得<script type="math/tex">max(Embedding_{head} * Embedding_{tails})</script>，同时<script type="math/tex">min(Embedding_{head} * Embedding_{neg_tails})</script>，也就是下面这个公式（你会在很多图学习Link-Prediction任务中以及一些NLP的对比学习任务中看到这个形式loss，logloss）。</p>
+<script type="math/tex; mode=display">
+Loss = -log\frac{e^{h_i*h_t}}{\sum_{j}^Ne^{h_i*h_{j}}}</script><p>同样，你也可以把它转成一个二分类问题，即positive node 点积为label为1，negative node点积label为0， 然后选择cross entropy loss实现。</p>
+<p>（此处可以留一个小问题给大家思考，LogLoss与以上的cross-entropy有什么区别？）</p>
+<p>此两种方式，经实践用下来，效果上差别不大，这里用的是第二种（经验上觉得cross-entropy loss更好优化），示例代码在这里，可以与以上思想对比进行学习。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CrossEntropyLoss</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, block_outputs, pos_graph, neg_graph</span>):</span></span><br><span class="line">        <span class="keyword">with</span> pos_graph.local_scope():</span><br><span class="line">            pos_graph.ndata[<span class="string">&#x27;h&#x27;</span>] = block_outputs</span><br><span class="line">            pos_graph.apply_edges(fn.u_dot_v(<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;score&#x27;</span>))</span><br><span class="line">            pos_score = pos_graph.edata[<span class="string">&#x27;score&#x27;</span>]</span><br><span class="line">        <span class="keyword">with</span> neg_graph.local_scope():</span><br><span class="line">            neg_graph.ndata[<span class="string">&#x27;h&#x27;</span>] = block_outputs</span><br><span class="line">            neg_graph.apply_edges(fn.u_dot_v(<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;score&#x27;</span>))</span><br><span class="line">            neg_score = neg_graph.edata[<span class="string">&#x27;score&#x27;</span>]</span><br><span class="line"></span><br><span class="line">        score = torch.cat([pos_score, neg_score])</span><br><span class="line">        label = torch.cat([torch.ones_like(pos_score), torch.zeros_like(neg_score)]).long()</span><br><span class="line">        loss = F.binary_cross_entropy_with_logits(score, label.float())</span><br><span class="line">        <span class="keyword">return</span> loss</span><br></pre></td></tr></table></figure>
+<h3 id="其他的工作"><a href="#其他的工作" class="headerlink" title="其他的工作"></a>其他的工作</h3><p>剩下的基本就与上一篇文章<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/429147607">怎么搭好一个GraphSAGE？按这三步走</a>就是一样的了，在这就不重复写了，大家感兴趣的可自行前往查看，这里就列一个基本提纲(结合第一张图应该很好理解)。</p>
+<ol>
+<li><p>Dataloader：遍历nodes，作为input node。</p>
+</li>
+<li><p>切子图：sample出head、tail、negative_tail的neighbors,构成子图  </p>
+</li>
+<li><p>模型：子图上特征聚合，得到head、tail、negative_tail的输出embedding</p>
+</li>
+</ol>
+<p>与做Node Classification任务时搭建模型基本一致，只是原来每个node只需对应切出一个子图，现在需对应切出三个子图（head、tail、negative_tail），套上上面那个目标函数。按照以上步骤来，实现好以上三个模块+一个目标函数，其他的就是组装工作了，保证数据流动的shape对应上就没问题了。</p>
+<h3 id="实验结果："><a href="#实验结果：" class="headerlink" title="实验结果："></a><strong>实验结果：</strong></h3><p>  <strong>Test F1: ~0.630 (0.612~0.648) (cora数据集)</strong></p>
+<p>以上代码主要做了一个逻辑的分析、梳理，完整的代码放在这里，感兴趣的可以自行查看。</p>
+<p>  <a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Graph-Learning">Graph_Learning</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">graphsage model</a>
         		</li>
       		
 		</ul>
@@ -223,7 +1020,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/10/17/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E4%B8%80%E4%B8%AAGCN%EF%BC%9F%E5%8F%AA%E9%9C%80%E8%BF%99%E5%9B%9B%E6%AD%A5/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/11/20/%E3%80%90Graph-Learning%E3%80%91%E6%90%AD%E4%B8%80%E4%B8%AA%E6%97%A0%E7%9B%91%E7%9D%A3%E7%9A%84GraphSAGE/">展开全文 >></a>
         </p>
       
 
@@ -253,20 +1050,20 @@
 
 
   
-    <article id="post-【TorchBug】LossFunction：CrossEntropyLoss与corss-entropy" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【NLP】Bert预训练模型一览：Bert、RoBerta、AlBert、NEZHA、WoBert、SIMBert" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/09/23/%E3%80%90TorchBug%E3%80%91LossFunction%EF%BC%9ACrossEntropyLoss%E4%B8%8Ecorss-entropy/">LossFunction：CrossEntropyLoss与corss_entropy</a>
+      <a class="article-title" href="/2021/11/08/%E3%80%90NLP%E3%80%91Bert%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E4%B8%80%E8%A7%88%EF%BC%9ABert%E3%80%81RoBerta%E3%80%81AlBert%E3%80%81NEZHA%E3%80%81WoBert%E3%80%81SIMBert/">【NLP】预训练模型一览：BERT、RoBERTa、ALBERT、NEZHA、WoBERT、SIMBert</a>
     </h1>
   
 
         
-        <a href="/2021/09/23/%E3%80%90TorchBug%E3%80%91LossFunction%EF%BC%9ACrossEntropyLoss%E4%B8%8Ecorss-entropy/" class="archive-article-date">
-  	<time datetime="2021-09-23T13:22:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-23</time>
+        <a href="/2021/11/08/%E3%80%90NLP%E3%80%91Bert%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E4%B8%80%E8%A7%88%EF%BC%9ABert%E3%80%81RoBerta%E3%80%81AlBert%E3%80%81NEZHA%E3%80%81WoBert%E3%80%81SIMBert/" class="archive-article-date">
+  	<time datetime="2021-11-08T13:14:36.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-08</time>
 </a>
         
 
@@ -279,26 +1076,118 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近看torch接口文档中发现，有两个corss entropy的接口，CrossEntropyLoss与corss_entropy，平常也是随便拿来就用，没注意过，但总是用起来有点虚。</p>
-<p>今天就结合代码仔细看看这两个接口的实现以及使用，顺带分析经常跟cross entropy一并出场的log_softmax、nll_loss。保证看完就不再稀里糊涂了，踏踏实实的使用，看结论可以直接拉到文中末尾。</p>
-<h3 id="1-corss-entropy与CrossEntropyLoss"><a href="#1-corss-entropy与CrossEntropyLoss" class="headerlink" title="1. corss_entropy与CrossEntropyLoss"></a>1. corss_entropy与CrossEntropyLoss</h3><h4 id="1-1-cross-entropy-交叉熵"><a href="#1-1-cross-entropy-交叉熵" class="headerlink" title="1.1 cross_entropy 交叉熵"></a>1.1 cross_entropy 交叉熵</h4><p>cross_entropy 交叉熵的数学定义</p>
-<script type="math/tex; mode=display">H(p,q)=-\sum_{x=0}^n(p(x)log(q(x)+ (1-p(x))log(1-q(x)))</script><p>交叉熵评估的是两个序列的距离，因此可以拿来用作模型的loss function。举个例子，在模型学习中，假设序列p是label，q是模型输出的特征序列，那模型想达到的效果是让这两个序列尽可能的拟合，相近。</p>
-<p>pytorch实现上用的不是以上这种形式，用的另一种形式是：<script type="math/tex">H(p,q)=-\sum_{x=0}^n(p(x)logq(x))</script></p>
-<p>而且，torch中label序列p的shape与模型输出q的shape不一定是一致的，因为你的任务<strong>可能是一个多分类任务</strong>，比如，q.shape = [N, C], N为样本个数，C为类别数，而p.shape=[N], 值要求0&lt;p(x)&lt;=C-1，不能大于类别数。</p>
-<p><strong>torch中cross_entropy具体计算公式是这个<script type="math/tex">loss(x, class)=-log(e^{x[class]}/\sum_{j=0}^Ce^{x[j]})</script>, x为序列q中的每一个向量。</strong></p>
-<p>看看在模型中是这么用corss_entropy的。</p>
-<p>举个例子, 一个batch装3个样本，5个class:</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line">logits = torch.randn(<span class="number">3</span>, <span class="number">5</span>, requires_grad=<span class="literal">True</span>) <span class="comment"># shape(3, 5)</span></span><br><span class="line">&gt;&gt;&gt;tensor([[ <span class="number">1.5410</span>, <span class="number">-0.2934</span>, <span class="number">-2.1788</span>,  <span class="number">0.5684</span>, <span class="number">-1.0845</span>],</span><br><span class="line">        [<span class="number">-1.3986</span>,  <span class="number">0.4033</span>,  <span class="number">0.8380</span>, <span class="number">-0.7193</span>, <span class="number">-0.4033</span>],</span><br><span class="line">        [<span class="number">-0.5966</span>,  <span class="number">0.1820</span>, <span class="number">-0.8567</span>,  <span class="number">1.1006</span>, <span class="number">-1.0712</span>]], requires_grad=<span class="literal">True</span>)</span><br><span class="line">labels = torch.tensor([<span class="number">1</span>, <span class="number">0</span>, <span class="number">4</span>])</span><br><span class="line">loss = F.cross_entropy(logits, labels, reduction=<span class="string">&#x27;none&#x27;</span>)</span><br><span class="line">&gt;&gt;&gt;tensor([<span class="number">2.3257</span>, <span class="number">3.0493</span>, <span class="number">2.7802</span>], grad_fn=&lt;NllLossBackward&gt;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># logsoftmax + nll_loss = cross_entropy</span></span><br><span class="line">loss_nll = F.nll_loss(F.log_softmax(logits), labels, reduction=<span class="string">&#x27;none&#x27;</span>)</span><br><span class="line">&gt;&gt;&gt;tensor([<span class="number">2.3257</span>, <span class="number">3.0493</span>, <span class="number">2.7802</span>], grad_fn=&lt;NllLossBackward&gt;)</span><br></pre></td></tr></table></figure>
-<p>算一下第一个样本的loss（torch中reduction默认是mean，这里用none算每一个样本的loss结果），<script type="math/tex">loss = -log(e^{-0.2934}/(e^{1.5410}+e^{-0.2934}+e^{-2.1788}+e^{0.5684}+e^{-1.0845}))=2.3257</script>。</p>
-<p><strong>其实，corss_entropy在实现上就是log_softmax 与 nll_loss的综合。</strong></p>
-<p>看一下log_softmax 与 nll_loss的计算公式：</p>
-<script type="math/tex; mode=display">log-softmax = log(softmax(x_i))=log(e^{x_i}/\sum_{j=0}e^{x[j]})</script><p>NLL-Loss (negative log likelihood loss), 数学上应该是<script type="math/tex">\sum_{x}log(x)</script> ，然而在torch中只是<strong>按label中对应的index取出logits对应的值，并取负号输出</strong>，也就是这个式子：</p>
-<script type="math/tex; mode=display">nll-loss(x, class) = -x[class]</script><p>所以总结一下，cross_entropy = nll_loss + log_softmax</p>
-<h4 id="1-2-CrossEntropyLoss-交叉熵损失函数"><a href="#1-2-CrossEntropyLoss-交叉熵损失函数" class="headerlink" title="1.2 CrossEntropyLoss 交叉熵损失函数"></a>1.2 CrossEntropyLoss 交叉熵损失函数</h4><p>Torch中CrossEntropyLoss计算方式与corss_entropy是一样的，也是这式子</p>
-<script type="math/tex; mode=display">loss(x, class)=-log(e^{x[class]}/\sum_{j=0}^Ce^{x[j]})</script><p>测试代码在这里：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line">loss = torch.nn.CrossEntropyLoss(reduction=<span class="string">&#x27;none&#x27;</span>)</span><br><span class="line">logits = torch.randn(<span class="number">3</span>, <span class="number">5</span>, requires_grad=<span class="literal">True</span>) <span class="comment"># shape(3, 5)</span></span><br><span class="line">&gt;&gt;&gt;tensor([[ <span class="number">1.5410</span>, <span class="number">-0.2934</span>, <span class="number">-2.1788</span>,  <span class="number">0.5684</span>, <span class="number">-1.0845</span>],</span><br><span class="line">        [<span class="number">-1.3986</span>,  <span class="number">0.4033</span>,  <span class="number">0.8380</span>, <span class="number">-0.7193</span>, <span class="number">-0.4033</span>],</span><br><span class="line">        [<span class="number">-0.5966</span>,  <span class="number">0.1820</span>, <span class="number">-0.8567</span>,  <span class="number">1.1006</span>, <span class="number">-1.0712</span>]], requires_grad=<span class="literal">True</span>)</span><br><span class="line">labels = torch.tensor([<span class="number">1</span>, <span class="number">0</span>, <span class="number">4</span>])</span><br><span class="line">loss = loss(logits, labels)</span><br><span class="line">&gt;&gt;&gt;tensor([<span class="number">2.3257</span>, <span class="number">3.0493</span>, <span class="number">2.7802</span>], grad_fn=&lt;NllLossBackward&gt;)</span><br></pre></td></tr></table></figure>
-<p><strong>所以，算出来的结果与cross_entropy是一样的。这corss_entropy与CrossEntropyLoss两个接口在结果上没有什么区别，都可以用。</strong></p>
-<p><strong>corss_entropy与CrossEntropyLoss两个接口在结果上没有什么区别，都可以用。但是在函数定义上，有一些区别，Torch中CrossEntropyLoss这个接口是在nn module下面的一个类，所以在使用时，得先定义一个实例，而corss_entropy是nn.functional下的一个功能函数，直接用就可以了。</strong></p>
+        <p><img src="/home/xyshu/Desktop/BLOG/PicBlog/BertSet/Bert_develop_my.png" alt="image-20211121181900718" style="zoom:80%;" /></p>
+<p>自从预训练模型Bert问世以来，这几年就演化出各种各样的Bert，各种Bert模型之间，从训练语料到模型结构上既有继承又有改变，各有所针对也有所长。在算力有限情况下，每次用Bert的时候会纠结一下，我该优先用哪一种或几种预训练模型进行实验呢，哪一种在我的任务上能达到最好效果呢？</p>
+<p>这篇文章就针对预训练模型，对比一下“预训练家族”，总结一下各自的优缺点、对应的场景以及适合的任务,从此告别纠结。（这里不涉及到具体的模型细节，默认大家都大概明白基本模型结构，细节方面建议大家还是去读原文最原汁原味）。</p>
+<h3 id="1-BERT"><a href="#1-BERT" class="headerlink" title="1. BERT"></a>1. BERT</h3><p>BERT提出前，正是word2vec,Glove等大火的时候，开启了word embedding的潮流，其实此时已经开启了预训练的先河。此时我们在做NLP任务一般也习惯先载入word2vec的embedding向量，作为一个模型的word embedding初始化代替原来的one-hot初始化（原来的one-hot初始化，一是稀疏内存消耗大，二是不易train，效果不好。）另外，word2vec有一个不能忽视的问题，就是它出来的embedding是静态的，也就是一个word对应一个embedding，那一词多义的问题在它这就懵了（如苹果，它到底是Apple的苹果还是咱吃的苹果）。这时候BERT提出来了，它是基于上下文的，意味着，它的embedding是要根据上下文表达决定的（一词多义处语境肯定不同，这就能区别出来了）。</p>
+<p>而BERT首先采用了Transformer的self-attention的结构encoder部分，能看到全文的内容，这种attention结构又能并行，还能提取同时上下文特征。而且不需要标注的自然语料有一大把，硬件方面当时也能跟得上，于是一顿训，这可太好用了，直接就横扫各大NLP任务了。</p>
+<p>BERT中主要有两大无监督训练任务。</p>
+<p><strong>Masked Language Model(MLM): </strong>随机Mask掉一个或几个词，然后输入mask的句子，预测mask的那个词是什么。</p>
+<p><strong>Next Sentence Prediction(NSP)：</strong>给定一篇文章中的两句话，判断是或不是紧挨着的上下句。</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/BertSet/Bert_Task.png" alt="image-20211121221031188"></p>
+<p>BERT出圈，主要是这么几个特点：</p>
+<p>1.当时横扫各大榜单的效果，奠定了当时两段式（pre-train + fine-tune）的任务模式，一度一统NLP江湖（当时很多比赛上，就是无脑上BERT pre-train + label数据fine-tune，就是吊打其他任务模式）。</p>
+<p>2.提出了MLM这个无监督的任务（虽然这个任务后来被一直诟病，存在pre-train与fine-tune阶段输入不一致的问题（pre-train输入有mask，fine-tune却没有），但这确实是一个对于语义理解很有帮助的无监督任务）</p>
+<p>3.用上了Attention结构的Transformer作为特征抽取器，可看到全文同时融合上下文信息且易并行，计算效率高，在语义表达上且表现出惊人的效果，当仁不让的最强特征抽取器。</p>
+<p>———————-<strong>分割线：Bert小结一下</strong>———————————————————————————————————-</p>
+<p>但BERT这种Pre-trained + fine-tune的两段模式，开启了新的NLP任务模式，但也是存在一些问题的。</p>
+<p>问题一：BERT提出的MLM任务是一个很好的无监督预训练任务（因此在后续的预训练模型中基本大多延用这个任务），但它存在一个问题。就是pre-train阶段，句子都是mask掉部分词输入的，而fine-tune阶段输入的是完整的句子（也就是无mask），会造成上下游任务不匹配的问题，同时这个任务也导致了BERT不适合于生成类的任务（因为mask是一种相当于加噪音的自训练模式（Denoising Autoencoder），而不是符合生成的自回归模式）。</p>
+<p>问题二：第二个NSP任务，在后续的很多实验中，说明这是个没带来多大效果提升的任务，在ALBERT、XLNET都丢去了这个任务。（但在现在的prompt大热的时候，这个任务的思想又被挖出来了，参见<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2109.03564">NSP-BERT</a>。)</p>
+<p>问题三：模型复杂，参数量太大，训练时间长（BERT在当时的资源条件下，训练一回称花费了几百万美金，但在现在来看3亿参数，肯定不够看，T5都宣称110亿了）</p>
+<p>另外，在BERT的基础上，<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1906.08101">BERT-wwm,BERT-wwm-ext</a>在中文领域提出了更完善的预训练模型。wwm全称为<strong>Whole Word Masking </strong>,由于中文与英语不同，中文是基于字的，BERT-wwm将一个完整的中文词mask，而不是单个字。ext则表示在更多数据集下训练（中文维基+通用数据），中文任务还是用BERT-wwm或BERT-wwm-ext会好用很多。</p>
+<p>后续的预训练模型上基本上就是在这三个问题上，各自施展拳脚了。</p>
+<h3 id="2-XLNet"><a href="#2-XLNet" class="headerlink" title="2. XLNet"></a>2. XLNet</h3><p>XLNet就是针对第一个问题发力，力求融合自回归LM和DAE LM两者的优点，同时想证明自回归的这种模式依然能打，且任何任务都能用这种生成的模型来完成。</p>
+<p><strong>1.Permutation Language Model（PLM）</strong></p>
+<p>XLNet提出只要在输入时，添加一个步骤就是PLM方法，就能把自回归（AR）与自编码（AE）方法优点结合起来。</p>
+<p>具体实现是，将输入的一句话先随机排列，然后将末尾的词mask掉（实现是在attention那操作，与BERT不一样，不是在输入处做mask），最后采用自回归的方法（从左至右）预测末尾mask掉的词。</p>
+<p><strong>2.Two-Stream Self-Attention</strong></p>
+<p>Permutation Language Model讲的是XLNet乱序mask训练的思想，这里Two-Stream Self-Attention讲的是PLM的实现。</p>
+<p>在上面乱序的情况下，会有一个实现的问题，例如x1,x2,x3,x4,打乱后排序x2,x1,x4,x3,自回归的语言模型目标函数是这样的：</p>
+<script type="math/tex; mode=display">P(x)=P(x_3|x_2, x_1, x_4)×P(x4|x2,x1)×P(x1|x2)×P(x2)</script><p>XLNet里的Two-Stream代表两组信息流，分别称为内容表征流（content stream）和询问表征流（query stream）。</p>
+<ul>
+<li>content steam 与GPT中的self-attention是一致的，但它只与自己及自己前面位置的token做attention。</li>
+<li>query stream  这是XLNet额外添加的位置信息，给每个token一个初始的位置信息，保证打乱后，这个位置信息不乱。举个例子，句子[x1,x2,x3,x4], 初始化位置编码[1,2,3,4],打乱顺序后：句子[x2,x3,x4,x1]，位置编码[2,3,4,1],也就是这个位置编码永远是表示句子中每个token的正确的语序位置。query stream就是取自己的位置编码，与其他的token 的content steam作attention，（若是不加这个额外的位置信息，在预测[x2,x1,x4,x3]的P(x4|x2,x1)与在预测[x2,x1,x3,x4]的P(x3|x2,x1)是一样的，模型只知道预测位置在第三个的token<script type="math/tex">P(x_{t=3}|x_2,x_1)</script>，却不知道此时在这第三个位置上的token是x3还是x4，这个query stream就是起到这个作用的）。</li>
+<li>结合图理解上面意思，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/70218096">李rumor-Google <em>XLNet</em>原理解读</a>解读的很好，可以去看看。</li>
+</ul>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/BertSet/XLNet.png" alt="image-20211118223157249"></p>
+<p>3.Partial Prediction</p>
+<p>这个Partial Prediction提出来，是为了训练效率而采取的折中策略。Permutation 后生成多个sequence，若对每个位置进行预测的话，<strong>训练极慢，optimizer又会很难收敛</strong>，于是训练时，只对每句话末尾部分位置进行预测。</p>
+<p>4.Transformer-XL</p>
+<p>另外XLNET还Transformer-XL是用来解决超长句的问题：由于Transformer编码固定长度的上下文（512），无法建模超过固定长度的依赖关系，对长文本编码效果差。于是在BERT中会对超长句截断，取512，这也就导致了transformer学不到对超长句的信息。</p>
+<p>Transformer-XL提出Segment Recurrence Mechanism，与RNN有点类似，就是将前一段算完后，算出它的隐状态，放到一个memory中，下一个段计算时，再取出memory的hidden state与当前hidden state拼接作为attention的K,V,因此得到更长的段的语义信息。</p>
+<p>———————-<strong>分割线：XLNet小结一下</strong>———————————————————————————————————-</p>
+<p><strong>XLNet发表的时候，无论是阅读理解任务（RACE、SQuAD）、文本分类任务（IMDB, Yelp-2, Yelp-5, DBpedia, AG, Amazon等）以及文本生成类任务（GLUE），表现都很优秀，基本是全面超越了BERT。</strong></p>
+<p>同时XLNet提出了一个很有创新的想法，就是不在句子上做mask，而改为在attention矩阵上动手脚，这一想法也引出了后续的很多不同形式的mask,如UNILM。</p>
+<p>XLNet这里面还有个小插曲，很有意思，当初XLNet发布时，在二十个公开任务上都表现出比BERT更优秀的结果，号称全面击败BERT，有人就不服了，说BERT在预训练中只使用了13GB的文本，而XLNet却使用了126GB，XLNet能做到的事，BERT应该也能做到。于是后续就出来了一个加强版BERT，就是下面这个RoBERTa（<strong>证明更久的训练时间、更多的数据、更强力调参，BERT并不差</strong>），又重回榜单首了。但后续XLNET团队又采用了相同量的数据进行了与BERT-large实验，发表了一个报告<a target="_blank" rel="noopener" href="https://medium.com/@xlnet.team/a-fair-comparison-study-of-xlnet-and-bert-with-large-models-5a4257f59dc0">A Fair Comparison Study of XLNet and BERT with Large Models</a>，结果就是下面这个显示XLNET更优，并将这个结果又更新到XLNET文章上，这也是为什么现在在arxiv上 ，XLNET文章的时间戳比RoBERTa靠后了，且两篇文章又有相互的实验结果对比的怪相了。（但据真实NER任务实验下来，XLNET还是没有RoBERTa好用，看网上也有不少这种反映，大家就理性看待，实践出真知吧）</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/tmp_typora_pictures/image-20211117232410473.png" alt="image-20211117232410473" style="zoom: 67%;" /></p>
+<h3 id="3-RoBERTa"><a href="#3-RoBERTa" class="headerlink" title="3. RoBERTa"></a>3. RoBERTa</h3><p>RoBERTa，又号称增强版BERT，RoBERTa延用的是BERT-large结构，模型结构上没做变化，重点是在它训练上，RoBERTa直接点讲，就是BERT的一个精调版。（虽说RoBERTa没做模型结构上的改变，但通过它的训练调整，把BERT原本具有的效果上发挥出来了，是一个工程实践版，也是极有意义。）</p>
+<p>看看RoBERTa在训练上提出哪些改进方案。</p>
+<p><strong>1.动态mask（Dynamic masking）</strong></p>
+<p>在BERT中，mask是在数据预处理时做的，这也意味着，因此在每个epoch中，训练的每个句子的mask是固定的、静态的。</p>
+<p>RoBERTa提出说一种动态mask的方法：将训练数据每个句子复制10次，每次采用不同的mask方法，每10个epoch会将所有数据迭代一遍，因此用一个mask方法得到的句子在40epoch中，会迭代到四次，但这个动态mask方法得到的效果上提升相当有限。</p>
+<p><strong>2.移除了NSP Loss + input segment format调优 </strong> </p>
+<p>在BERT中NSP任务是这么设置的:从同一篇文章中连续的两个segment（0.5），不同的文章中的segment（0.5）</p>
+<p>RoBERTa在此点设置了四个对比实验： </p>
+<ol>
+<li>SEGMENT-PAIR+NSP：上下紧邻的段落 + NSP任务（原BERT中模式）</li>
+<li><p>SENTENCE-PAIR+NSP：使用两个连续的句子（较segment缩小了length，因此用更大的batch size，保证与1中每个batch中看到的token差不多）+ NSP。 </p>
+</li>
+<li><p>FULL-SENTENCES：尽量选择512长度的连续句子，（若跨document了，就加一个特殊分隔符间隔），无NSP。</p>
+</li>
+<li><p>DOC-SENTENCE：设置和FULL-SENTENCES一样，但是不跨document。无NSP。（为保证与1中每个batch中看到的token差不多，因此会动态调整batch size）</p>
+</li>
+</ol>
+<p>对比结果表明是DOC-SENTENCE+无NSP最优，FULL-SENTENCES略低，而SENTENCE-PAIR+NSP表现最差，猜想可能是句子太短，没让模型学到long-range dependencies（但文中后续实验采用的是FULL-SENTENCES，因为这种模式不用依靠调节batch_size来保证token一样多的问题，方便后续对比）</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/tmp_typora_pictures/image-20211116230933493.png" alt="image-20211116230933493"></p>
+<p><strong>3.Batch_size更大，训练数据集更大，训练时间更长</strong></p>
+<p>这个就属于参数调优了，因为作者看到了一些文章在增大Batch-Size会对结果有提升，于是就做了batch-size调优。</p>
+<p>BERT-base: 1M steps + batch size of 256 sequences，RoBERTa进行了实验，也有略微提升,2k batch_size最优。</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/tmp_typora_pictures/image-20211116233835052.png" alt="image-20211116233835052"></p>
+<p>同时也增加了数据集。在原数据集BOOKCORPUS plus English W IKIPEDIA.(16G original) 增加了CC-NEWS(76G)、 OPEN WEB TEXT(38G)、 STORIES(31G)，效果上得到进一步的提升，当然这也需要更长的训练时间。</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/tmp_typora_pictures/image-20211116234040462.png" alt="image-20211116234040462" style="zoom:80%;" /></p>
+<p><strong>4.Text Encoding</strong></p>
+<p>在GPT与BERT，编码方式都是用的BPE（Byte-Pair Encoding），这是一种介于字符和词语之间的方式，比如water，可能会被拆成“wa”, “te”, “r”, 其中具体怎么切，这个BPE字典是从语料中统计学习到的。</p>
+<p>原始Bert中，采用的BPE字典是30k， RoBERTa增大到了50K，相对于BERT-base和BERT-large会增加15M/20M的参数。采用更大的byte-level的BPE词典。</p>
+<p>———————-<strong>分割线：RoBERTa小结一下</strong>———————————————————————————————————-</p>
+<p>RoBERTa的优缺点不用多说，就比较明显了，更久的训练时间、更多的数据、更强力调参，BERT并不差。不论是数据上，还是模型参数以及计算量，基本上是把能利用的都拉满了，但这带来的就是需要更多的计算资源，更多的训练时间，说白了就得多花钱。</p>
+<h3 id="4-ALBERT"><a href="#4-ALBERT" class="headerlink" title="4. ALBERT"></a>4. ALBERT</h3><p>在上述各种预训练模型，堆砌数据，加大模型参数，模型更复杂时，ALBERT站出来了。“瘦身”成功的ALBERT说，老大哥你们这整的这么复杂，参数量这么大，训练一回几百万美金就没了，这也不太行啊。我来让你们看看，什么是”Simple Is Better.”</p>
+<p>ALBERT文章中，开篇摘要中就确定了它的致力要解决的问题。</p>
+<p><strong>1.GPU/TPU memory limitations.</strong> 解决显存限制问题。也就是减小占用内存。</p>
+<p><strong>2.longer training times.</strong> 解决长时间的训练问题，也就是需要减少模型参数，减少计算量。</p>
+<p><strong>3.unexpected model degration.</strong> 解决模型效果衰减问题，提升模型效果，这说的是模型参数变多，模型变复杂时，到一定程度，模型参数继续增加时会出现效果变差的现象 。</p>
+<p>ALBERT针对这三个问题，提出了三个方法</p>
+<p><strong>1.Factorized Embedding Parameterization</strong></p>
+<p>vocabulary embedding参数分解，也就是将原Embedding矩阵分解成一个小的embedding矩阵以及一个维度转换矩阵，如下图，H为hidden-layer维度，E为embedding维度。</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/tmp_typora_pictures/image-20211111233204460.png" alt="image-20211111233204460" style="zoom:67%;" /></p>
+<p>这种方法能起到减少参数的作用，但不是太明显，看下面这个图的parameter参数量可以看到。</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/BertSet/AlBert_dim_res.jpg" alt="preview"></p>
+<p>主要减少参数的还是依赖于下面这个方法。</p>
+<p><strong>2.Cross-layer Parameter Sharing</strong></p>
+<p>参数共享这方面，ALBERT分为三种参数共享模式1.共享Attention参数，也就是每层attention-layer的Q,K,V共享。2.共享FFN层参数。3.共享所有的参数。</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/BertSet/ALBERT_all_share_params.png" alt="image-20211112000001700"></p>
+<p>这种参数共享的方法确实把参数量明显的降下来了。但全共享的方式，精度上也出现了1~2个点的损失。</p>
+<p><strong>3.Sentence Order Prediction（SOP）</strong></p>
+<p>上面两个参数共享的方式，确实达到了减少参数量的效果，但也带来了精度的损失，那从哪里找补回来呢？</p>
+<p>ALBERT认为BERT中NSP的任务太简单，作用不大，于是提出了SOP（预测句子的顺序）。</p>
+<p><strong>SOP：postive样本来自与同一doc下的连续句子，（这与BERT里的样本配置一致）。negative样本则是将两句顺序颠倒，作为负样本，由此做一个SOP任务。</strong></p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/BertSet/ALBERT_SOP.png" alt="image-20211116213834228"></p>
+<p>在ALBERT的实验中，说明了，确实SOP这个任务比NSP这个任务效果上好了不少。</p>
+<p>———————-<strong>分割线：ALBERT小结一下</strong>——————————————————————————————-</p>
+<p>ALBERT确实提出了有效的模型参数压缩方法（Factorized Embedding Parameterization + Cross-layer Parameter Sharing），但从结果上看，全面超越BERT-large的效果是ALBERT-xxlarge(hidden_size=4096, 12层，BERT-large hidden_size=1024, 24层)base版本上是比BERT略低的。ALBERT有点减参数不减计算量，因此ALBERT提出的共享参数，没有达到压缩模型，加快训练速度同时效果提升的完美双超越。</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/tmp_typora_pictures/ALBERT_res1.png" alt="image-20211113095222570"></p>
+<p>ALBERT压缩模型参数这种方式，在效果上超越BERT-large并不定是共享参数的模型结构带来的，（不过模型压缩往往会损失精度，不必纠结于此，要达到了双超越得引起业界改革热潮了）。总结一下ALBERT带来提升的几个优点。</p>
+<p>1.预训练用的语料90%是512 length的长句，10%是128 length短句，这与BERT反过来。</p>
+<p>2.ALBERT采用的是n-gram的mask，每个片段的长度取值 n（最大为3），比如，取1-gram 、2-gram、3-gram，取哪个的概率，由公式$p(n)=\frac{1/n}{\sum_{k=1}^N1/k}$计算，n越大概率越小： </p>
+<p>3.模型结构上，由于采用了共享所有参数，一直加深模型层数是很难有持续提升的，<strong>把 H 从 1024 直接扩大到了 4096。</strong> <strong>BERT-large 有24 层，而 ALBERT-xxlarge 只用了 12 层</strong>。 这也就是大家说的前者是“窄而深”，后者是“宽而浅”的，减参数而不减计算量。</p>
+<p>4.Sentence Order Prediction（SOP），从结果上看，这个任务确实是比NSP在pre-train帮助语义表达上是更有效的。（最近<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2109.03564">NSP-BERT</a>这一篇，基于prompt方法Few/Zero Shot用的就是NSP任务）</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/BertSet/ALBERT_res2.png" alt="image-20211113104505084"></p>
+<p>所以，若是对维度、内存有强烈限制，当然ALBERT-base是有效缩减了维度，但在精度上对比BERT-base会有2~4点的损失，若不对维度有强烈限制的话，追求好的效果用ALBERT还是得采用largexxx，但这计算量也不小，好像又失去了训练速度快的作用。而且在今天来看，单从效果出发，超越ALBERT的又一大批在，比如MacBERT、NEZHA等。</p>
+<h3 id="最后总结一下"><a href="#最后总结一下" class="headerlink" title="最后总结一下"></a>最后总结一下</h3><p>这里总结了BERT、XLNet、RoBERTa、ALBERT的几个演变过程及针对BERT基础上主要改进的点。</p>
+<p>XLNet针对BERTpre-train与fine-tune上下游任务不统一的问题，提出了乱序attention mask模型（即不在输入处mask，而在attention结构中进行乱序的mask)。RoBERTa是个精调BERT过程，更大的BatchSize、更多的训练数据、更长的迭代时间。ALBERT主要是针对BERT参数量太大问题，提出了共享参数方法，确实减少了模型参数，但实际效果上需在实际工作中进行验证。</p>
+<p>这里带着主观经验下一个简单粗暴的结论，在中文文本任务，若是文本语义理解，优先BERT-wwm-ext及RoBERTa类，这两个都是经过更大的数据进行预训练及优化了训练方式，比BERT基础版表现好的多。若是生成类任务，如翻译等，可以考虑下XLNet、GPT家族类生成模型，在生成类任务上还是比BERT类表现会好的多。若是在上线上对模型大小及维度有着严格要求，ALBERT也是个可考虑选择，毕竟是经过了实验验证，比自己重新动手设计与实验更可靠。</p>
+<p>（在预训练模型学习中，发现经过这两年的发展，现在的预训练模型确实多，应接不暇）</p>
+<p>给大家推荐个仓库，里面整合现存的各类预训练模型，挺全的。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/lonePatient/awesome-pretrained-chinese-nlp-models">https://github.com/lonePatient/awesome-pretrained-chinese-nlp-models</a></p>
 
       
 
@@ -312,571 +1201,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">loss func</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Pytorch-Learning//" class="article-tag-list-link color2">Pytorch Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/09/23/%E3%80%90TorchBug%E3%80%91LossFunction%EF%BC%9ACrossEntropyLoss%E4%B8%8Ecorss-entropy/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-【Graph-Learning】图学习入门路线" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/09/18/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E8%B7%AF%E7%BA%BF/">【Graph-Learning】图学习入门路线</a>
-    </h1>
-  
-
-        
-        <a href="/2021/09/18/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E8%B7%AF%E7%BA%BF/" class="archive-article-date">
-  	<time datetime="2021-09-18T12:36:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-18</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这就跟当时刚开始深度学习流行的那时候一样，CNN在大家眼中都是个很新奇的东西，当时觉得既难又神秘，那你看现在，谁还会觉得觉得CNN很难了，框架一堆都是现成的轮子，三两行代码搭一个cnn，教程遍地都是。</p>
-<p>觉得难不好入门，是因为你还不了解它，你认真的去读它几篇文章，不用最新的，就从最基础的开始，认真读个三四篇，并着手把一些基础的模型，例如最初的GCN，GAT动手写一写。刚开始不会写不要紧啊，现在资料都已经很多了，照着别人的代码结合文章理解，仿照写一写，三两个模型之后。估计那时你就会觉得，这图神经网络也不过是各个节点向量间在乱七八糟的一顿加权求和罢了，一点也不神秘。
-        
-          <a class="article-more-a" href="/2021/09/18/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E8%B7%AF%E7%BA%BF/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">graph learning method</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/09/18/%E3%80%90Graph-Learning%E3%80%91%E5%9B%BE%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%E8%B7%AF%E7%BA%BF/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-【Graph-Learning】聊聊TextGCN-文本分类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/09/12/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ATextGCN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/">图网络：聊聊文本图模型TextGCN、BertGCN</a>
-    </h1>
-  
-
-        
-        <a href="/2021/09/12/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ATextGCN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/" class="archive-article-date">
-  	<time datetime="2021-09-12T02:20:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-09-12</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>文本分类是NLP的一个常规任务，在这个任务上，Bert这类的pre-trained的model已经取得了一个通用且效果较好的地位。在我看来，<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1809.05679.pdf">TextGCN</a>的提出，主要贡献不是说在文本分类这个基础任务上，取得了多大的突破，它更多的是通过图网络对自然语言中文本表达的任务进行了一些探索，给大家提供了一个不错且可行的参考角度。
-        
-          <a class="article-more-a" href="/2021/09/12/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ATextGCN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">text graph</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/09/12/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ATextGCN-%E6%96%87%E6%9C%AC%E5%88%86%E7%B1%BB/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-图卷积：从GCN到GAT、GraphSAGE" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/22/%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/">图卷积：从GCN到GAT、GraphSAGE</a>
-    </h1>
-  
-
-        
-        <a href="/2021/08/22/%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/" class="archive-article-date">
-  	<time datetime="2021-08-22T09:49:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-22</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>图模型总体上可以分为两大类：一是random-walk游走类模型，另一类就是GCN、GAT等卷积模型了。</p>
-<p>下面就自己学习卷积图模型过程的一些模型GCN、GAT、GraphSAGE 及疑问总结一下，欢迎交流学习。
-        
-          <a class="article-more-a" href="/2021/08/22/%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">graph random-walk model</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/08/22/%E5%9B%BE%E5%8D%B7%E7%A7%AF%EF%BC%9A%E4%BB%8EGCN%E5%88%B0GAT%E3%80%81GraphSAGE/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-【Graph-Learning】聊聊Node2Vec（论文解析、实践）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/">进阶版游走图模型Node2Vec</a>
-    </h1>
-  
-
-        
-        <a href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2021-08-09T14:23:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-09</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>前面有介绍过deepwalk，它是一种基于DFS游走的Graph embedding模型。</p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/397710211">游走图模型—同构图DeepWalk</a></p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1607.00653">node2vec</a>算是deepwalk的进阶版。模型训练原理与deepwalk差不多，但它通过调节边参数，融合DFS、BFS两种方式进行图游走，增加了游走的灵活性，进一步丰富了图表达。
-        
-          <a class="article-more-a" href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">graph random-walk model</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/08/09/%E3%80%90Graph-Learning%E3%80%91%E8%81%8A%E8%81%8ANode2Vec%EF%BC%88%E8%AE%BA%E6%96%87%E8%A7%A3%E6%9E%90%E3%80%81%E5%AE%9E%E8%B7%B5%EF%BC%89/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-【Graph-Learning】三言两语说清DeepWalk" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/27/%E3%80%90Graph-Learning%E3%80%91%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/">Graph-Learning：三言两语说清DeepWalk（论文解析、实战）</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/27/%E3%80%90Graph-Learning%E3%80%91%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/" class="archive-article-date">
-  	<time datetime="2021-07-27T14:21:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-27</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210809013607.png" style="zoom:100%;" /></p>
-<p>图学习模型主要有两类:1. 图游走类算法模型 2.图神经网络算法模型</p>
-<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1403.6652.pdf">DeepWalk</a>在图算法里是一个比较经典的图学习模型，算是图模型里图游走模型的开山鼻祖了，虽然效果上跟现在的新模型是没法比了，但它的random walk+skip-gram训练思想绝对是具有重要的参考意义。另外DeepWalk模型简单、思路清晰，作为一个图学习入门学习的模型绝对是不二之选，以上也是现在各个文章都会提及这个模型的重要原因了。
-        
-          <a class="article-more-a" href="/2021/07/27/%E3%80%90Graph-Learning%E3%80%91%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">graph random-walk model</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/27/%E3%80%90Graph-Learning%E3%80%91%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Transformer大白话详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/20/Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/">Transformer大白话详解</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/20/Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
-  	<time datetime="2021-07-20T13:29:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-20</time>
-</a>
-        
-
-    <!--显示阅读次数-->
-    
-      </header>
-    
-    <!-- 目录内容 -->
-    
-<!-- 目录内容结束 -->
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>Transformer在CV界刮起了一股旋风，说明这个attention的方法确实是经典。这篇文章就用大白话聊下Transformer，并结合代码详解下transformer。
-        
-          <a class="article-more-a" href="/2021/07/20/Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Transformer</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">pretrained model</a>
         		</li>
       		
 		</ul>
@@ -897,7 +1222,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/20/Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/11/08/%E3%80%90NLP%E3%80%91Bert%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E4%B8%80%E8%A7%88%EF%BC%9ABert%E3%80%81RoBerta%E3%80%81AlBert%E3%80%81NEZHA%E3%80%81WoBert%E3%80%81SIMBert/">展开全文 >></a>
         </p>
       
 
@@ -927,20 +1252,20 @@
 
 
   
-    <article id="post-Bert、Transformer面试100问" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【NLP】文本表达进击-从Bert-flow到Bert-white、SimCSE" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/18/Bert%E3%80%81Transformer%E9%9D%A2%E8%AF%95100%E9%97%AE/">Bert、Transformer面试100问</a>
+      <a class="article-title" href="/2021/11/04/%E3%80%90NLP%E3%80%91%E6%96%87%E6%9C%AC%E8%A1%A8%E8%BE%BE%E8%BF%9B%E5%87%BB-%E4%BB%8EBert-flow%E5%88%B0Bert-white%E3%80%81SimCSE/">【NLP】文本表达进击:从Bert-flow到Bert-white、SimCSE</a>
     </h1>
   
 
         
-        <a href="/2021/07/18/Bert%E3%80%81Transformer%E9%9D%A2%E8%AF%95100%E9%97%AE/" class="archive-article-date">
-  	<time datetime="2021-07-18T07:30:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-18</time>
+        <a href="/2021/11/04/%E3%80%90NLP%E3%80%91%E6%96%87%E6%9C%AC%E8%A1%A8%E8%BE%BE%E8%BF%9B%E5%87%BB-%E4%BB%8EBert-flow%E5%88%B0Bert-white%E3%80%81SimCSE/" class="archive-article-date">
+  	<time datetime="2021-11-04T13:47:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-04</time>
 </a>
         
 
@@ -953,10 +1278,61 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>现在算法岗，基本上Bert、transformer面试是必问了，这两个模型也是划时代的存在，Bert开启了NLP领域的pre-train时代，万物皆可上Bert。Transformer这个特征抽取结构也是史上最强特征抽取器，这两个不熟悉，都不敢大声说话了。
-        
-          <a class="article-more-a" href="/2021/07/18/Bert%E3%80%81Transformer%E9%9D%A2%E8%AF%95100%E9%97%AE/#more">more >></a>
-        
+        <p>Bert预训练模型问世以来，改变了很多NLP任务的习惯。很多NLP任务都会直接在Bert的基础上做一个fine-tune，构建一个baseline模型，既快捷也使用，但Bert在做文本表达任务时也有一些明显的缺点。</p>
+<p>既然有缺点，那这么卷的深度学习领域肯定会有解决方法。于是Bert-flow、Bert-White及SimCSE就来了。</p>
+<p>最近刚好也在做文本表达类的任务，就把这个任务相关的文章学习总结了一下，欢迎交流学习。</p>
+<h3 id="1-Bert存在的两个问题"><a href="#1-Bert存在的两个问题" class="headerlink" title="1.Bert存在的两个问题"></a>1.Bert存在的两个问题</h3><h4 id="一、Bert-encode出来的向量表达具有各向异性。"><a href="#一、Bert-encode出来的向量表达具有各向异性。" class="headerlink" title="一、Bert encode出来的向量表达具有各向异性。"></a>一、Bert encode出来的向量表达具有各向异性。</h4><p>什么叫各向异性？举个例子，一些电阻原件，正接是良导体，反接是绝缘体或者电阻很大，沿不同方向差异很大。在bert出来的向量中表现为，用不同的方式去衡量它，他表现出不同的语义，差别很大，也就是不能完整的衡量出bert向量中全部语义信息。</p>
+<p>在ICLR里有两篇文章（[ICLR2019文章][<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1907.12009]、">https://arxiv.org/abs/1907.12009]、</a> <a target="_blank" rel="noopener" href="https://openreview.net/forum?id=ByxY8CNtvr">ICLR2020</a>）也对这种现象进行了一个研究，表面Transform模型出来的向量表达（如Bert、GPT2）就是会产生各向异性，且也给出了各向异性的表现状态，就是向量会不均匀分布，且充斥在一个狭窄的锥形空间下。</p>
+<p>这种性质也限制了句子向量的语义表达能力，因此当采用计算bert encode句子相似度，采用cos或dot是无法很好的衡量出两个句子的相似度的，因为bert向量不是基于一个标准正交基得到的。</p>
+<h4 id="二、分布不均匀，低频词分布稀疏，高频词分布紧密。"><a href="#二、分布不均匀，低频词分布稀疏，高频词分布紧密。" class="headerlink" title="二、分布不均匀，低频词分布稀疏，高频词分布紧密。"></a>二、分布不均匀，低频词分布稀疏，高频词分布紧密。</h4><p>也就是高频词会集中在头部，离原点近，低频词会集中在尾部，离远点远高频词与低频词分布在不同的区域，那高频词与低频词之间的相识度也就没法计算了。这也反映出来的就是明显的低频词没有得到一个很好的训练。同时，高频词频次高，也会主宰句子表达。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211106164754072.png" alt="image-20211106164754072" style="zoom:67%;" /></p>
+<p>———————-<strong>分割线：Bert向量问题小结一下</strong>————————————————————————————————————————————————</p>
+<p>以上是Bert encode句子向量具有的两个明显的问题。1.句子向量具有各向异性。2.向量分布不均匀，低频词稀疏，高频词紧密，且聚集于不同的分布空间。</p>
+<p>既然问题已经定义清楚了，那这么卷的NLP领域肯定会有解决方法。因此Bert-flow还有Bert-whitening就出现了，这两篇文章解决的都是问题是一致的，都是想解决句子embedding的各向异性及向量的分布不均匀问题。</p>
+<h3 id="2-流式变换Bert-flow"><a href="#2-流式变换Bert-flow" class="headerlink" title="2. 流式变换Bert-flow"></a>2. 流式变换Bert-flow</h3><p>Bert-flow在文中详细总结并分析了以上两个问题之后，思想也比较直接，既然Bert出来的embedding向量存在各向异性，进而也产生了分布不均匀问题，那我就采用一个变换，将Bert encode的句子表达转换到一个各向同性且分布较均匀的空间。而标准的高斯分布刚好是一个各向同性的空间，且是一个凸函数，语义分布也更平滑均匀。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/Bert-flow-pic.png" alt="preview" style="zoom: 50%;" /></p>
+<p>于是,变换就来了。bert-flow采用一种流式可逆变换，记为</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/bertflow-eq-transform.png" alt="image-20211106165234963"></p>
+<p>其中u就是Bert空间向量（observe space），z即是高斯空间向量（latent space）， <script type="math/tex">f：Z->U</script> 则是一个可逆变换，这个变换也是模型需要学出来的。</p>
+<p>根据变元定理，观测空间的u的概率密度函数为：</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/bertflow-eq-pdf.png" alt="image-20211106170307198"></p>
+<p>那模型优化目标的也就是最大化这个u的边际概率。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/bertflow-eq-max.png" alt="image-20211106170538507"></p>
+<p><strong>最后，通过无监督的方式maximize这个优化目标，得到可逆的映射变换f，这其实就是在Bert pre-train model后接了一个flow变换的模型，让其继续pre-train，学出flow变换，从而完成向量空间的transform。</strong></p>
+<p>———————-<strong>分割线：Bert-flow 小结一下</strong>————————————————————————————————————————————————</p>
+<p>Bert-flow完整分析了Bert句子embedding里存在的向量各向异性及分布不均匀问题，并列出了完整的实验结果佐证了这一现象。同时提出了一种flow变换，将各向异性的Bert向量转换到一个标准的高斯分布空间，从而有效的提升了无监督领域的文本表达效果（另外bert-flow还提了个小技巧，采用bert输出的first-layer+last-layer平均会更好，这点原文avg-last-2layer可能有误，<a target="_blank" rel="noopener" href="https://github.com/bohanli/BERT-flow/issues/11">GitHub issue</a>有讨论）。</p>
+<p>虽然这种bert-flow方法站在现在的角度看还是复杂了些，但Bert-flow这篇文章完整的梳理出了问题脉络，并对这些问题通过实验做出了完整的剖析与实验佐证，读起来很顺畅，推荐大家看语义向量表达的问题时可以从这篇看起。</p>
+<h3 id="3-带白化处理的Bert-whitening"><a href="#3-带白化处理的Bert-whitening" class="headerlink" title="3.带白化处理的Bert-whitening"></a>3.带白化处理的Bert-whitening</h3><p>在解决问题的路上，方法总是会朝着简单的方向进行迭代更新。于是Bert-whitening带着更简单的变换方法来了。</p>
+<p>既然是要做一个向量的转换，那有没有简单一点的方法，直接校正句向量？Bert-whitening提出通过一个白化的操作直接校正局向量的协方差矩阵，简单粗暴，也达到了与bert-flow差不多的效果。</p>
+<p>方法很简单，思路也很直接，就是将现存的Bert向量空间分布记<script type="math/tex">x_i-(μ， \sum)，其中均值为μ，协方差\sum</script>，进行白化操作，转换成<script type="math/tex">μ=0，\sum为单位阵</script>的分布，也就是进行如下表达转换：</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/bertwhite-white.png" alt="image-20211107170422251"></p>
+<p>所以问题就变成计算bert向量分布的<script type="math/tex">均值μ以及协方差\sum</script>。</p>
+<p>假设向量集合为<script type="math/tex">[x_i]^N_{i=1}</script>,怎么求解<script type="math/tex">均值μ以及协方差\sum</script>，下面图是作者苏神的博客<a target="_blank" rel="noopener" href="https://spaces.ac.cn/archives/8069">你可能不需要BERT-flow：一个线性变换媲美BERT-flow</a>的完整推导，很详细，基础的数学知识就能看懂，可以去这里看完整推导，这里就不做详细阐述了。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211107174442725.png" alt="image-20211107174442725"></p>
+<p>———————-<strong>分割线：Bert-whitening 小结一下</strong>————————————————————————————————————————————————</p>
+<p>Bert-whitening确实在Bert-flow的基础上，更简单更直接的对原bert向量进行空间分布转换，也达到bert-flow差不多甚至更好的效果，加上作者的完整推导分享，思路也很清晰易懂，同时在SVD矩阵分解那一步,可以针对对角阵<strong>Λ</strong>进行一个降维操作，只保留特征值大的前n个维度，剔除冗余维度，这无疑在工程上应用节省了内存，也提升了性能。</p>
+<h3 id="4-对比学习的SimCSE"><a href="#4-对比学习的SimCSE" class="headerlink" title="4.对比学习的SimCSE"></a>4.对比学习的SimCSE</h3><p>SimCSE是陈丹琦组的文章，陈丹琦组的文章总是会带来的不一样的惊喜，真的厉害。这篇文章有点重剑无锋，大巧不工的意思，采用简单的dropout方法+对比学习在文本表达上就达到SOTA了。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/SimCSE-structure.png" alt="image-20211107182012770"></p>
+<p>SimCSE分为无监督与有监督版本，但基本思想上没有什么区别，只是在正负样本数据构造上不同。</p>
+<p><strong>无监督版本</strong>上，就是将一个句子输入encoder两次，由于bert encoder是一个随机dropout mask encoder,因此输入一个句子两次会得到两个不同的embedding，产生的这两个embedding作为训练中相互对比的正样本，同一个batch中其他句子产生的embedding则作为负样本，以此来构造一个对比学习的无监督训练。（所以这里的batch数量应当尽可能的大一些，防止batch内出现与自身文本是相同语义的样本出现作为负样本，减少在loss中这种相同语义样本占的比重。）</p>
+<p>思路很简单，loss也容易理解，就是常规对比学习的loss设计，max(正样本间的距离)，min(负样本间的距离)， 加了一个温度因子t进行平滑调节。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/SimCSE-loss.png" alt=""></p>
+<p><strong>有监督版本上</strong>，因为有监督数据了就不是重复输入一个文本两次，将自身文本以及正样本entailment以及负样本contradiction分别输入encoder，得到对应embedding，entailment样本即为正样本，同一batch内其他样本的embedding作为负样本进行对比学习，loss上与无监督是一致的，只是数据构造上的区别。</p>
+<p><strong>另外，文中也分析了这种方式为什么有效？</strong></p>
+<p>在理解SimCSE有效之前，首先得定义一下alignment和uniformity这两个指标，这两指标<a target="_blank" rel="noopener" href="http://proceedings.mlr.press/v119/wang20k/wang20k.pdf">Wang and Isola (2020)提出</a>，用来评估对比学习中embedding的效果，都是越小越好。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211107224123775.png" alt="image-20211107224123775"></p>
+<p><strong>Alignment：</strong>评估的是相似的样本向量间的一致性，也就是说相似样本间有相似的feature,差距应该小</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211107222639664.png" alt="image-20211107222639664"></p>
+<p><strong>uniformity：</strong>评估的是向量整体分布的均匀程度，也就是说向量应该均匀分布在球面上，不应该出现Bert那种分布不均（高频词分布集中紧凑，低频词稀疏）</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211107222703082.png" alt="image-20211107222703082"></p>
+<p>文章中设置不同的dropout率做了八组实验，其中fixed 0.1是使用同样的dropout mask做两次（也就是自己与正样本得到一样的embedding），这里发现dropout=0、dropout=fix 0.1 差别很大，按道理来说，自身与自身产生的正样本<script type="math/tex">x_i与x_i^+</script>是一样的embedding，怎么会差别这么大？</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211107224624953.png" alt="image-20211107224624953"></p>
+<p>文中对于上述情况，做了一个结果反推现象上的分析，画出了训练过程迭代中Alignment、uniformity指标分析图，发现随着迭代进行4个方法都可以减少uniform，也就是分布都会走向均匀分布。但fixed0.1和no dropout优化不动alignment，反而增大了。</p>
+<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/image-20211107224635201.png" alt="image-20211107224635201"></p>
+<p>有些遗憾的是，文章中并没有看到对dropout=0、dropout=fix 0.1 反差很大的这种情况做出由因及果的理论上的分析，感觉只看到了结果，没有找到合理的解释原因少了点什么，可能是dropout=0.1破坏了原有句子的基础embedding语义信息，使得效果还比不上dropout=0。</p>
+<p>———————-<strong>分割线：SimCSE小结一下</strong>————————————————————————————————————————————————</p>
+<p>SimCSE方法上大道至简，在解决像Bert这种Transformer结构出来的embedding的各向异性及分布不均匀问题上，提出了一个更简单易行的方案，在有监督及无监督任务上都达到了SOTA，证明了通过dropout构造的样本进行对比学习有效性可行性。</p>
+
       
 
       
@@ -969,11 +1345,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Bert</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Transformer</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">text representation</a>
         		</li>
       		
 		</ul>
@@ -994,7 +1366,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/18/Bert%E3%80%81Transformer%E9%9D%A2%E8%AF%95100%E9%97%AE/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/11/04/%E3%80%90NLP%E3%80%91%E6%96%87%E6%9C%AC%E8%A1%A8%E8%BE%BE%E8%BF%9B%E5%87%BB-%E4%BB%8EBert-flow%E5%88%B0Bert-white%E3%80%81SimCSE/">展开全文 >></a>
         </p>
       
 
@@ -1024,20 +1396,20 @@
 
 
   
-    <article id="post-【Graph-Learning】异构图模型-GATNE" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【Graph-Learning】怎么搭好GraphSAGE？按这三步走" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/17/%E3%80%90Graph-Learning%E3%80%91%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/">异构图模型--GATNE</a>
+      <a class="article-title" href="/2021/11/01/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E5%A5%BDGraphSAGE%EF%BC%9F%E6%8C%89%E8%BF%99%E4%B8%89%E6%AD%A5%E8%B5%B0/">【Graph-Learning】怎么搭好一个GraphSAGE？按这三步走</a>
     </h1>
   
 
         
-        <a href="/2021/07/17/%E3%80%90Graph-Learning%E3%80%91%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/" class="archive-article-date">
-  	<time datetime="2021-07-17T08:33:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-17</time>
+        <a href="/2021/11/01/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E5%A5%BDGraphSAGE%EF%BC%9F%E6%8C%89%E8%BF%99%E4%B8%89%E6%AD%A5%E8%B5%B0/" class="archive-article-date">
+  	<time datetime="2021-11-01T15:04:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-01</time>
 </a>
         
 
@@ -1050,9 +1422,11 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>图算法模型种类繁多，但可以根据图结构来进行分类，根据不同的图结构选取适应的图模型。以图结构分类主要是两大类。
+        <p>GraphSAGE，解决的就是GCN全图迭代时，大图场景无法训练的局限,在十万百万级别nodes大图训练时基本上都要用到的这个技巧。这么实用的技巧，光看原理，没动手写过肯定不够，踩坑实践一下理解才更透彻。</p>
+<p>那怎么正确搭建一个GraphSAGE呢？</p>
+<p>这篇文章就按三步法原则，从选邻居点，切子图、特征聚合出发，搭一个GraphSAGE的model。话不多说，直接上show me the code环节。
         
-          <a class="article-more-a" href="/2021/07/17/%E3%80%90Graph-Learning%E3%80%91%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/#more">more >></a>
+          <a class="article-more-a" href="/2021/11/01/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E5%A5%BDGraphSAGE%EF%BC%9F%E6%8C%89%E8%BF%99%E4%B8%89%E6%AD%A5%E8%B5%B0/#more">more >></a>
         
       
 
@@ -1066,7 +1440,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">heterogeneous graph</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">graphsage model</a>
         		</li>
       		
 		</ul>
@@ -1087,7 +1461,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/17/%E3%80%90Graph-Learning%E3%80%91%E5%BC%82%E6%9E%84%E5%9B%BE%E6%A8%A1%E5%9E%8B-GATNE/">展开全文 >></a>
+          <a class="article-more-a" href="/2021/11/01/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E5%A5%BDGraphSAGE%EF%BC%9F%E6%8C%89%E8%BF%99%E4%B8%89%E6%AD%A5%E8%B5%B0/">展开全文 >></a>
         </p>
       
 
@@ -1119,7 +1493,7 @@
   
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
     </nav>
   
 
@@ -1304,6 +1678,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">bert</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">daily</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">graphsage model</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">text representation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">optimizer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">pretrained model</a>
               </li>
             
             <div class="clearfix"></div>

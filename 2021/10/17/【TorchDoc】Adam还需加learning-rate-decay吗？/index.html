@@ -6,20 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>站在transformer的肩膀上调bert.md | Hexo</title>
+  <title>【TorchDoc】Adam还需加learning-rate decay吗？ | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="引言做文本处理任务，总是会用到经典预训练模型bert，而torch调用bert，得将原预训练文件先转换成torch适应的版本，总是有些麻烦。 发现一个好用的开源工具，Hugging face开源的transformer库，以前叫pytorch-pretrained-bert，将调用bert这一事情，简化了不少。前人种树，后人乘凉。看看这事变得有多简单。 torch、tensorflow在trans">
+  <meta name="description" content="今天写模型代码出现一个模型结果极不稳定的问题，loss会抖动的特别厉害。有时模型loss能收敛到极低，有时却怎么也降不下来。网上有答案说，这里有可能是lr太大，到模型快收敛时，lr依然大，则会跳过最优点，导致模型无法收敛到极小值点。 但是我用的optimizer是Adam啊，Adam不是自适应的吗？Adam还有必要加lr decay吗？">
 <meta property="og:type" content="article">
-<meta property="og:title" content="站在transformer的肩膀上调bert.md">
-<meta property="og:url" content="http://example.com/2021/06/14/%E7%AB%99%E5%9C%A8transformer%E7%9A%84%E8%82%A9%E8%86%80%E4%B8%8A%E8%B0%83bert-md/index.html">
+<meta property="og:title" content="【TorchDoc】Adam还需加learning-rate decay吗？">
+<meta property="og:url" content="http://example.com/2021/10/17/%E3%80%90TorchDoc%E3%80%91Adam%E8%BF%98%E9%9C%80%E5%8A%A0learning-rate-decay%E5%90%97%EF%BC%9F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="引言做文本处理任务，总是会用到经典预训练模型bert，而torch调用bert，得将原预训练文件先转换成torch适应的版本，总是有些麻烦。 发现一个好用的开源工具，Hugging face开源的transformer库，以前叫pytorch-pretrained-bert，将调用bert这一事情，简化了不少。前人种树，后人乘凉。看看这事变得有多简单。 torch、tensorflow在trans">
+<meta property="og:description" content="今天写模型代码出现一个模型结果极不稳定的问题，loss会抖动的特别厉害。有时模型loss能收敛到极低，有时却怎么也降不下来。网上有答案说，这里有可能是lr太大，到模型快收敛时，lr依然大，则会跳过最优点，导致模型无法收敛到极小值点。 但是我用的optimizer是Adam啊，Adam不是自适应的吗？Adam还有必要加lr decay吗？">
 <meta property="og:locale" content="zh_CH">
-<meta property="article:published_time" content="2021-06-14T13:22:44.000Z">
-<meta property="article:modified_time" content="2021-06-14T15:52:14.000Z">
+<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/Optimizer/lr_sliding_avg.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/1351564/201906/1351564-20190615000526560-254363648.png">
+<meta property="article:published_time" content="2021-10-17T14:12:59.000Z">
+<meta property="article:modified_time" content="2021-10-19T15:13:57.333Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
-<meta property="article:tag" content="bert">
+<meta property="article:tag" content="optimizer">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/Optimizer/lr_sliding_avg.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -161,20 +164,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-站在transformer的肩膀上调bert-md" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-【TorchDoc】Adam还需加learning-rate-decay吗？" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      站在transformer的肩膀上调bert.md
+      【TorchDoc】Adam还需加learning-rate decay吗？
     </h1>
   
 
         
-        <a href="/2021/06/14/%E7%AB%99%E5%9C%A8transformer%E7%9A%84%E8%82%A9%E8%86%80%E4%B8%8A%E8%B0%83bert-md/" class="archive-article-date">
-  	<time datetime="2021-06-14T13:22:44.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-14</time>
+        <a href="/2021/10/17/%E3%80%90TorchDoc%E3%80%91Adam%E8%BF%98%E9%9C%80%E5%8A%A0learning-rate-decay%E5%90%97%EF%BC%9F/" class="archive-article-date">
+  	<time datetime="2021-10-17T14:12:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-17</time>
 </a>
         
 
@@ -199,7 +202,7 @@
         <div id="toc-article" class="toc-article">
             <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
             <strong class="toc-title">文章目录</strong>
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87transformer%E8%B0%83%E7%94%A8bert"><span class="toc-number">2.</span> <span class="toc-text">通过transformer调用bert</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85transformer%E7%8E%AF%E5%A2%83"><span class="toc-number">2.1.</span> <span class="toc-text">1. 安装transformer环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%B8%8B%E8%BD%BDbert%E9%A2%84%E8%AE%AD%E7%BB%83%E6%96%87%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text">2. 下载bert预训练文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-tokenizer%E3%80%81encode%E2%80%94%E5%88%86%E8%AF%8D%E5%8F%8A%E7%BC%96%E7%A0%81"><span class="toc-number">2.3.</span> <span class="toc-text">3. tokenizer、encode—分词及编码</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%80%E8%88%AC%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">1. 一般梯度下降法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Adam%E5%8F%82%E6%95%B0%E6%9B%B4%E6%96%B0"><span class="toc-number">2.</span> <span class="toc-text">2. Adam参数更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-lr-decay%E5%8A%A0%E8%BF%98%E6%98%AF%E4%B8%8D%E5%8A%A0%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">3. lr decay加还是不加？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-lr-decay-%E6%80%8E%E4%B9%88%E5%8A%A0%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">4. lr decay 怎么加？</span></a></li></ol>
        </div>
        <script type="text/javascript">
         function showToc(){
@@ -219,23 +222,40 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h3><p>做文本处理任务，总是会用到经典预训练模型bert，而torch调用bert，得将原预训练文件先转换成torch适应的版本，总是有些麻烦。</p>
-<p>发现一个好用的开源工具，Hugging face开源的transformer库，以前叫pytorch-pretrained-bert，将调用bert这一事情，简化了不少。前人种树，后人乘凉。看看这事变得有多简单。</p>
-<p>torch、tensorflow在transformer库的基础上都适用。</p>
-<p><a target="_blank" rel="noopener" href="https://huggingface.co/transformers/">附一个官网链接</a>。</p>
-<h3 id="通过transformer调用bert"><a href="#通过transformer调用bert" class="headerlink" title="通过transformer调用bert"></a>通过transformer调用bert</h3><h4 id="1-安装transformer环境"><a href="#1-安装transformer环境" class="headerlink" title="1. 安装transformer环境"></a>1. 安装transformer环境</h4><p>​    在安装好torch基础上，直接安装transformer</p>
-<blockquote>
-<p>pip install transformer</p>
-</blockquote>
-<p>其实，这个transformer包把一些预训练文件的转换及调用代码做了一些封装，使得调用更方便。</p>
-<p>下面就开始正式调bert了。</p>
-<h4 id="2-下载bert预训练文件"><a href="#2-下载bert预训练文件" class="headerlink" title="2. 下载bert预训练文件"></a>2. 下载bert预训练文件</h4><p>上官网找到<a target="_blank" rel="noopener" href="https://huggingface.co/models">模型页面</a>, 找一下需要的bert版本，例如，需要chinese-bert-base，搜一下就能找到了。下载对应的预训练文件pytorch_model.bin、vocab.txt、coonfig.json，放到文件夹../bert_chinese_pretrained就好了</p>
-<h4 id="3-tokenizer、encode—分词及编码"><a href="#3-tokenizer、encode—分词及编码" class="headerlink" title="3. tokenizer、encode—分词及编码"></a>3. tokenizer、encode—分词及编码</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> BertModel, BertConfig, BertTokenizer</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bert_define</span>(<span class="params">path = <span class="string">&quot;../bert_chinese_pretrained&quot;</span></span>):</span></span><br><span class="line">    <span class="comment"># 加载bert的tokenizer分词</span></span><br><span class="line">    tokenizer = BertTokenizer.from_pretrained(path)</span><br><span class="line">    <span class="comment"># 加载预训练模型</span></span><br><span class="line">    model_config = BertConfig.from_pretrained(path)</span><br><span class="line">    model = BertModel.from_pretrained(path, config=model_config)</span><br><span class="line">    <span class="keyword">return</span> tokenizer, model</span><br></pre></td></tr></table></figure>
-<p>几行代码就定义好了，bert需要的tokenizer及encode模型。</p>
-<p>下面测试一下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">text = [<span class="string">&quot;清晨去学校，小鸟对我笑。&quot;</span>, <span class="string">&quot;小鸟说，早早早， 是谁一早背上大书包。&quot;</span>]</span><br><span class="line">max_len = <span class="number">32</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构成一个小batch</span></span><br><span class="line">batch_token, batch_segment, batch_mask = list(), list(), list()</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> text:</span><br><span class="line">    <span class="comment"># text 作 tokenizer 分词</span></span><br><span class="line">    token = tokenizer.tokenize(t)</span><br><span class="line">    token = [<span class="string">&#x27;[CLS]&#x27;</span>] + token + [<span class="string">&#x27;[SEP]&#x27;</span>]</span><br><span class="line">    token_id = tokenizer.convert_tokens_to_ids(token)  <span class="comment"># 字转换vocab中的index</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 加padding补齐及segment、mask</span></span><br><span class="line">    padding = [<span class="number">0</span>] * (max_len - len(token_id))</span><br><span class="line">    mask = [<span class="number">1</span>] * len(token_id) + padding</span><br><span class="line">    segment = [<span class="number">0</span>] * len(token_id) + padding</span><br><span class="line">    token_id = token_id + padding</span><br><span class="line"></span><br><span class="line">    batch_token.append(token_id)</span><br><span class="line">    batch_segment.append(segment)</span><br><span class="line">    batch_mask.append(mask)</span><br><span class="line"></span><br><span class="line">batch_tensor_token = torch.tensor(batch_token)</span><br><span class="line">batch_tensor_segment = torch.tensor(batch_segment)</span><br><span class="line">batch_tensor_mask = torch.tensor(batch_mask)</span><br><span class="line"><span class="comment"># text encode</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    outputs = model(batch_tensor_token, token_type_ids=batch_tensor_segment, attention_mask=batch_tensor_mask)</span><br><span class="line">    outputs = outputs[<span class="number">0</span>][:, <span class="number">0</span>, :]  <span class="comment"># 取cls向量</span></span><br><span class="line">    print(outputs.shape)  <span class="comment"># torch.Size([2, 768])</span></span><br></pre></td></tr></table></figure>
-<p>也可以在encode后，即拿cls向量，接其他的下游任务，如文本分类等等，这就是预训练bert的一般用法了。</p>
-<p>在此基础上的，<a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Chinese-Text-Classification-Bert-Torch">写了个完整的调bert预训练作文本多分类的任务</a>, 其中还实现了调albert作文本分类的工作（把BertModel换成AlbertModel就可，tokenizer可以共用bert-base的），供参考。</p>
+        <p>今天写模型代码出现一个模型结果极不稳定的问题，loss会抖动的特别厉害。有时模型loss能收敛到极低，有时却怎么也降不下来。网上有答案说，这里有可能是lr太大，到模型快收敛时，lr依然大，则会跳过最优点，导致模型无法收敛到极小值点。</p>
+<p>但是我用的optimizer是Adam啊，Adam不是自适应的吗？Adam还有必要加lr decay吗？<a id="more"></a></p>
+<p>网上搜了一番，但没有看到一个很好解答这个问题的答案，探索了一下，将自己的分析结果放在这里，如有不对，欢迎评论交流讨论。</p>
+<p>一般流程下，一个optimizer优化参数时，是按照如下顺序进行优化迭代的。</p>
+<p>第3、4步，各个优化器下都差不多，就是进行梯度更新了。主要的不同的是在1、2步了。（图来自<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/32230623）">https://zhuanlan.zhihu.com/p/32230623）</a></p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/Optimizer/lr_sliding_avg.png" alt="image-20211019211243063"></p>
+<p>先看一下一般的梯度下降法是怎么更新模型参数的</p>
+<h3 id="1-一般梯度下降法"><a href="#1-一般梯度下降法" class="headerlink" title="1. 一般梯度下降法"></a>1. 一般梯度下降法</h3><p>公式：<script type="math/tex">\theta_{t+1}=\theta_{t}-\eta\nabla J(\theta_{t})</script></p>
+<p>其中 ，$\eta$是学习率，$\theta_{t}$是第 <em>t</em> 轮的参数，$J(\theta_{t})$是损失函数，$\nabla J(\theta_{t})$是梯度。 </p>
+<p>$\eta$就是lr，正常在模型中，一般就是个定值，如lr=1e-2。</p>
+<p>为后续表达上统一、方便，令$g_{t}=J(\theta_{t})$, 所以公式可以表示为</p>
+<script type="math/tex; mode=display">\theta_{t+1}=\theta_{t}-\eta * g_{t}</script><h3 id="2-Adam参数更新"><a href="#2-Adam参数更新" class="headerlink" title="2. Adam参数更新"></a>2. Adam参数更新</h3><p>Adam(Adaptive Moment Estimation), 是一种lr自适应的改进的优化器，加入了一阶与二阶动量，是一个二阶的优化器。</p>
+<p>Adam参数更新的公式：</p>
+<script type="math/tex; mode=display">
+m_{t} = \beta_1m_{t-1} + (1-\beta_1)g_t \tag {1}</script><script type="math/tex; mode=display">
+v_{t} = \beta_2v_{t-1} + (1-\beta_2)g_t^2 \tag {2}</script><p>公式1为一阶动量，公式2为一阶动量，<script type="math/tex">\beta_1</script>控制一阶动量，<script type="math/tex">\beta_2</script>控制二阶动量，实际中，这两值一般取0.9与0.999。</p>
+<p><strong>公式1、2是一个滑动平均的模型，用来估计变量的局部均值，使得变量的更新与一段时间内的历史取值有关。</strong><script type="math/tex">\beta∈[0,1], \beta=0相当于没有使用滑动平均</script>。</p>
+<p>初始化时，<script type="math/tex">m_0=0, v_0=0</script>，因此在初期时，动量累积值较小时，<script type="math/tex">m_0, v_0</script>会接近于0，这样会导致没有梯度，或刚开始时梯度就极小，优化不动。因此要进行偏差修正，上面公式1、2，就变成了下面这样。</p>
+<script type="math/tex; mode=display">
+\widehat{m_{t}} = m_{t}/(1-\beta_1^t) \tag {3}</script><script type="math/tex; mode=display">
+\widehat{v_{t}} = v_{t}/(1-\beta_2^t) \tag {4}</script><p><strong>t越大，<script type="math/tex">1-\beta_1^t</script>越接近1，公式3、4就就接近于公式1、2了，也就是说，公式3、4的形式是在刚开始时发挥作用，避免刚开始时<script type="math/tex">m_0, v_0</script>会接近于0，梯度优化在原地转悠半天。</strong></p>
+<p>当 <em>β</em> 越大时，滑动平均得到的值越和gt的历史值相关。如果 <em>β</em>=0.9，则大致等于过去 10 个 <em>gt</em> 值的平均；如果 <em>β</em>=0.99，则大致等于过去 100 个 *gt 值的平均。</p>
+<p>图来自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/wuliytTaotao/p/9479958.html">https://www.cnblogs.com/wuliytTaotao/p/9479958.html</a></p>
+<p><img src="https://img2018.cnblogs.com/blog/1351564/201906/1351564-20190615000526560-254363648.png" alt="img"></p>
+<p><strong>可以看到加了滑动平均的明显值要稳定的多，而加了偏差修正的在模型初始阶段就能维持一个较好的动量值，这会节省模型迭代的时间。另外滑动平均占内存少，不需要保存过去历史 gt值，就能够估计其均值。</strong></p>
+<p>最后再来到Adam最后的梯度更新的公式。</p>
+<script type="math/tex; mode=display">
+\theta_{t+1} = \theta_{t}- \eta/(\sqrt {\widehat{v_t}}+\epsilon)\widehat{m_t} \tag {5}</script><p>可以看到这里的实际学习率是<script type="math/tex">\sqrt {\widehat{v_t}}+\epsilon</script>，不是一个保持不变的值。</p>
+<h3 id="3-lr-decay加还是不加？"><a href="#3-lr-decay加还是不加？" class="headerlink" title="3. lr decay加还是不加？"></a>3. lr decay加还是不加？</h3><p>目前，对于自适应学习率的优化器加或不加，还没有看到一个从理论到实践证明上，一统江湖的说法。</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1711.05101">论文Decoupled Weight Decay Regularization</a>里对比了Adam+L2 与AdamW（Adam+weight decay）两种优化器，然后采用不同的lr schedule方式进行实验。<strong>最后的实验结果表明，虽然Adam及AdamW是一种自适应lr的Adam优化器方法，应该来说不需要增加额外的lr scheduler方法，但在它的实验中，加了lr decay的Adam还是有效提升了模型的表现。</strong></p>
+<p>但这只是在它的实验里进行了说明，并没有从理论上进行证明。因此不能说有定论，但是若你的模型结果极不稳定的问题，loss会抖动特别厉害，不妨尝试一下加个lr decay试一试。</p>
+<h3 id="4-lr-decay-怎么加？"><a href="#4-lr-decay-怎么加？" class="headerlink" title="4. lr decay 怎么加？"></a>4. lr decay 怎么加？</h3><p>torch中有很多进行lr decay的方式，这里给一个ExponentialLR API 的demo代码，就是这样就好了。</p>
+<p>ExponentialLR原理： decayed_lr = lr * decay_rate ^ (global_step / decay_steps)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">my_optim = Adam(model.parameters, lr)</span><br><span class="line">decayRate = <span class="number">0.96</span></span><br><span class="line">my_lr_scheduler = torch.optim.lr_scheduler.ExponentialLR(optimizer=my_optim, gamma=decayRate)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> e <span class="keyword">in</span> epochs:</span><br><span class="line">    train_epoch()</span><br><span class="line">    my_optim.step()</span><br><span class="line">    </span><br><span class="line">    valid_epoch()</span><br><span class="line">    my_lr_scheduler.step()</span><br></pre></td></tr></table></figure>
 
       
 
@@ -280,7 +300,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">bert</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">optimizer</a>
         		</li>
       		
 		</ul>
@@ -292,7 +312,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/NLP//" class="article-tag-list-link color4">NLP</a>
+        			<a href="/categories/Pytorch-Learning//" class="article-tag-list-link color2">Pytorch Learning</a>
         		</li>
       		
 		</ul>
@@ -347,7 +367,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/06/14/%E7%AB%99%E5%9C%A8transformer%E7%9A%84%E8%82%A9%E8%86%80%E4%B8%8A%E8%B0%83bert-md/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/10/17/%E3%80%90TorchDoc%E3%80%91Adam%E8%BF%98%E9%9C%80%E5%8A%A0learning-rate-decay%E5%90%97%EF%BC%9F/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -361,18 +381,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/06/23/CNN%E6%A8%A1%E5%9E%8B%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E6%8C%87%E5%8D%97/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/11/01/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E5%A5%BDGraphSAGE%EF%BC%9F%E6%8C%89%E8%BF%99%E4%B8%89%E6%AD%A5%E8%B5%B0/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          CNN模型快速上手指南.md
+          【Graph-Learning】怎么搭好一个GraphSAGE？按这三步走
         
       </div>
     </a>
   
   
-    <a href="/2021/06/08/git-%E7%89%88%E6%9C%AC%E7%AE%A1%E7%90%86%EF%BC%8C%E5%AE%9E%E6%93%8D/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">git 版本管理，实操</div>
+    <a href="/2021/10/17/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E4%B8%80%E4%B8%AAGCN%EF%BC%9F%E5%8F%AA%E9%9C%80%E8%BF%99%E5%9B%9B%E6%AD%A5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【Graph-Learning】怎么搭一个GCN？只需这四步</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -399,7 +419,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87transformer%E8%B0%83%E7%94%A8bert"><span class="toc-number">2.</span> <span class="toc-text">通过transformer调用bert</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85transformer%E7%8E%AF%E5%A2%83"><span class="toc-number">2.1.</span> <span class="toc-text">1. 安装transformer环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%B8%8B%E8%BD%BDbert%E9%A2%84%E8%AE%AD%E7%BB%83%E6%96%87%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text">2. 下载bert预训练文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-tokenizer%E3%80%81encode%E2%80%94%E5%88%86%E8%AF%8D%E5%8F%8A%E7%BC%96%E7%A0%81"><span class="toc-number">2.3.</span> <span class="toc-text">3. tokenizer、encode—分词及编码</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%B8%80%E8%88%AC%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">1. 一般梯度下降法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Adam%E5%8F%82%E6%95%B0%E6%9B%B4%E6%96%B0"><span class="toc-number">2.</span> <span class="toc-text">2. Adam参数更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-lr-decay%E5%8A%A0%E8%BF%98%E6%98%AF%E4%B8%8D%E5%8A%A0%EF%BC%9F"><span class="toc-number">3.</span> <span class="toc-text">3. lr decay加还是不加？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-lr-decay-%E6%80%8E%E4%B9%88%E5%8A%A0%EF%BC%9F"><span class="toc-number">4.</span> <span class="toc-text">4. lr decay 怎么加？</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -601,6 +621,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">bert</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">daily</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">graphsage model</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">text representation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">optimizer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">pretrained model</a>
               </li>
             
             <div class="clearfix"></div>

@@ -6,27 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Transformer大白话详解 | Hexo</title>
+  <title>【Graph-Learning】怎么搭好一个GraphSAGE？按这三步走 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 引言Transformer在CV界刮起了一股旋风，说明这个attention的方法确实是经典。这篇文章就用大白话聊下Transformer，并结合代码详解下transformer。">
+  <meta name="description" content="GraphSAGE，解决的就是GCN全图迭代时，大图场景无法训练的局限,在十万百万级别nodes大图训练时基本上都要用到的这个技巧。这么实用的技巧，光看原理，没动手写过肯定不够，踩坑实践一下理解才更透彻。 那怎么正确搭建一个GraphSAGE呢？ 这篇文章就按三步法原则，从选邻居点，切子图、特征聚合出发，搭一个GraphSAGE的model。话不多说，直接上show me the code环节。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Transformer大白话详解">
-<meta property="og:url" content="http://example.com/2021/07/20/Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:title" content="【Graph-Learning】怎么搭好一个GraphSAGE？按这三步走">
+<meta property="og:url" content="http://example.com/2021/11/01/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E5%A5%BDGraphSAGE%EF%BC%9F%E6%8C%89%E8%BF%99%E4%B8%89%E6%AD%A5%E8%B5%B0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 引言Transformer在CV界刮起了一股旋风，说明这个attention的方法确实是经典。这篇文章就用大白话聊下Transformer，并结合代码详解下transformer。">
+<meta property="og:description" content="GraphSAGE，解决的就是GCN全图迭代时，大图场景无法训练的局限,在十万百万级别nodes大图训练时基本上都要用到的这个技巧。这么实用的技巧，光看原理，没动手写过肯定不够，踩坑实践一下理解才更透彻。 那怎么正确搭建一个GraphSAGE呢？ 这篇文章就按三步法原则，从选邻居点，切子图、特征聚合出发，搭一个GraphSAGE的model。话不多说，直接上show me the code环节。">
 <meta property="og:locale" content="zh_CH">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232202.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232200.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232204.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232205.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232201.png">
-<meta property="og:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232203.png">
-<meta property="article:published_time" content="2021-07-20T13:29:10.000Z">
-<meta property="article:modified_time" content="2021-07-26T15:27:57.000Z">
+<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/GraphSAGE/node_classification.png">
+<meta property="og:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/GraphSAGE/algorithm.png">
+<meta property="article:published_time" content="2021-11-01T15:04:19.000Z">
+<meta property="article:modified_time" content="2021-11-20T15:34:03.587Z">
 <meta property="article:author" content="暴躁的狮子歌歌">
-<meta property="article:tag" content="Transformer">
+<meta property="article:tag" content="graphsage model">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232202.png">
+<meta name="twitter:image" content="http://example.com/home/xyshu/Desktop/BLOG/PicBlog/GraphSAGE/node_classification.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -168,20 +164,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Transformer大白话详解" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-【Graph-Learning】怎么搭好GraphSAGE？按这三步走" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Transformer大白话详解
+      【Graph-Learning】怎么搭好一个GraphSAGE？按这三步走
     </h1>
   
 
         
-        <a href="/2021/07/20/Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
-  	<time datetime="2021-07-20T13:29:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-20</time>
+        <a href="/2021/11/01/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E5%A5%BDGraphSAGE%EF%BC%9F%E6%8C%89%E8%BF%99%E4%B8%89%E6%AD%A5%E8%B5%B0/" class="archive-article-date">
+  	<time datetime="2021-11-01T15:04:19.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-01</time>
 </a>
         
 
@@ -206,7 +202,7 @@
         <div id="toc-article" class="toc-article">
             <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
             <strong class="toc-title">文章目录</strong>
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Transformer%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">2.Transformer结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Attention-%E5%B1%82"><span class="toc-number">3.</span> <span class="toc-text">3.Attention 层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Feed-Farward-%E5%B1%82"><span class="toc-number">4.</span> <span class="toc-text">3.Feed-Farward 层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Embedding-and-Softmax"><span class="toc-number">5.</span> <span class="toc-text">4. Embedding and Softmax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Position-Encoding"><span class="toc-number">6.</span> <span class="toc-text">5. Position Encoding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-why-self-attention"><span class="toc-number">7.</span> <span class="toc-text">6.why self-attention</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="toc-number">8.</span> <span class="toc-text">总结一下</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B5%AE%E5%8F%A8%E4%B8%80%E4%B8%8BGraphSAGE%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">絮叨一下GraphSAGE原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Dataloader%EF%BC%9A%E9%81%8D%E5%8E%86nodes%EF%BC%8C%E4%BD%9C%E4%B8%BAinput-node%E3%80%82"><span class="toc-number">2.</span> <span class="toc-text">1.Dataloader：遍历nodes，作为input node。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%87%E5%AD%90%E5%9B%BE%EF%BC%9Asample%E5%87%BAinput-node%E7%9A%84neighbors-%E6%9E%84%E6%88%90%E5%AD%90%E5%9B%BE"><span class="toc-number">3.</span> <span class="toc-text">2. 切子图：sample出input node的neighbors,构成子图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%AD%90%E5%9B%BE%E4%B8%8A%E7%89%B9%E5%BE%81%E8%81%9A%E5%90%88"><span class="toc-number">4.</span> <span class="toc-text">3. 模型：子图上特征聚合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">实验结果：</span></a></li></ol>
        </div>
        <script type="text/javascript">
         function showToc(){
@@ -226,50 +222,39 @@
 <!-- 目录内容结束 -->
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="1-引言"><a href="#1-引言" class="headerlink" title="1. 引言"></a>1. 引言</h3><p>Transformer在CV界刮起了一股旋风，说明这个attention的方法确实是经典。这篇文章就用大白话聊下Transformer，并结合代码详解下transformer。<a id="more"></a></p>
-<h3 id="2-Transformer结构"><a href="#2-Transformer结构" class="headerlink" title="2.Transformer结构"></a>2.Transformer结构</h3><p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1706.03762.pdf">transformer</a>的结构总体封起来就是一个大盒子，这个大盒子分成两个功能块，一部分叫做encoder，另一部分叫做decoder。其实encoder功能块就是抽取特征的，抽取出来的特征就交给解码功能块decoder，decoder块用encoder抽取到的特征去做你要做的任务，类比到常见的机器学习任务，也是这么回事，先做特征，然后由特征去做分类、回归等任务。</p>
-<p>整体看，transformer是个大盒子，一层层拆下去，看看这里面都有些什么。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232202.png" alt="Transformer_Stru" style="zoom:80%;" /></p>
-<p>拆开来就看就是6个小的encoder堆叠起来组成Encoder特征抽取模块、6个小的decoder堆叠起来组成Decoder解码模块。 具体怎么堆叠在一起的可看原文中的图。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232200.png" alt="model—structure" style="zoom:80%;" /></p>
-<p><strong>Encoder块：</strong></p>
-<ol>
-<li>N=6，表示6个小的encoder堆叠，inputs就是输入的文本序列，经过self-attention layer + Norm，然后再经过全连接的FeedForward layer。</li>
-<li>为避免网络过深导致的梯度消失问题，加入了残差结构，表达为<script type="math/tex">LayerNorm(x+SubLayer(x))</script>,其中SubLayer就是每层中做的操作，如在self-attention layer中即为做attention计算，在FeedForward layer中做的为fully connected forward处理，这里为保证在残差结构中，维度能对齐，所有输出均统一为512。 </li>
-</ol>
-<p><strong>Decoder块：</strong></p>
-<ol>
-<li>与Encoder类似，N=6，表示6个小的decoder堆叠，<strong>outputs是来自于上一个i-1位置decoder的输出，作为i位置上的decoder输入（曾经的seq2seq也是这样子）</strong>，而在encoder-decoder layer这层，K、V是来自encoder的输出，Q来自self-attention的输出。decoder这里也加入残差结构，与encoder一样。</li>
-</ol>
-<h3 id="3-Attention-层"><a href="#3-Attention-层" class="headerlink" title="3.Attention 层"></a>3.Attention 层</h3><p>让Transfermer一战成名的结构Attention，attention layer也就做了这一件事，细化的来分解下。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232204.png" alt="attention-style" style="zoom:60%;" /></p>
-<p>公式也很简洁：<script type="math/tex">Attention(Q,K,V)=softmax(QK^T/\sqrt{d_k})V</script></p>
-<p><strong>具体就是</strong></p>
-<p><strong>1.一个<script type="math/tex">token_i</script>会产生<script type="math/tex">q_i,k_i,v_i</script>三个向量 代表这个向量，</strong></p>
-<p><strong>2. <script type="math/tex">q_i</script>会挨个点乘其他token的<script type="math/tex">k_{其他}</script>后，然后做softmax</strong></p>
-<p><strong>3.softmax后得到一串权重再点乘<script type="math/tex">v_i</script>，并做sum就是自己的输出到下一层的向量<script type="math/tex">z_i</script></strong></p>
-<p><strong>原文中，除了点乘（dot-product），也对比了addiadditive attention计算方式，当<script type="math/tex">d_k</script>小时，两个效果差不多，当<script type="math/tex">d_k</script>大时，addiadditive 更好，因为点乘造成的梯度更大，导致经过softmax后产生的gradient就很小了，后续与<script type="math/tex">v_i</script>运算时，self-attention的差异就小了</strong></p>
-<p>Multi-head attention就是把一个attention操作复制成多个，堆叠了起来，过程是一致的，换到工程上就是给token embedding向量、<script type="math/tex">q_i,k_i,v_i</script>等，都额外增加了一个维度，把原来<script type="math/tex">1×d_{model}变成h×d_h, 其中d_h=d_{model}/h</script>，输出时再将多个头的结果concat，刚好维度又回来了，变成<script type="math/tex">d_{model}</script>了，又对应上了。</p>
-<p>进一步借助<a target="_blank" rel="noopener" href="http://jalammar.github.io/">Jay Alammar</a>画的图再刨析一遍，这个图画的很棒，看着图动手过一遍，更清晰。</p>
-<p>输入时将token转化embedding输入（<script type="math/tex">x1，x2</script>），同时由<script type="math/tex">x1，x2</script>分别点乘各自的权重矩阵<script type="math/tex">W_q,W_k,W_v</script>,得到<script type="math/tex">q,k,v</script>，点乘其他token的<script type="math/tex">k_{其他}</script>后，然后做softmax，再点乘<script type="math/tex">v_i</script>，并做sum就是自己的输出到下一层的向量<script type="math/tex">z_i</script></p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232205.png" alt="attention-compute" style="zoom:70%;" /></p>
-<p>再看看一下multi-head attention，就是把一个复制成多个，堆叠了起来，增加了一个维度，比如原来的x是1×521的，8个头的multi-attention就是8×512，其他的过程就是一样的。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232201.png" alt="multi-attention" style="zoom:67%;" /></p>
-<h3 id="3-Feed-Farward-层"><a href="#3-Feed-Farward-层" class="headerlink" title="3.Feed-Farward 层"></a>3.Feed-Farward 层</h3><p>一个FFN里包含两个linear transformations，说起来太模糊，看代码。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PositionwiseFeedForward</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="string">&quot;Implements FFN equation.&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, d_model, d_ff, dropout=<span class="number">0.1</span></span>):</span></span><br><span class="line">        super(PositionwiseFeedForward, self).__init__()</span><br><span class="line">        self.w_1 = nn.Linear(d_model, d_ff)</span><br><span class="line">        self.w_2 = nn.Linear(d_ff, d_model)</span><br><span class="line">        self.dropout = nn.Dropout(dropout)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.w_2(self.dropout(F.relu(self.w_1(x))))</span><br></pre></td></tr></table></figure>
-<ol>
-<li>第一个linear transformations为<script type="math/tex">self.w_1</script>，输入为attention层的embedding，维度为<script type="math/tex">d_{model}=512</script>，输出的维度为<script type="math/tex">d_{ff}=2048</script>，同时在这层做完linear transformation后,会用relu进行一个映射处理。</li>
-<li>第二个linear transformations为<script type="math/tex">self.w_2</script>，输入为第一个linear transformations的embedding，维度为<script type="math/tex">d_{ff}=2048</script>，输出的维度为<script type="math/tex">d_{model}=512</script>，维度刚好，进入下一个attention层。</li>
-<li>另外参数<script type="math/tex">self.w_1、 self.w_2</script>是分开的，并没有共享，相当于做了两次卷积，卷积核大小为1。</li>
-</ol>
-<h3 id="4-Embedding-and-Softmax"><a href="#4-Embedding-and-Softmax" class="headerlink" title="4. Embedding and Softmax"></a>4. Embedding and Softmax</h3><p>这里没啥特别的，Embedding分别说的是第二张transformer结构图中Input Embedding与Output Embedding，在Embedding层中，这里的参数会乘以<script type="math/tex">\sqrt{d_{model}}</script>, Input Embedding、Output Embedding（这个好理解，毕竟decoder中的Output Embedding就是第i-1个字符的embedding），Softmax说的的decoder输出预测下一个字符的probabilties用softmax进行转化。softmax前面的linear与embedding层的参数也是共享的。</p>
-<h3 id="5-Position-Encoding"><a href="#5-Position-Encoding" class="headerlink" title="5. Position Encoding"></a>5. Position Encoding</h3><p>这里transformer为什么要加这个position encoding？</p>
-<p>其实一路看下来，也很容易理解。<strong>这里弥补的是transformer丧失捕捉位置信息的缺点，它的主要结构attention做的都是无主次无先后的线性变换，各字符都是处于同一级别（也因为如此，attention可并行计算，相比于RNN（字符有前后之分）可是大幅度提高了计算效率）</strong>，于是人工的加上表达位置信息的Position Encoding embedding。</p>
-<p><img src="https://jacksonblogpic.oss-cn-shanghai.aliyuncs.com/img/20210726232203.png" alt="pos_emb" style="zoom:80%;" /></p>
-<p>这里别看错了，公式里的<script type="math/tex">pos</script>表示位置、<script type="math/tex">i</script>是维度，就是说，取定了维度，不同位置的编码就由一个正弦曲线生成好了，其波长为从<script type="math/tex">2\Pi</script> 到<script type="math/tex">10000*2\Pi</script>的等比级数。</p>
-<p><strong>为什么选定了这个position生成函数？文中给出的解释的是是因为对于任何固定的偏移量<script type="math/tex">k</script>,<script type="math/tex">PE_{pos+k}</script>可表示为<script type="math/tex">PE_{pos}</script>的线性函数，它能让模型很容易学会Attend相对位置。 就是说模型不仅注意到绝对位置，还能注意到相对位置</strong></p>
-<h3 id="6-why-self-attention"><a href="#6-why-self-attention" class="headerlink" title="6.why self-attention"></a>6.why self-attention</h3><p>为什么选中了self-attention这种特征计算模式？1.考虑到每一层由句子长度及进行的操作而引起的总计算量。2.attention 计算可并行。3.attention解决了句子中长依赖语义问题（捕捉间隔较远的词之间的语义联系问题）。</p>
-<h3 id="总结一下"><a href="#总结一下" class="headerlink" title="总结一下"></a>总结一下</h3><p>transformer可拿出来说作为缺陷的地方就是它这种结构使得丧失了捕捉位置的能力，所以后续出了很多RNN或CNN与attention结合的模型，但工程上要的就是效率，它强大的并行计算能力带来了极大的效率提升，而且这种attention模式极好的解决了长依赖问题。</p>
+        <p>GraphSAGE，解决的就是GCN全图迭代时，大图场景无法训练的局限,在十万百万级别nodes大图训练时基本上都要用到的这个技巧。这么实用的技巧，光看原理，没动手写过肯定不够，踩坑实践一下理解才更透彻。</p>
+<p>那怎么正确搭建一个GraphSAGE呢？</p>
+<p>这篇文章就按三步法原则，从选邻居点，切子图、特征聚合出发，搭一个GraphSAGE的model。话不多说，直接上show me the code环节。<a id="more"></a></p>
+<h3 id="絮叨一下GraphSAGE原理"><a href="#絮叨一下GraphSAGE原理" class="headerlink" title="絮叨一下GraphSAGE原理"></a>絮叨一下GraphSAGE原理</h3><p>搭之前，还是得絮叨一下GraphSAGE基本原理，这个理论基础一定不能少，烂熟于心才能随心所欲，才知道代码怎么写。</p>
+<p>关于GCN的缺陷的及GraphSAGE的优势以及原理可以看这里<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/404826711">图卷积：从GCN到GAT、GraphSAGE</a></p>
+<p>GraphSAGE的原理、优缺点在上面也写过了详细分析，这里就不在重复，只简单过一下基本流程原理。</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/GraphSAGE/node_classification.png" alt="image-20211102223201541"></p>
+<p>上面这张图很描述了GraphSAGE的实现逻辑，它将一个整图分割开，为每个节点建立一个子图，用来做聚合，然后得到input nodes的feature。比如上图红点是input node，则其他带颜色的点则为为input node sample出来的neighbors，从而得到一个子图，这个子图就是为做聚合，从而得到input node的聚合后的feature。</p>
+<p>到这里，基本就可以梳理出搭一个GraphSAGE的基本步骤了，<strong>1.Dataloader：遍历nodes，作为input node。 2. 切子图：sample出input node的neighbors,构成子图  3. 模型：子图上特征聚合</strong></p>
+<p>三步法，开搭。（上面这张图涉及的名与代码中变量取名一致，图为逻辑思想，代码为具体实现，可结合学习）</p>
+<blockquote>
+<p><strong>上面图结合下面代码使用更方便。</strong>确定input nodes，以两层为例，sample出两层，每一层都组成一个子图block，n层则n个block,然后都装进blocks里即可，在做特征聚合时，依次遍历block从下往上逐层聚合,直到得到input nodes feature，然后接上别的任务如node classification就完成了。</p>
+</blockquote>
+<h3 id="1-Dataloader：遍历nodes，作为input-node。"><a href="#1-Dataloader：遍历nodes，作为input-node。" class="headerlink" title="1.Dataloader：遍历nodes，作为input node。"></a>1.Dataloader：遍历nodes，作为input node。</h3><p>把数据图网络建立起来。（这里以dgl框架为例提供一个简单demo，及一个dgl自带的cora数据图网络用来验证搭建的正确性）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> dgl</span><br><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> Dataset</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_graph_test</span>(<span class="params">self</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;a demo graph: just for graph test</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    src_nodes = torch.tensor([<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>])</span><br><span class="line">    dst_nodes = torch.tensor([<span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>])</span><br><span class="line">    graph = dgl.graph((src_nodes, dst_nodes))</span><br><span class="line">    <span class="keyword">return</span> graph</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">build_cora_dataset</span>(<span class="params">add_symmetric_edges=True, add_self_loop=True</span>):</span></span><br><span class="line">    dataset = CoraGraphDataset()</span><br><span class="line">    graph = dataset[<span class="number">0</span>]</span><br><span class="line">	</span><br><span class="line">    <span class="comment"># 加对称边</span></span><br><span class="line">    <span class="keyword">if</span> add_symmetric_edges:</span><br><span class="line">        edges = graph.edges()</span><br><span class="line">        graph.add_edges(edges[<span class="number">1</span>], edges[<span class="number">0</span>])</span><br><span class="line">	<span class="comment"># 加自循环边</span></span><br><span class="line">    graph = dgl.remove_self_loop(graph)</span><br><span class="line">    <span class="keyword">if</span> add_self_loop:</span><br><span class="line">        graph = dgl.add_self_loop(graph)</span><br><span class="line">    <span class="keyword">return</span> graph</span><br></pre></td></tr></table></figure>
+<p>NodeDataSet也比较简单，就是遍历所有train数据集中涉及的点作为input nodes就完了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomoNodesSet</span>(<span class="params">Dataset</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, g, mask</span>):</span></span><br><span class="line">        <span class="comment"># only load masked node for training/testing</span></span><br><span class="line">        self.g = g</span><br><span class="line">        self.nodes = g.nodes()[mask].tolist()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> len(self.nodes)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span>(<span class="params">self, index</span>):</span></span><br><span class="line">        heads = self.nodes[index]</span><br><span class="line">        <span class="keyword">return</span> heads</span><br></pre></td></tr></table></figure>
+<h3 id="2-切子图：sample出input-node的neighbors-构成子图"><a href="#2-切子图：sample出input-node的neighbors-构成子图" class="headerlink" title="2. 切子图：sample出input node的neighbors,构成子图"></a>2. 切子图：sample出input node的neighbors,构成子图</h3><p>sample neighbors构成子图这块，应该是整个数据管道dataloader里的核心了。</p>
+<p>这里把这一块，用一个call函数去实现，也就上面NodeSet出来的每个点，在这个回调类中去给它构建出子图来。最后dataloader主要是返回三个东西，分别是input nodes（batch）, 子图中涉及all nodes(seeds), 以及子图（blocks)。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NodesGraphCollactor</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    select heads/tails/neg_tails&#x27;s neighbors for aggregation</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, g, neighbors_every_layer=[<span class="number">5</span>, <span class="number">1</span>]</span>):</span></span><br><span class="line">        self.g = g</span><br><span class="line">        self.neighbors_every_layer = neighbors_every_layer</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span>(<span class="params">self, batch</span>):</span></span><br><span class="line">        blocks, seeds = self.sample_blocks(batch)</span><br><span class="line">        <span class="keyword">return</span> batch, seeds, blocks</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sample_blocks</span>(<span class="params">self, seeds</span>):</span></span><br><span class="line">        blocks = []</span><br><span class="line">        <span class="keyword">for</span> n_neighbors <span class="keyword">in</span> self.neighbors_every_layer:</span><br><span class="line">            frontier = dgl.sampling.sample_neighbors(</span><br><span class="line">                self.g,</span><br><span class="line">                seeds,</span><br><span class="line">                fanout=n_neighbors,</span><br><span class="line">                edge_dir=<span class="string">&#x27;in&#x27;</span>)</span><br><span class="line">            block = self.compact_and_copy(frontier, seeds)</span><br><span class="line">            seeds = block.srcdata[dgl.NID]  <span class="comment"># 这里应该返回这一层的src node</span></span><br><span class="line">            blocks.insert(<span class="number">0</span>, block)</span><br><span class="line">        <span class="keyword">return</span> blocks, seeds</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">compact_and_copy</span>(<span class="params">self, frontier, seeds</span>):</span></span><br><span class="line">        <span class="comment"># 将第一轮的dst节点与大的图frontier压缩成小图  block</span></span><br><span class="line">        <span class="comment"># 并设置block的seeds 为 output nodes，其他为input nodes</span></span><br><span class="line">        block = dgl.to_block(frontier, seeds)</span><br><span class="line">        <span class="keyword">for</span> col, data <span class="keyword">in</span> frontier.edata.items():</span><br><span class="line">            <span class="keyword">if</span> col == dgl.EID:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            block.edata[col] = data[block.edata[dgl.EID]]</span><br><span class="line">        <span class="keyword">return</span> block</span><br></pre></td></tr></table></figure>
+<h3 id="3-模型：子图上特征聚合"><a href="#3-模型：子图上特征聚合" class="headerlink" title="3. 模型：子图上特征聚合"></a>3. 模型：子图上特征聚合</h3><p>在得到上述的input nodes、子图blocks后，就可以搭GraphSAGE聚合网络了。</p>
+<p>怎么个聚合法，参考论文也就是下面这个地方，先聚合邻居node feature，然后concat起来，经过个激活函数(对应下图)，就得到input node feature了，最后输出在做一个normalize,即完成。</p>
+<p><img src="/home/xyshu/Desktop/BLOG/PicBlog/GraphSAGE/algorithm.png" alt="image-20211102230108387"></p>
+<p> 定义好维度转换矩阵Q, 模型参数W（这里加了bias, 不加bias模型抖动的很厉害，不易收敛）。</p>
+<p>（项目代码中也写了个带edge weight的WeightedSAGEConv，可自行前往<a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Graph-Learning">git仓库</a>查看）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WeightedSAGEConv</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, input_dims, output_dims, act=F.relu, dropout=<span class="number">0.5</span>, bias=True</span>):</span></span><br><span class="line">        super().__init__()</span><br><span class="line"></span><br><span class="line">        self.act = act</span><br><span class="line">        self.Q = nn.Linear(input_dims, output_dims)</span><br><span class="line">        self.W = nn.Linear(input_dims + output_dims, output_dims)</span><br><span class="line">        <span class="keyword">if</span> bias:</span><br><span class="line">            self.bias = Parameter(torch.FloatTensor(output_dims))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.register_parameter(<span class="string">&#x27;bias&#x27;</span>, <span class="literal">None</span>)</span><br><span class="line">        <span class="comment"># self.dropout = nn.Dropout(dropout)</span></span><br><span class="line">        self.reset_parameters()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">reset_parameters</span>(<span class="params">self</span>):</span></span><br><span class="line">		<span class="string">&quot;&quot;&quot;init Q, W and bias&quot;&quot;&quot;</span></span><br><span class="line">        ......</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, g, h, weights=None</span>):</span></span><br><span class="line">        h_src, h_dst = h</span><br><span class="line">        <span class="keyword">with</span> g.local_scope():</span><br><span class="line">            g.srcdata[<span class="string">&#x27;n&#x27;</span>] = self.Q(h_src)</span><br><span class="line">            g.update_all(fn.copy_src(<span class="string">&#x27;n&#x27;</span>, <span class="string">&#x27;m&#x27;</span>), fn.mean(<span class="string">&#x27;m&#x27;</span>, <span class="string">&#x27;neigh&#x27;</span>))  <span class="comment"># aggregation or pool:fn.max()</span></span><br><span class="line">            n = g.dstdata[<span class="string">&#x27;neigh&#x27;</span>]</span><br><span class="line">            z = self.act(self.W(torch.cat([n, h_dst], <span class="number">1</span>))) + self.bias</span><br><span class="line">            z_norm = z.norm(<span class="number">2</span>, <span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">            z_norm = torch.where(z_norm == <span class="number">0</span>, torch.tensor(<span class="number">1.</span>).to(z_norm), z_norm)</span><br><span class="line">            z = z / z_norm</span><br><span class="line">            <span class="keyword">return</span> z</span><br></pre></td></tr></table></figure>
+<p>当然GraphSAGE也可以跟GCN一样，进行多层aggregate的，上面可以作为<strong>多层GraphSAGE的一个基础子layer</strong>，一个多层GraphSAGE就很容易了（这里为两层的聚合，则blocks装两个子层图block，对应聚合层layers也为两层）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">SAGENet</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, input_dim, hidden_dims, output_dims,</span></span></span><br><span class="line"><span class="function"><span class="params">                 n_layers, act=F.relu, dropout=<span class="number">0.5</span></span>):</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.convs = nn.ModuleList()</span><br><span class="line">        self.convs.append(WeightedSAGEConv(input_dim, hidden_dims, act, dropout))</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(n_layers - <span class="number">2</span>):</span><br><span class="line">            self.convs.append(WeightedSAGEConv(hidden_dims, hidden_dims,</span><br><span class="line">                                               act, dropout))</span><br><span class="line">        self.convs.append(WeightedSAGEConv(hidden_dims, output_dims,</span><br><span class="line">                                           act, dropout))</span><br><span class="line">        self.dropout = nn.Dropout(dropout)</span><br><span class="line">        self.act = act</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, blocks, h</span>):</span></span><br><span class="line">        <span class="keyword">for</span> l, (layer, block) <span class="keyword">in</span> enumerate(zip(self.convs, blocks)):</span><br><span class="line">            h_dst = h[:block.number_of_nodes(<span class="string">&#x27;DST/&#x27;</span> + block.ntypes[<span class="number">0</span>])]</span><br><span class="line">            h = layer(block, (h, h_dst))</span><br><span class="line">            <span class="keyword">if</span> l != len(self.convs) - <span class="number">1</span>:</span><br><span class="line">                h = self.dropout(h)</span><br><span class="line">        <span class="keyword">return</span> h</span><br></pre></td></tr></table></figure>
+<h3 id="实验结果："><a href="#实验结果：" class="headerlink" title="实验结果："></a><strong>实验结果：</strong></h3><p>  cora数据集的<strong>node Classification</strong>任务。</p>
+<p>  <strong>Test accuracy ~0.781(0.762-0.801) (<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1609.02907">paper</a>: 0.815)</strong></p>
+<p>（另外，dgl中也提供了此代码，但只提供了full-graph train也就是整图放到网络中训练更新的那种模式，能到0.83，这个明显不是GraphSAGE的初衷，而sample-batch的模式，没有提供cora数据集实验结果，经过替换自行切换更改数据集，Test acc 0.67）</p>
+<p>以上代码主要做了一个逻辑的分析、梳理，完整的代码放在这里，感兴趣的可以自行查看。</p>
+<p>  <a target="_blank" rel="noopener" href="https://github.com/shuxinyin/Graph-Learning">Graph_Learning</a></p>
 
       
 
@@ -314,7 +299,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Transformer</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">graphsage model</a>
         		</li>
       		
 		</ul>
@@ -326,7 +311,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/NLP//" class="article-tag-list-link color4">NLP</a>
+        			<a href="/categories/Graph-Learning//" class="article-tag-list-link color5">Graph Learning</a>
         		</li>
       		
 		</ul>
@@ -381,7 +366,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/07/20/Transformer%E5%A4%A7%E7%99%BD%E8%AF%9D%E8%AF%A6%E8%A7%A3/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2021/11/01/%E3%80%90Graph-Learning%E3%80%91%E6%80%8E%E4%B9%88%E6%90%AD%E5%A5%BDGraphSAGE%EF%BC%9F%E6%8C%89%E8%BF%99%E4%B8%89%E6%AD%A5%E8%B5%B0/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -395,18 +380,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/07/27/%E3%80%90Graph-Learning%E3%80%91%E4%B8%89%E8%A8%80%E4%B8%A4%E8%AF%AD%E8%AF%B4%E6%B8%85DeepWalk/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2021/11/04/%E3%80%90NLP%E3%80%91%E6%96%87%E6%9C%AC%E8%A1%A8%E8%BE%BE%E8%BF%9B%E5%87%BB-%E4%BB%8EBert-flow%E5%88%B0Bert-white%E3%80%81SimCSE/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          Graph-Learning：三言两语说清DeepWalk（论文解析、实战）
+          【NLP】文本表达进击:从Bert-flow到Bert-white、SimCSE
         
       </div>
     </a>
   
   
-    <a href="/2021/07/18/Bert%E3%80%81Transformer%E9%9D%A2%E8%AF%95100%E9%97%AE/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Bert、Transformer面试100问</div>
+    <a href="/2021/10/17/%E3%80%90TorchDoc%E3%80%91Adam%E8%BF%98%E9%9C%80%E5%8A%A0learning-rate-decay%E5%90%97%EF%BC%9F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【TorchDoc】Adam还需加learning-rate decay吗？</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -433,7 +418,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%BC%95%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Transformer%E7%BB%93%E6%9E%84"><span class="toc-number">2.</span> <span class="toc-text">2.Transformer结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Attention-%E5%B1%82"><span class="toc-number">3.</span> <span class="toc-text">3.Attention 层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Feed-Farward-%E5%B1%82"><span class="toc-number">4.</span> <span class="toc-text">3.Feed-Farward 层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Embedding-and-Softmax"><span class="toc-number">5.</span> <span class="toc-text">4. Embedding and Softmax</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Position-Encoding"><span class="toc-number">6.</span> <span class="toc-text">5. Position Encoding</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-why-self-attention"><span class="toc-number">7.</span> <span class="toc-text">6.why self-attention</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B"><span class="toc-number">8.</span> <span class="toc-text">总结一下</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B5%AE%E5%8F%A8%E4%B8%80%E4%B8%8BGraphSAGE%E5%8E%9F%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">絮叨一下GraphSAGE原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Dataloader%EF%BC%9A%E9%81%8D%E5%8E%86nodes%EF%BC%8C%E4%BD%9C%E4%B8%BAinput-node%E3%80%82"><span class="toc-number">2.</span> <span class="toc-text">1.Dataloader：遍历nodes，作为input node。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%88%87%E5%AD%90%E5%9B%BE%EF%BC%9Asample%E5%87%BAinput-node%E7%9A%84neighbors-%E6%9E%84%E6%88%90%E5%AD%90%E5%9B%BE"><span class="toc-number">3.</span> <span class="toc-text">2. 切子图：sample出input node的neighbors,构成子图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%AD%90%E5%9B%BE%E4%B8%8A%E7%89%B9%E5%BE%81%E8%81%9A%E5%90%88"><span class="toc-number">4.</span> <span class="toc-text">3. 模型：子图上特征聚合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">实验结果：</span></a></li></ol>
                     </div>
                 </span>
             </div>
@@ -635,6 +620,26 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">bert</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">daily</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">graphsage model</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">text representation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">optimizer</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">pretrained model</a>
               </li>
             
             <div class="clearfix"></div>
